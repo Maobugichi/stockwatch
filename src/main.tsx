@@ -19,7 +19,7 @@ import StockDetails from "./components/ui/stock-details";
 import AlertsList from "./routes/alert-logs";
 import  NewsPage from "./routes/news-page";
 import Onboarding from "./components/ui/onboarding/onboardingStepper";
-import Trending from "./routes/trending";
+
 
 const router = createHashRouter([
   {
@@ -29,7 +29,7 @@ const router = createHashRouter([
     loader:rootLoader,
     children: [{
         index:true,   
-        element: <Trending/>,
+        element: <Dashboard/>,
         loader:fetchTrending,
         
     },
