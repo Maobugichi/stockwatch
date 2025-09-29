@@ -48,7 +48,7 @@ const Login = () => {
                 <Input name="password" type="password" value={userData.password} placeholder="Enter your password" checkInput={(e:React.ChangeEvent<HTMLInputElement>) => getLoginDetails(e,setUserData)}/>
                     <Button 
                     type="submit"
-                    className="md:self-start md:ml-8 bg-black text-white text-sm h-12 font-bold rounded-sm w-[90%] md:w-[15%] md:h-12"
+                    className="md:self-start md:ml-8 bg-red-500 text-white text-sm h-12 font-bold rounded-sm w-[90%] md:w-[15%] md:h-12"
                     >
                   
                    {loading ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
