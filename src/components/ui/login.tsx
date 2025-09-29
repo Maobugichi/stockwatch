@@ -24,16 +24,19 @@ const Login = () => {
         setLoading(true);
 
         const response = await login(e,userData);
-        console.log(response)
-        setLoading(false) 
+       
+      
         if (response.status == 200) {
             const user = response;
             localStorage.setItem("user-data",JSON.stringify(response))
             if (!user.onboarded) {
              navigate("/onboarding");
             } else {
+             setLoading(false) 
              navigate("/");
+             
             }
+            
         } 
        
     }
@@ -45,12 +48,12 @@ const Login = () => {
                 <Input name="password" type="password" value={userData.password} placeholder="Enter your password" checkInput={(e:React.ChangeEvent<HTMLInputElement>) => getLoginDetails(e,setUserData)}/>
                     <Button 
                     type="submit"
-                    className="md:self-start md:ml-8 bg-black text-white text-sm h-8 rounded-sm w-[90%] md:w-[15%] md:h-12"
+                    className="md:self-start md:ml-8 bg-black text-white text-sm h-12 font-bold rounded-sm w-[90%] md:w-[15%] md:h-12"
                     >
                   
                    {loading ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
                     </Button>
-                    <span> Dont have an Account?<Link className=" text-blue-500 underline" to="/signup">Sign up</Link></span>
+                    <span> Dont have an Account?  <Link className=" text-blue-500 underline" to="/signup">Sign up</Link></span>
             </Form>
         </div>
     )
