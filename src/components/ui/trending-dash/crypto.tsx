@@ -3,12 +3,8 @@ import type { DashboardData } from "@/types";
 import { useNavigate } from "react-router-dom";
 import { formatNumber } from "@/lib/utils";
 import {
-  LineChart as ReLineChart,
-  Line,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
-  YAxis,
   AreaChart,
   Area,
 } from "recharts";

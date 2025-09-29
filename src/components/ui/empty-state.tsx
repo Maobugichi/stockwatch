@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { PlusCircle, TrendingUp, BarChart3, Briefcase } from 'lucide-react';
 import type { UserChoiceType } from "@/types";
 import { submitPortfolio } from '@/lib/utils';

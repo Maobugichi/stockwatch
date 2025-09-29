@@ -1,10 +1,7 @@
 import { useEffect, useState , useContext } from "react";
 import { MyContext } from "../context";
-import axios from "axios";
 import {
     Card,
-    CardHeader,
-    CardTitle,
     CardContent
 } from "@/components/ui/card"
 
@@ -24,12 +21,11 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogFooter
 } from "@/components/ui/dialog"
 import { getTicker, handleAlerts } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Form } from "./form";
-import { BellPlus, Eye } from "lucide-react";
+import { BellPlus } from "lucide-react";
 
 const CreateAlertForm = () => {
     const myContext = useContext(MyContext);
@@ -43,7 +39,8 @@ const CreateAlertForm = () => {
     ]);
     const [ open , setOpen ] = useState<boolean>(false)
     const [ userChoice, setUserChoice ] = useState<string>("") 
-
+    
+    console.log(userChoice);
     const handleAddCondition = () => {
         setConditions([...conditions, {type:"price_above" , value:""}]);
     }

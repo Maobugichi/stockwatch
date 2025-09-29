@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   LineChart as ReLineChart,
   Line,
@@ -10,15 +8,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useState, useRef, useEffect } from "react";
+import {  useRef } from "react";
 import {
   ArrowUpRight,
   ArrowDownRight,
   Landmark,
   BarChart2,
-  LineChart,
-  Cpu,
-  Activity,
   Flame,
   Snowflake,
   DollarSign,
@@ -46,10 +41,7 @@ function StockCard({ stock, showSparklineChange, navigate, badge }: any) {
     ? stock.sparklineChangePercent ?? 0
     : stock.changePercent ?? 0;
   const sparkColor = change >= 0 ? "#22c55e" : "#ef4444";
-  const pathRef = useRef<SVGPathElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const [pathLength, setPathLength] = useState(0);
-  const [viewBox, setViewBox] = useState("0 0 300 200"); // Default size
 
  
  

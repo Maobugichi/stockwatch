@@ -3,7 +3,6 @@ import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   type ChartConfig
@@ -47,35 +46,6 @@ const PortfolioPie = ({ data }: { data: PortfolioData }) => {
         };
     });
 
-    
-    const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
-        // Check if we're on mobile (this is a simple heuristic)
-        if (typeof window !== 'undefined' && window.innerWidth < 768) {
-            return null; // Don't show labels on mobile
-        }
-
-        const RADIAN = Math.PI / 180;
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-        const x = cx + radius * Math.cos(-midAngle * RADIAN);
-        const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-        // Only show label if percentage is above 5% to avoid clutter
-        if (percent * 100 < 5) return null;
-
-        return (
-            <text 
-                x={x} 
-                y={y} 
-                fill="white" 
-                textAnchor={x > cx ? 'start' : 'end'} 
-                dominantBaseline="central"
-                fontSize="12"
-                fontWeight="500"
-            >
-                {`${(percent * 100).toFixed(0)}%`}
-            </text>
-        );
-    };
 
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
@@ -118,7 +88,7 @@ const PortfolioPie = ({ data }: { data: PortfolioData }) => {
                             >
                                 {chartData.map((item, index) => (
                                     <Cell
-                                        key={`cell-${index}`}
+                                        key={`cell-${item}-${index}`}
                                         fill={chartConfig[data.breakdown[index].symbol]?.color || chartColors[index % chartColors.length]}
                                         stroke="#ffffff"
                                         strokeWidth={1}

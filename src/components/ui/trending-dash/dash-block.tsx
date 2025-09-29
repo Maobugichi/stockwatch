@@ -8,7 +8,7 @@ interface StatCardProps {
   gradientClass: string;
 }
 
-const StatCard = ({ title, icon, value, description, gradientClass }: StatCardProps) => {
+const StatCard = ({ title, icon, value, description }: StatCardProps) => {
   return (
     <Card className={`border shadow font-inter  h-[130px]`}>
       <CardHeader className=" h-[20%]">

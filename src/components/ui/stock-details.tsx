@@ -1,10 +1,6 @@
 import { useLoaderData } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, BarChart, Bar, Legend } from "recharts";
-
-import TimePeriodDropdown from "./chart_drop";
-import { formatNumber, getNewsData } from "@/lib/utils";
+import { getNewsData } from "@/lib/utils";
 import ValuationTable from "./val-table";
 import type { StockData } from "@/types";
 import EventsInfoTable from "./events";

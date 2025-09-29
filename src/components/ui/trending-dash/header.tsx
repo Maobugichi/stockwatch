@@ -1,5 +1,5 @@
 import { Badge } from "../badge";
-import { RefreshCw, Search, Check, ChevronDown, X, Building2 } from "lucide-react";
+import { RefreshCw, Search, Check, X, Building2 } from "lucide-react";
 import { Button } from "../button"
 import { Input } from "../input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -14,7 +14,7 @@ interface HeaderProps {
     userChoice: any
 }
 
-const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, setUserChoice, userChoice }) => {
+const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, setUserChoice }) => {
     const [options, setOptions] = useState<any[]>([]);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);

@@ -1,6 +1,3 @@
-import Holdings from "@/components/holdings"
-import { addToWatchList } from "@/lib/utils";
-import { useState } from "react";
 import { useLoaderData , Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ResponsiveContainer , LineChart, Line , Tooltip,XAxis,YAxis } from "recharts";

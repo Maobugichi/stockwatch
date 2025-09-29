@@ -1,14 +1,8 @@
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import axios from "axios";
-import { useState , useEffect, type SetStateAction } from "react";
+import {  useEffect, type SetStateAction } from "react";
 import { useNavigate , useLocation } from "react-router-dom";
 
-type TimePeriodOption = {
-  label: string
-  value: string
-  days: number
-  interval: string
-}
+
 
 const timePeriodOptions = [
   { label: "1d", value: "1d", days: 1, interval: "1m" },
@@ -23,7 +17,7 @@ interface TimePeriodSelectProps {
   setPeriod:React.Dispatch<SetStateAction<string>>
   className?: string
 }
-const TimePeriodDropdown = ({ className , period, setPeriod }: TimePeriodSelectProps) => {
+const TimePeriodDropdown = ({  period, setPeriod }: TimePeriodSelectProps) => {
   
   const navigate = useNavigate();
   const location = useLocation();

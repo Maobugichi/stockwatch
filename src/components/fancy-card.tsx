@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, type Variants } from 'framer-motion';
+import  { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 
 const NeonTrailCard = () => {
@@ -25,16 +25,7 @@ const NeonTrailCard = () => {
   }, []);
 
   // Variants for the chase animation
-  const trailVariants: Variants = {
-    animate: {
-      strokeDashoffset: [0, -pathLength],
-      transition: {
-        duration: 2,
-        ease: 'linear',
-        repeat: Infinity,
-      },
-    },
-  };
+ 
 
   // Path aligned to Card's outer border (320x192px, border-radius: 0.625rem = 10px)
   const pathD = "M 1 10 A 10 10 0 0 1 11 1 H 309 A 10 10 0 0 1 319 11 V 181 A 10 10 0 0 1 309 191 H 11 A 10 10 0 0 1 1 181 V 10 Z";
