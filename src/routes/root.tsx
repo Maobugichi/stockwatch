@@ -36,4 +36,18 @@ const Root: React.FC = () => {
   );
 };
 
+
 export default Root;
+
+export function HydrateFallback() {
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh' 
+    }}>
+      <ClipLoader />
+    </div>
+  );
+}

@@ -22,7 +22,6 @@ import { fetchTrendingNews } from "@/lib/utils";
 import HoldingsTable from "@/components/ui/holdingTable";
 import { resolveCssVar } from "@/lib/utils";
 import PortfolioPie from "@/components/ui/port-pie";
-
 import { FullPageEmptyState } from "@/components/ui/empty-state";
 
 

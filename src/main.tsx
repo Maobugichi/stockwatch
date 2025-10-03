@@ -6,7 +6,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import ErrorPage from "./error-page";
-import Root from "./routes/root";
+import Root, { HydrateFallback } from "./routes/root";
 import { dashLoader, fetchAlerts, fetchTrending, newsLoader, rootLoader, stockLoader, watchListLoader } from "./lib/utils";
 import { Toaster } from "./components/ui/sonner";
 import Dashboard from "./components/ui/dashboard";
@@ -19,6 +19,7 @@ import StockDetails from "./components/ui/stock-details";
 import AlertsList from "./routes/alert-logs";
 import  NewsPage from "./routes/news-page";
 import Onboarding from "./components/ui/onboarding/onboardingStepper";
+import StockDashboard from "./routes/trending";
 
 
 const router = createHashRouter([
@@ -29,7 +30,8 @@ const router = createHashRouter([
     loader:rootLoader,
     children: [{
         index:true,   
-        element: <Dashboard/>,
+        element: <StockDashboard/>,
+        HydrateFallback: HydrateFallback,
         loader:fetchTrending,
         
     },

@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect  } from "react-router-dom";
 import { Form } from "./form";
 import { Input } from "./input";
 import { getLoginDetails, login } from "@/lib/utils";
@@ -17,23 +17,20 @@ const Login = () => {
         email:"",
         password:""
     });
-    const navigate = useNavigate();
     const [ loading , setLoading ] = useState<boolean>(false)
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
 
         const response = await login(e,userData);
-       
-      
         if (response.status == 200) {
             const user = response;
             localStorage.setItem("user-data",JSON.stringify(response))
             if (!user.onboarded) {
-             navigate("/onboarding");
+             redirect("/onboarding");
             } else {
              setLoading(false) 
-             navigate("/");
+             redirect("/");
              
             }
             
