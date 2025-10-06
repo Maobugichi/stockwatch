@@ -460,7 +460,7 @@ const fetchUser = async (setUser:React.Dispatch<SetStateAction<any>> , setCurren
   const fetchTrending = async () => {
       try {
         const res = await axios.get(`${backendEndpoint}/trending-stock`, { withCredentials: true });
-         console.log(res.data)
+      
         const data = res.data;
         return data
       } catch (err) {

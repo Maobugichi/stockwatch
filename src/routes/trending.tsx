@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import  { use, useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -12,15 +12,24 @@ import {
   FlameIcon,
 } from 'lucide-react';
 import type { UserChoiceTypeWatch } from '@/types';
-import { useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData } from 'react-router-dom';
 import NewsItem from '@/components/ui/trending-dash/news';
 import StockCard from '@/components/ui/trending-dash/stock-card';
 import Header from '@/components/ui/trending-dash/header';
 import StatCard from '@/components/ui/trending-dash/dash-block';
 import TabsListComponent from '@/components/ui/trending-dash/tabs-list';
-
+import { useQuery, useMutation } from "@tanstack/react-query"
+import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 const StockDashboard = () => {
-  const loader = useLoaderData();
+  //const loader = useLoaderData();
+
+  const { data , isLoading , error, isError } = useQuery({queryKey:['port'], queryFn: async() => {
+    const response = await axios.get(`https://stocks-server-kcro.onrender.com/api/trending-stock`)
+    return response.data
+  }});
+
+  console.log(data)
   const [searchTerm, setSearchTerm] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
@@ -32,7 +41,12 @@ const [activeTab, setActiveTab] = useState("overview");
  
 useEffect(() => {
   setRefreshing(false);console.log(selectedStock)
-},[])
+},[]);
+
+if (isLoading) return <ClipLoader size={40}/>
+if (isError) {
+    redirect("/login")
+}
 
 const cardsData = (data: any) => [
   {
@@ -76,7 +90,7 @@ const cardsData = (data: any) => [
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-              { cardsData(loader).map((item:any) => (
+              { cardsData(data).map((item:any) => (
                 <StatCard title={item.title} icon={item.icon} value={item.value} description={item.description} gradientClass={item.gradientClass}/>
               ))}
             </div>
@@ -89,7 +103,7 @@ const cardsData = (data: any) => [
               <CardContent>
                 <ScrollArea className="h-96">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-                    {loader?.liveData
+                    {data?.liveData
                      .map((stock:any, index:any) => (
                         <StockCard 
                           key={index} 
@@ -116,7 +130,7 @@ const cardsData = (data: any) => [
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-                  {loader?.isTrendingQuote?.map((stock:any , index:number) => (
+                  {data?.isTrendingQuote?.map((stock:any , index:number) => (
                     <StockCard key={index} stock={stock} onSelect={setSelectedStock} />
                   ))}
                 </div>
@@ -136,7 +150,7 @@ const cardsData = (data: any) => [
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {loader?.gainers?.map((stock:any, index:any) => (
+                  {data?.gainers?.map((stock:any, index:any) => (
                     <StockCard 
                       key={index} 
                       stock={stock} 
@@ -162,7 +176,7 @@ const cardsData = (data: any) => [
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
-                  {loader?.losers?.map((stock:any, index:any) => (
+                  {data?.losers?.map((stock:any, index:any) => (
                     <StockCard 
                       key={index} 
                       stock={stock} 
@@ -188,7 +202,7 @@ const cardsData = (data: any) => [
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
-                  {loader?.active?.map((stock:any, index:any) => (
+                  {data?.active?.map((stock:any, index:any) => (
                     <StockCard 
                       key={index} 
                       stock={stock} 
@@ -215,7 +229,7 @@ const cardsData = (data: any) => [
               <CardContent>
                 <ScrollArea className="h-96">
                   <div className="space-y-4">
-                    {loader?.news?.map((item:any, itemIndex:any) => 
+                    {data?.news?.map((item:any, itemIndex:any) => 
                       item.news?.map((newsItem:any, newsIndex:any) => (
                         <NewsItem 
                           key={`${itemIndex}-${newsIndex}`} 
