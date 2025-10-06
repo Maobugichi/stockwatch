@@ -1,4 +1,4 @@
-import  { use, useEffect, useState } from 'react';
+import  {  useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -12,19 +12,19 @@ import {
   FlameIcon,
 } from 'lucide-react';
 import type { UserChoiceTypeWatch } from '@/types';
-import { redirect, useLoaderData } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 import NewsItem from '@/components/ui/trending-dash/news';
 import StockCard from '@/components/ui/trending-dash/stock-card';
 import Header from '@/components/ui/trending-dash/header';
 import StatCard from '@/components/ui/trending-dash/dash-block';
 import TabsListComponent from '@/components/ui/trending-dash/tabs-list';
-import { useQuery, useMutation } from "@tanstack/react-query"
+import { useQuery  } from "@tanstack/react-query"
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 const StockDashboard = () => {
   //const loader = useLoaderData();
 
-  const { data , isLoading , error, isError } = useQuery({queryKey:['port'], queryFn: async() => {
+  const { data , isLoading ,  isError } = useQuery({queryKey:['port'], queryFn: async() => {
     const response = await axios.get(`https://stocks-server-kcro.onrender.com/api/trending-stock`)
     return response.data
   }});
