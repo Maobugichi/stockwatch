@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import { Link, redirect  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form } from "./form";
 import { Input } from "./input";
 import { getLoginDetails } from "@/lib/utils";

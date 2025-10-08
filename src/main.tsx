@@ -22,6 +22,7 @@ import Onboarding from "./components/ui/onboarding/onboardingStepper";
 import StockDashboard from "./routes/trending";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
+import Hydrate from "./App";
 
 const router = createHashRouter([
   {
@@ -65,13 +66,15 @@ const router = createHashRouter([
       errorElement:<ErrorPage/>
     },
   ],
-  },
+  HydrateFallback:Hydrate
+  }
+  ,
   {
     path:"/signup/",
     element:<SignUp/>
   },
   {
-    path:"/login/",
+    path:"/login",
     element:<Login/>
   },
   {

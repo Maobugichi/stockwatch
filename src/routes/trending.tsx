@@ -24,10 +24,12 @@ import { ClipLoader } from 'react-spinners';
 const StockDashboard = () => {
   //const loader = useLoaderData();
 
-  const { data , isLoading ,  isError } = useQuery({queryKey:['port'], queryFn: async() => {
-    const response = await axios.get(`https://stocks-server-kcro.onrender.com/api/trending-stock`)
+  const { data , isLoading , error ,  isError } = useQuery({queryKey:['port'], queryFn: async() => {
+    const response = await axios.get(`https://stocks-server-kcro.onrender.com/api/trending-stock`, {withCredentials:true})
     return response.data
   }});
+
+  console.log(error)
 
   const [searchTerm, setSearchTerm] = useState('');
   const [refreshing, setRefreshing] = useState(false);
