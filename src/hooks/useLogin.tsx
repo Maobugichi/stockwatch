@@ -41,11 +41,9 @@ export function useLogin() {
             });
              console.log(data)
                 if (data.onboarded) {
-               
                 navigate(`${basePath}`, { replace: true });
                 
                 } else {
-               
                 navigate('/onboarding/', { replace: true });
                 }
         } ,
