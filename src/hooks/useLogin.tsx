@@ -38,10 +38,13 @@ export function useLogin() {
             }
             setTimeout(() => {
                 if (data.onboarded) {
-                // For hash router
+               
                 window.location.hash = '/';
                 // Or use navigate as backup
                 navigate('/', { replace: true });
+                toast.success("Login Success", {
+                description: "Welcome back champ"
+                });
                 } else {
                 window.location.hash = '/onboarding/';
                 navigate('/onboarding/', { replace: true });

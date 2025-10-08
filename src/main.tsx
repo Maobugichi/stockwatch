@@ -19,7 +19,7 @@ import StockDetails from "./components/ui/stock-details";
 import AlertsList from "./routes/alert-logs";
 import  NewsPage from "./routes/news-page";
 import Onboarding from "./components/ui/onboarding/onboardingStepper";
-import StockDashboard from "./routes/trending";
+
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Hydrate from "./App";
@@ -32,7 +32,7 @@ const router = createHashRouter([
     loader:rootLoader,
     children: [{
         index:true,   
-        element: <StockDashboard/>,
+        element: <Dashboard/>,
         HydrateFallback: HydrateFallback, 
     },
     {
