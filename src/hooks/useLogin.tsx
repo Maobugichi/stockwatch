@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 
 const backendEndpoint = import.meta.env.VITE_API_BASE_URL;
-
+const basePath = import.meta.env.VITE_BASE_URL || '/stockwatch/';
 
 async function loginUser(userData:UserDetails) {
   try {
@@ -40,19 +40,14 @@ export function useLogin() {
                 description: "Welcome back champ"
             });
              console.log(data)
-            setTimeout(() => {
                 if (data.onboarded) {
                
-                window.location.hash = '#/portfolio';
-
-                // Or use navigate as backup
-                //navigate('/portfolio', { replace: true });
+                navigate(`${basePath}`, { replace: true });
                 
                 } else {
-                window.location.hash = '/onboarding/';
+               
                 navigate('/onboarding/', { replace: true });
                 }
-            }, 300); //
         } ,
         onError: (error) => {
             let message = "An unexpected error occurred.";
