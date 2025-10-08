@@ -25,6 +25,17 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import Hydrate from "./App";
 import StockDashboard from "./routes/trending";
 
+async function initErudaIfDebug() {
+  if (localStorage.getItem("debug") === "true") {
+    const eruda = await import("eruda");
+    eruda.default.init();
+    console.log("%c🪄 Debug mode active", "color: lime;");
+  }
+}
+
+
+initErudaIfDebug();
+
 const router = createHashRouter([
   {
     path: "/",
