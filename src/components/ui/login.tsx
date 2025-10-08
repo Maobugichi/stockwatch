@@ -23,7 +23,7 @@ const Login = () => {
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        login(userData)
+         login(userData)
     }
 
     return(

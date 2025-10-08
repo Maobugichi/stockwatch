@@ -8,7 +8,7 @@ const useNews = (getNewsData:any) => {
     useEffect(() => {
       let isMounted = true;
       async function getNews() {
-        const response = await getNewsData();
+        const response = await getNewsData;
       
         if (isMounted) {
             setNews(response);

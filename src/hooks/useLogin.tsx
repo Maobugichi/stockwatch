@@ -36,15 +36,18 @@ export function useLogin() {
                 });
                 return;
             }
+            toast.success("Login Success", {
+                description: "Welcome back champ"
+            });
+             console.log(data)
             setTimeout(() => {
                 if (data.onboarded) {
                
-                window.location.hash = '/portfolio';
+                window.location.hash = '#/portfolio';
+
                 // Or use navigate as backup
-                navigate('/portfolio', { replace: true });
-                toast.success("Login Success", {
-                description: "Welcome back champ"
-                });
+                //navigate('/portfolio', { replace: true });
+                
                 } else {
                 window.location.hash = '/onboarding/';
                 navigate('/onboarding/', { replace: true });
