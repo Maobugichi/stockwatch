@@ -30,14 +30,23 @@ export function useLogin() {
         mutationFn:loginUser,
         onSuccess: (data) => {
             
-            if (data.onboarded) {
-              navigate('/');
-              toast.success("Login Successful! 🎉", {
-                description: "Welcome back!",
+            if (!data) {
+                toast.error("Login Failed", {
+                description: "No response data received"
                 });
-            } else {
-                navigate('/onboarding/');
+                return;
             }
+            setTimeout(() => {
+                if (data.onboarded) {
+                // For hash router
+                window.location.hash = '/';
+                // Or use navigate as backup
+                navigate('/', { replace: true });
+                } else {
+                window.location.hash = '/onboarding/';
+                navigate('/onboarding/', { replace: true });
+                }
+            }, 300); //
         } ,
         onError: (error) => {
             let message = "An unexpected error occurred.";
