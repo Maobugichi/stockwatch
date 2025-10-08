@@ -74,7 +74,7 @@ const router = createHashRouter([
     element:<SignUp/>
   },
   {
-    path:"/login",
+    path:"login",
     element:<Login/>
   },
   {

@@ -39,9 +39,9 @@ export function useLogin() {
             setTimeout(() => {
                 if (data.onboarded) {
                
-                window.location.hash = '/';
+                window.location.hash = '/portfolio';
                 // Or use navigate as backup
-                navigate('/', { replace: true });
+                navigate('/portfolio', { replace: true });
                 toast.success("Login Success", {
                 description: "Welcome back champ"
                 });
