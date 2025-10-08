@@ -40,6 +40,7 @@ export function useLogin() {
                 description: "Welcome back champ"
             });
              console.log(data)
+             
                 if (data.onboarded) {
                 navigate(`${basePath}`, { replace: true });
                 

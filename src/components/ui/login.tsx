@@ -36,8 +36,14 @@ const Login = () => {
                     className="md:self-start md:ml-8 bg-black text-white text-sm h-12 font-bold rounded-sm w-[90%] md:w-[15%] md:h-12"
                     >
                   
-                   {isPending ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
+                      {isPending ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
                     </Button>
+                    <button onClick={() => {
+                    localStorage.setItem("debug", "true");
+                    location.reload();
+                    }}>
+                    Enable Debug Mode
+                    </button>
                     {isError && <p style={{ color: "red" }}>{(error as any).message}</p>}
                     <span> Dont have an Account?  <Link className=" text-blue-500 underline" to="/signup">Sign up</Link></span>
             </Form>
