@@ -206,4 +206,11 @@ type UserChoiceTypeWatch = {
 }
 
 
-export type { StockData , TimePeriod, PortfolioData , DashboardData , LiveData , SimpleStock ,ExtendedStock , NewsItem, NewsResponse , StockApiResponse , UserChoiceType , UserChoiceTypeWatch }
+interface UserDetails  {
+  email:string,
+  password:string
+}
+
+
+
+export type { StockData , TimePeriod, PortfolioData , DashboardData , LiveData , SimpleStock ,ExtendedStock , NewsItem, NewsResponse , StockApiResponse , UserChoiceType , UserChoiceTypeWatch , UserDetails }

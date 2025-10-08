@@ -2,10 +2,10 @@ import React, {  useState } from "react";
 import { Link, redirect  } from "react-router-dom";
 import { Form } from "./form";
 import { Input } from "./input";
-import { getLoginDetails, login } from "@/lib/utils";
+import { getLoginDetails } from "@/lib/utils";
 import { Button } from "./button";
 import { ClipLoader } from "react-spinners";
-
+import { useLogin } from "@/hooks/useLogin";
 
 type UserDataType = {
     email:string,
@@ -13,29 +13,16 @@ type UserDataType = {
 }
 
 const Login = () => {
+    const { mutate:login , isPending , isError, error } = useLogin();
+
     const [ userData , setUserData ] = useState<UserDataType>({
         email:"",
         password:""
     });
-    const [ loading , setLoading ] = useState<boolean>(false)
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-        setLoading(true);
-
-        const response = await login(e,userData);
-        if (response.status == 200) {
-            const user = response;
-            localStorage.setItem("user-data",JSON.stringify(response))
-            if (!user.onboarded) {
-             redirect("/onboarding");
-            } else {
-             setLoading(false) 
-             redirect("/");
-             
-            }
-            
-        } 
-       
+        e.preventDefault();
+        login(userData)
     }
 
     return(
@@ -48,8 +35,9 @@ const Login = () => {
                     className="md:self-start md:ml-8 bg-black text-white text-sm h-12 font-bold rounded-sm w-[90%] md:w-[15%] md:h-12"
                     >
                   
-                   {loading ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
+                   {isPending ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
                     </Button>
+                    {isError && <p style={{ color: "red" }}>{(error as any).message}</p>}
                     <span> Dont have an Account?  <Link className=" text-blue-500 underline" to="/signup">Sign up</Link></span>
             </Form>
         </div>

@@ -7,17 +7,15 @@ const useNews = (getNewsData:any) => {
     const [ loading, setLoading ] = useState<boolean>(true)
     useEffect(() => {
       let isMounted = true;
-      console.log(getNewsData)
       async function getNews() {
-        const response = await getNewsData;
-        console.log(response)
+        const response = await getNewsData();
+      
         if (isMounted) {
             setNews(response);
             setLoading(false)
         }
       }
       getNews()
-
       return () => {
         isMounted = false
       }
@@ -28,4 +26,4 @@ const useNews = (getNewsData:any) => {
     return { news , loading }
 }
 
-export default useNews
+export default useNews;

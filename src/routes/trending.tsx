@@ -29,7 +29,6 @@ const StockDashboard = () => {
     return response.data
   }});
 
-  console.log(data)
   const [searchTerm, setSearchTerm] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);

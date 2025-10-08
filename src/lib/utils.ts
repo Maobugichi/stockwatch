@@ -5,6 +5,7 @@ import  { redirect } from "react-router-dom";
 import type { SetStateAction } from "react";
 import type { LoaderFunctionArgs } from "react-router-dom";
 import type React from "react";
+import type { UserDetails } from "@/types";
 
 
 type InputFields = {
@@ -21,13 +22,8 @@ type UserChoiceType = {
     buyPrice:string
 }
 
-type UserDetails = {
-  email:string,
-  password:string
-}
 
-
-const backendEndpoint = 'https://stocks-server-kcro.onrender.com/api'
+const backendEndpoint = import.meta.env.VITE_API_BASE_URL;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -63,19 +59,7 @@ async function submitCredentials(e:React.FormEvent<HTMLFormElement>,userData:Inp
 
 }
 
-async function login(e:React.FormEvent<HTMLFormElement>,userData:UserDetails) {
-  e.preventDefault();
-  try {
-    const { email , password } = userData;
-    if (!email || !password) return;
-    const response = await axios.post(`${backendEndpoint}/login/`,{ email , password },{
-      withCredentials:true,
-    })
-    return {...response.data , status:response.status};
-  } catch(err) {
-    console.log(err)
-  }
-}
+
 
 async function stockLoader({params, request}:LoaderFunctionArgs)  {
   const { symbol  } = params;
@@ -509,5 +493,5 @@ const fetchUser = async (setUser:React.Dispatch<SetStateAction<any>> , setCurren
 
   
   
-export { submitCredentials , getValues , rootLoader , getTicker , handleUserChoice , getLoginDetails , login , submitPortfolio , dashLoader , addToWatchList, watchListLoader , stockLoader , formatNumber, getNewsData , fetchTrendingNews , handleAlerts , fetchAlerts , submitChanges , handleAnalyze , resolveCssVar , newsLoader , fetchUser , next , fetchTrending , formatCurrency , formatMarketCap , formatVolume , getChangeColor }
+export { submitCredentials , getValues , rootLoader , getTicker , handleUserChoice , getLoginDetails , submitPortfolio , dashLoader , addToWatchList, watchListLoader , stockLoader , formatNumber, getNewsData , fetchTrendingNews , handleAlerts , fetchAlerts , submitChanges , handleAnalyze , resolveCssVar , newsLoader , fetchUser , next , fetchTrending , formatCurrency , formatMarketCap , formatVolume , getChangeColor }
 
