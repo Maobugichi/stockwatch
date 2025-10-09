@@ -16,7 +16,7 @@ async function loginUser(userData: UserDetails) {
     return { ...response.data };
   } catch (err) {
     console.log(err)
-    throw err; // Important: re-throw so onError is triggered
+    throw err; 
   }
 }
 
@@ -46,7 +46,7 @@ export function useLogin() {
       
       // Force navigation with window.location as fallback
       try {
-        navigate(targetPath, { replace: true });
+        //navigate(targetPath, { replace: true });
         console.log('✅ Navigate called successfully');
         
         // Fallback: If navigation doesn't work, force reload to target
@@ -56,16 +56,16 @@ export function useLogin() {
           
           if (currentPath !== targetPath) {
             console.warn('⚠️ Navigation failed, forcing with location.hash');
-            window.location.hash = targetPath;
-            window.location.reload();
+            //window.location.hash = targetPath;
+            //window.location.reload();
           }
         }, 100);
         
       } catch (err) {
         console.error('❌ Navigation error:', err);
         // Force fallback
-        window.location.hash = targetPath;
-        window.location.reload();
+        //window.location.hash = targetPath;
+        //window.location.reload();
       }
     },
     onError: (error) => {
