@@ -16,7 +16,7 @@ async function loginUser(userData: UserDetails) {
     return { ...response.data };
   } catch (err) {
     console.log(err)
-    throw err; 
+    throw err; // Important: re-throw so onError is triggered
   }
 }
 
@@ -41,32 +41,11 @@ export function useLogin() {
         description: "Welcome back champ"
       });
       
-      const targetPath = data.onboarded ? '/' : '/onboarding/';
+      const targetPath = data.onboarded ? '/' : '/onboarding';
       console.log('🔍 Attempting to navigate to:', targetPath);
       
-      // Force navigation with window.location as fallback
-      try {
-        //navigate(targetPath, { replace: true });
-        console.log('✅ Navigate called successfully');
-        
-        // Fallback: If navigation doesn't work, force reload to target
-        setTimeout(() => {
-          const currentPath = window.location.hash.replace('#', '');
-          console.log('🔍 After navigate, current path:', currentPath);
-          
-          if (currentPath !== targetPath) {
-            console.warn('⚠️ Navigation failed, forcing with location.hash');
-            //window.location.hash = targetPath;
-            //window.location.reload();
-          }
-        }, 100);
-        
-      } catch (err) {
-        console.error('❌ Navigation error:', err);
-        // Force fallback
-        //window.location.hash = targetPath;
-        //window.location.reload();
-      }
+      // Direct hash manipulation is most reliable for hash routing
+      window.location.hash = targetPath;
     },
     onError: (error) => {
       console.error('❌ Login Error:', error);
