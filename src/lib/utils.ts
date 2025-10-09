@@ -87,27 +87,7 @@ async function stockLoader({params, request}:LoaderFunctionArgs)  {
   
 }
 
-async function rootLoader()  {
-  try {
-      const res = await axios.get(`${backendEndpoint}/`,{
-      withCredentials:true,
-      headers: {
-        "Content-Type":"application/json"
-      }});  
-      const user = res.data;
 
-     if (!user.onboarded) {
-      return redirect("/onboarding");
-     }
-     return user;
-  } catch(err:any) {
-    if (err.response?.status == 401) {
-       return redirect("/login")
-    }
-    throw err
-  }
-  
-}
 
 const getTicker = async(q:string,setOptions:React.Dispatch<SetStateAction<SearchTicker>>) => {
   try {
@@ -494,5 +474,5 @@ const fetchUser = async (setUser:React.Dispatch<SetStateAction<any>> , setCurren
 
   
   
-export { submitCredentials , getValues , rootLoader , getTicker , handleUserChoice , getLoginDetails , submitPortfolio , dashLoader , addToWatchList, watchListLoader , stockLoader , formatNumber, getNewsData , fetchTrendingNews , handleAlerts , fetchAlerts , submitChanges , handleAnalyze , resolveCssVar , newsLoader , fetchUser , next , fetchTrending , formatCurrency , formatMarketCap , formatVolume , getChangeColor }
+export { submitCredentials , getValues ,  getTicker , handleUserChoice , getLoginDetails , submitPortfolio , dashLoader , addToWatchList, watchListLoader , stockLoader , formatNumber, getNewsData , fetchTrendingNews , handleAlerts , fetchAlerts , submitChanges , handleAnalyze , resolveCssVar , newsLoader , fetchUser , next , fetchTrending , formatCurrency , formatMarketCap , formatVolume , getChangeColor }
 

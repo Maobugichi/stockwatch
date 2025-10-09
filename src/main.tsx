@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import ErrorPage from "./error-page";
 import Root, { HydrateFallback } from "./routes/root";
-import { dashLoader, fetchAlerts,  newsLoader, rootLoader, stockLoader, watchListLoader } from "./lib/utils";
+import { dashLoader, fetchAlerts,  newsLoader, stockLoader, watchListLoader } from "./lib/utils";
 import { Toaster } from "./components/ui/sonner";
 import Dashboard from "./components/ui/dashboard";
 import SignUp from "./components/ui/signup";
@@ -41,7 +41,6 @@ const router = createHashRouter([
     path: "/",
     element:<Root/>,
     errorElement:<ErrorPage/>,
-    loader:rootLoader,
     children: [{
         index:true,   
         element: <StockDashboard/>,
