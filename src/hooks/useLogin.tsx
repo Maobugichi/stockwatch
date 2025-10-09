@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UserDetails } from "@/types";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 import { toast } from "sonner";
 
 const backendEndpoint = import.meta.env.VITE_API_BASE_URL;
@@ -21,7 +21,7 @@ async function loginUser(userData: UserDetails) {
 }
 
 export function useLogin() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   
   return useMutation({
     mutationFn: loginUser,
