@@ -5,6 +5,7 @@ import Header from "@/components/ui/header";
 import { motion } from "motion/react";
 import { ClipLoader } from "react-spinners";
 
+
 const Root: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);  
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ const Root: React.FC = () => {
          
           <div className="absolute inset-0 mt-16 overflow-auto">
             <div className="min-h-full md:p-4 ">
-             {isLoading ? <div className="h-[80vh] grid place-items-center"><ClipLoader color="#3b82f6" size={40} /></div> : <Outlet />}
+             {isLoading ? <div className="h-[80vh] grid place-items-center"><ClipLoader color="#3b82f6" size={40} /></div> : <Outlet/>}
             </div>
           </div>
         </motion.div>

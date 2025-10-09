@@ -12,7 +12,9 @@ async function loginUser(userData: UserDetails) {
     if (!email || !password) return;
     const response = await axios.post(`${backendEndpoint}/login/`, { email, password }, {
       withCredentials: true,
-    })
+    });
+
+    
     return { ...response.data };
   } catch (err) {
     console.log(err)
@@ -25,19 +27,22 @@ export function useLogin() {
   
   return useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      console.log('🔍 Login Success Data:', data);
+    onSuccess: async (data) => {
+      //console.log('🔍 Login Success Data:', data);
       console.log('🔍 Current URL:', window.location.href);
       console.log('🔍 Current Hash:', window.location.hash);
       console.log('🔍 Origin:', window.location.origin);
       console.log('🔍 Pathname:', window.location.pathname);
       
+
+
       if (!data) {
         toast.error("Login Failed", {
           description: "No response data received"
         });
         return;
       }
+     
       
       toast.success("Login Success", {
         description: "Welcome back champ"
