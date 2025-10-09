@@ -29,6 +29,8 @@ export function useLogin() {
       console.log('🔍 Login Success Data:', data);
       console.log('🔍 Current URL:', window.location.href);
       console.log('🔍 Current Hash:', window.location.hash);
+      console.log('🔍 Origin:', window.location.origin);
+      console.log('🔍 Pathname:', window.location.pathname);
       
       if (!data) {
         toast.error("Login Failed", {
@@ -41,11 +43,17 @@ export function useLogin() {
         description: "Welcome back champ"
       });
       
-      const targetPath = data.onboarded ? '/' : '/onboarding';
-      console.log('🔍 Attempting to navigate to:', targetPath);
+      // Force full page navigation with the complete URL
+      const baseUrl = window.location.origin + window.location.pathname;
+      const targetHash = data.onboarded ? '#/' : '#/onboarding';
+      const fullUrl = baseUrl + targetHash;
       
-      // Direct hash manipulation is most reliable for hash routing
-      window.location.hash = targetPath;
+      console.log('🔍 Navigating to full URL:', fullUrl);
+      
+      // Use a small delay to ensure toast shows, then force navigation
+      setTimeout(() => {
+        window.location.href = fullUrl;
+      }, 300);
     },
     onError: (error) => {
       console.error('❌ Login Error:', error);
