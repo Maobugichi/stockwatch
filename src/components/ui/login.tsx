@@ -25,24 +25,46 @@ const Login = () => {
         e.preventDefault();
         e.stopPropagation();
         
+        console.log('🚀 Form submitted');
+        
         try {
-            // Use mutateAsync to wait for the result
+            console.log('🔄 Calling login...');
             const result = await login(userData);
             
-            console.log('🔍 Login result:', result);
+            console.log('✅ Login result:', result);
+            console.log('🔍 Onboarded status:', result?.onboarded);
             
             // Navigate based on onboarding status
-            if (result?.onboarded) {
-                console.log('🔍 Navigating to root');
-                navigate('/', { replace: true });
-                 console.log('didnt navigate haha');
-            } else {
-                console.log('🔍 Navigating to onboarding');
-                navigate('/onboarding', { replace: true });
-            }
+            const targetPath = result?.onboarded ? '/' : '/onboarding';
+            console.log('🎯 Target path:', targetPath);
+            
+            // Try navigate
+            console.log('🧭 Attempting navigate...');
+            navigate(targetPath, { replace: true });
+            console.log('✅ Navigate called');
+            
+            // Fallback: if navigate doesn't work, force hash change
+            setTimeout(() => {
+                console.log('⏱️ Checking if navigation happened...');
+                console.log('Current hash:', window.location.hash);
+                const expectedHash = `#${targetPath}`;
+                
+                if (window.location.hash !== expectedHash) {
+                    console.log('⚠️ Navigate failed, forcing hash change');
+                    window.location.hash = targetPath;
+                    
+                    // If still not working after another delay, reload
+                    setTimeout(() => {
+                        if (window.location.hash !== expectedHash) {
+                            console.log('🔥 Nuclear option: reloading');
+                            window.location.reload();
+                        }
+                    }, 500);
+                }
+            }, 500);
+            
         } catch (error) {
-            // Error is already handled in the mutation's onError
-            console.error('Login failed:', error);
+            console.error('❌ Login failed:', error);
         }
     }
 
