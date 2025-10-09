@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 
 const backendEndpoint = import.meta.env.VITE_API_BASE_URL;
-const basePath = import.meta.env.VITE_BASE_URL || '/stockwatch/';
+const basePath = import.meta.env.VITE_BASE_URL || '/';
 
 async function loginUser(userData:UserDetails) {
   try {

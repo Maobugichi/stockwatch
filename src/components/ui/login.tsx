@@ -38,7 +38,7 @@ const Login = () => {
                   
                       {isPending ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
                     </Button>
-                    <button onClick={() => {
+                    <button className="bg-black text-white" onClick={() => {
                     localStorage.setItem("debug", "true");
                     location.reload();
                     }}>
