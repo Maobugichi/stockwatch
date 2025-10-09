@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UserDetails } from "@/types";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "sonner";
 
@@ -23,7 +24,7 @@ async function loginUser(userData: UserDetails) {
 }
 
 export function useLogin() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   
   return useMutation({
     mutationFn: loginUser,
@@ -50,15 +51,17 @@ export function useLogin() {
       
       // Force full page navigation with the complete URL
       const baseUrl = window.location.origin + window.location.pathname;
-      const targetHash = data.onboarded ? '#/' : '#/onboarding';
+      const targetHash = data.onboarded ? '/' : '/onboarding';
       const fullUrl = baseUrl + targetHash;
       
       console.log('🔍 Navigating to full URL:', fullUrl);
       
       // Use a small delay to ensure toast shows, then force navigation
       setTimeout(() => {
-        window.location.href = fullUrl;
+        navigate(targetHash)
       }, 300);
+
+      console.log('Navigation didnt work haha')
     },
     onError: (error) => {
       console.error('❌ Login Error:', error);

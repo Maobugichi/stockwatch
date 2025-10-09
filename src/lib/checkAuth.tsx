@@ -12,13 +12,13 @@ export async function authLoader() {
 
     if (response.data) {
         console.log(response.data)
-        redirect('/')
+        
     } 
   } catch (err: any) {
     if (err.response?.status === 401) {
-      throw redirect("/login");
+      throw redirect("/login/");
     }
-    throw err; // let React Router handle other errors
+    throw err; 
   }
 }
 
