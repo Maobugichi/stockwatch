@@ -57,10 +57,7 @@ export function useLogin() {
       console.log('🔍 Navigating to full URL:', fullUrl);
       
       // Use a small delay to ensure toast shows, then force navigation
-      setTimeout(() => {
         navigate(targetHash)
-      }, 300);
-
       console.log('Navigation didnt work haha')
     },
     onError: (error) => {
