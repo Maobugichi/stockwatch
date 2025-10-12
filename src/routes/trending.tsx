@@ -12,7 +12,7 @@ import {
   FlameIcon,
 } from 'lucide-react';
 import type { UserChoiceTypeWatch } from '@/types';
-import { redirect, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import NewsItem from '@/components/ui/trending-dash/news';
 import StockCard from '@/components/ui/trending-dash/stock-card';
 import Header from '@/components/ui/trending-dash/header';
