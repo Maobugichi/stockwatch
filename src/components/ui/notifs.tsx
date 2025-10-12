@@ -12,10 +12,10 @@ const Notifications = () => {
    
    useEffect(() => {
     console.log("notif:" + notification)
-    if (!notification) return; // don’t subscribe if empty string
+    if (!notification) return;
 
      console.log("Subscribing to event:", notification);
-    socket.on(notification, (data) => {
+    socket.on(notification.message, (data) => {
         const { type , message , time } = data;
         switch(type) {
             case "success":
@@ -59,7 +59,7 @@ const Notifications = () => {
     });
 
     return () => {
-        socket.off(notification)
+        socket.off(notification.message)
     }
    
    },[notification])

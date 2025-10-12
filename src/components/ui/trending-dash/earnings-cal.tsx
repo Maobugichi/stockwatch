@@ -44,7 +44,7 @@ const Earnings:React.FC<EarningsProps> = ({dashboardData}) => {
                 
                 <Button
                  className="w-full mt-3"
-                 clicked={() => navigate(`/stock/${event.symbol}`)}
+                 onClick={() => navigate(`/stock/${event.symbol}`)}
                 >
                  View Details
                 </Button>
