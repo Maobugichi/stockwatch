@@ -115,7 +115,6 @@ const NewsPage = () => {
     }
   };
 
-
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
@@ -123,7 +122,6 @@ const NewsPage = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
 
   useEffect(() => {
     if (!autoRefresh) return;
@@ -133,7 +131,6 @@ const NewsPage = () => {
     return () => clearInterval(interval);
   }, [autoRefresh]);
 
- 
   useEffect(() => {
     const saved = localStorage.getItem("bookmarkedNews");
     if (saved) {
@@ -146,7 +143,6 @@ const NewsPage = () => {
       setNews(data);
     }
   }, [data]);
-
 
   const processedNews = useMemo(() => {
     let filtered = [...news];
@@ -164,7 +160,6 @@ const NewsPage = () => {
         case "oldest":
           return new Date(a.datetime || 0).getTime() - new Date(b.datetime || 0).getTime();
         case "relevance":
-        
           return (b.summary?.length || 0) - (a.summary?.length || 0);
         default:
           return 0;
@@ -202,7 +197,6 @@ const NewsPage = () => {
   const renderFiltersAndActions = () => (
     <div className="md:grid md:grid-cols-3 scrollbar-hide flex overflow-auto place-items-center gap-3 mb-6 md:p-4 bg-gray-50 rounded-lg items-center">
       <div className="flex h-10 gap-2">
-
         <Select value={sortBy} onValueChange={(val: any) => setSortBy(val)}>
           <SelectTrigger className="md:w-40 h-full">
             <Clock className="w-4 h-4 mr-2" />
@@ -229,29 +223,27 @@ const NewsPage = () => {
             ))}
           </SelectContent>
         </Select>
-       </div>
+      </div>
       
-      <div className="flex flex-shrink-0 w-[95%] gap-2 items-center  h-9">
+      <div className="flex flex-shrink-0 w-[95%] gap-2 items-center h-9">
         <Button
-          className="text-xs shadow-xs grid place-items-center rounded-sm h-full  border w-1/2"
-          clicked={handleRefresh}
+          className="text-xs shadow-xs grid place-items-center rounded-sm h-full border w-1/2"
+          onClick={handleRefresh}
           disabled={refreshing}
         >
           <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
         </Button>
 
-      
         <Button
           className="text-xs shadow-xs flex items-center rounded-sm justify-center h-full border w-1/2"
-          clicked={() => setAutoRefresh(!autoRefresh)}
+          onClick={() => setAutoRefresh(!autoRefresh)}
         >
           <TrendingUp className="w-4 h-4 mr-2" />
           Auto-refresh {autoRefresh ? 'ON' : 'OFF'}
         </Button>
       </div>
       
-     
-      <div className="flex flex-shrink-0  items-center text-xs md:text-sm text-gray-600 h-10">
+      <div className="flex flex-shrink-0 items-center text-xs md:text-sm text-gray-600 h-10">
         Showing {paginatedNews.length} of {processedNews.length} articles
       </div>
     </div>
@@ -263,7 +255,7 @@ const NewsPage = () => {
         <Button
           className="bg-black text-white p-2 md:text-md text-sm"
           disabled={currentPage === 1}
-          clicked={() => {
+          onClick={() => {
             setCurrentPage(currentPage - 1)
             newsContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
           }}
@@ -280,7 +272,7 @@ const NewsPage = () => {
               <Button
                 key={pageNum}
                 className="md:text-md text-sm"
-                clicked={() => {
+                onClick={() => {
                   setCurrentPage(pageNum)
                   newsContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
@@ -294,7 +286,7 @@ const NewsPage = () => {
         <Button
           className="text-white bg-black p-2 px-4 md:text-md text-sm"
           disabled={currentPage === totalPages}
-          clicked={() => {
+          onClick={() => {
             setCurrentPage(currentPage + 1)
             newsContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
           }}
@@ -310,14 +302,14 @@ const NewsPage = () => {
       {showScrollTop && (
         <Button
           className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg"
-          clicked={scrollToTop}
+          onClick={scrollToTop}
         >
           <ChevronUp className="w-4 h-4" />
         </Button>
       )}
 
       <Tabs value={type === "company" ? "company" : category} onValueChange={handleTabChange}>
-        <TabsList className="mb-6 sticky  h-10 md:h-12 snap-x snap-mandatory scroll-smooth  z-30 md:grid gap-5 md:grid-cols-6 flex w-full overflow-x-auto scrollbar-hide justify-start lg:w-auto pl-2 lg:justify-center top-8">
+        <TabsList className="mb-6 sticky h-10 md:h-12 snap-x snap-mandatory scroll-smooth z-30 md:grid gap-5 md:grid-cols-6 flex w-full overflow-x-auto scrollbar-hide justify-start lg:w-auto pl-2 lg:justify-center top-8">
           <TabsTrigger className="" value="general">📰 General</TabsTrigger>
           <TabsTrigger value="crypto">💰 Crypto</TabsTrigger>
           <TabsTrigger value="forex">💱 Forex</TabsTrigger>
@@ -327,8 +319,7 @@ const NewsPage = () => {
         </TabsList>
 
         <TabsContent value={category} hidden={type === "company"}>
-          
-          <div className="flex sticky  md:top-22 top-20 md:h-10 bg-white h-16 z-10 justify-between items-center mb-4">
+          <div className="flex sticky md:top-22 top-20 md:h-10 bg-white h-16 z-10 justify-between items-center mb-4">
             <h2 className="text-xl font-semibold capitalize">{category} News</h2>
             <Badge variant="secondary" className="text-sm">
               {processedNews.length} articles
@@ -343,7 +334,7 @@ const NewsPage = () => {
             renderSkeletons(6)
           ) : (
             <>
-              <div  className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {paginatedNews.map((item) => (
                   <div key={item.id || item.datetime} className="relative group h-full">
                     <NewsCard item={item} />
@@ -351,7 +342,7 @@ const NewsPage = () => {
                     <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                       <Button
                         className="h-8 w-8"
-                        clicked={() => toggleBookmark(String(item.id) || String(item.datetime) || "")}
+                        onClick={() => toggleBookmark(String(item.id) || String(item.datetime) || "")}
                       >
                         {bookmarked.has(String(item.id) || item.datetime?.toString() || "") ? (
                           <BookmarkCheck className="w-3 h-3" />
@@ -362,14 +353,14 @@ const NewsPage = () => {
                       
                       <Button
                         className="h-8 w-8"
-                        clicked={() => shareNews(item)}
+                        onClick={() => shareNews(item)}
                       >
                         <Share2 className="w-3 h-3" />
                       </Button>
                       
                       <Button
                         className="h-8 w-8"
-                        clicked={() => window.open(item.url, '_blank')}
+                        onClick={() => window.open(item.url, '_blank')}
                       >
                         <ExternalLink className="w-3 h-3" />
                       </Button>
@@ -390,12 +381,11 @@ const NewsPage = () => {
                 value={search}
                 type="search"
                 name="search"
-                checkInput={(e:any) => setSearch(e.target.value.toUpperCase())}
+                onChange={(e) => setSearch(e.target.value.toUpperCase())}
                 placeholder="Enter ticker (e.g. TSLA, MSFT)"
                 className="pl-10 border"
-                onKeyDown={(e:any) => e.key === 'Enter' && handleCompanySearch()}
+                onKeyDown={(e) => e.key === 'Enter' && handleCompanySearch()}
               />
-              
               
               {recentSearches.length > 0 && search.length > 0 && (
                 <Card className="absolute top-full left-0 right-0 mt-1 z-10 max-h-40 overflow-y-auto">
@@ -404,8 +394,8 @@ const NewsPage = () => {
                     {recentSearches.map((recent, idx) => (
                       <Button
                         key={idx}
-                        className="w-full border-b flex gap-2 items-center h-14  text-md"
-                        clicked={() => {
+                        className="w-full border-b flex gap-2 items-center h-14 text-md"
+                        onClick={() => {
                           setSearch(recent);
                           handleCompanySearch();
                         }}
@@ -419,7 +409,11 @@ const NewsPage = () => {
               )}
             </div>
             
-            <Button className="flex items-center bg-black text-white w-24 rounded-2xl justify-center" clicked={handleCompanySearch} disabled={!search}>
+            <Button 
+              className="flex items-center bg-black text-white w-24 rounded-2xl justify-center" 
+              onClick={handleCompanySearch} 
+              disabled={!search}
+            >
               <Search className="w-4 h-4 mr-2" />
               Search
             </Button>
@@ -459,7 +453,7 @@ const NewsPage = () => {
             renderSkeletons(6)
           ) : (
             <>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {paginatedNews.map((item) => (
                   <div key={item.id || item.datetime} className="relative group">
                     <NewsCard item={item} />
@@ -467,7 +461,7 @@ const NewsPage = () => {
                     <div className="absolute bottom-0 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                       <Button
                         className="h-8 w-8"
-                        clicked={() => toggleBookmark(String(item.id) || item.datetime?.toString() || "")}
+                        onClick={() => toggleBookmark(String(item.id) || item.datetime?.toString() || "")}
                       >
                         {bookmarked.has(String(item.id) || item.datetime?.toString() || "") ? (
                           <BookmarkCheck className="w-3 h-3" />
@@ -478,14 +472,14 @@ const NewsPage = () => {
                       
                       <Button
                         className="h-8 w-8"
-                        clicked={() => shareNews(item)}
+                        onClick={() => shareNews(item)}
                       >
                         <Share2 className="w-3 h-3" />
                       </Button>
                       
                       <Button
                         className="h-8 w-8"
-                        clicked={() => window.open(item.url, '_blank')}
+                        onClick={() => window.open(item.url, '_blank')}
                       >
                         <ExternalLink className="w-3 h-3" />
                       </Button>
