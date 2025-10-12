@@ -4,21 +4,21 @@ import type { SetStateAction } from "react";
 
 interface NewsProps {
     dashboardData: DashboardData;
-    setSelectedNewsMarket:React.Dispatch<SetStateAction<any>>
+    setSelectedNewsMarket: React.Dispatch<SetStateAction<any>>
 }
 
-const SetSelect:React.FC<NewsProps> = ({ dashboardData , setSelectedNewsMarket}) => {
-    return(
+const SetSelect: React.FC<NewsProps> = ({ dashboardData, setSelectedNewsMarket }) => {
+    return (
         <div className="flex gap-2">
-                {Object.keys(dashboardData.news).map((market) => (
-                  <Button
+            {Object.keys(dashboardData.news).map((market) => (
+                <Button
                     key={market}
                     className=""
-                    clicked={() => setSelectedNewsMarket(market)}
-                  >
+                    onClick={() => setSelectedNewsMarket(market)}
+                >
                     {market}
-                  </Button>
-                ))}
+                </Button>
+            ))}
         </div>
     )
 }
