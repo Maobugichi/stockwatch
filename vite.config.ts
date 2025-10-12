@@ -5,7 +5,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base:"/stockwatch/",
+  base:"/",
   define: {
     'import.meta.env.VITE_API_URL': JSON.stringify('https://stocks-server-kcro.onrender.com')
   },

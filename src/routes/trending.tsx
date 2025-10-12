@@ -12,7 +12,7 @@ import {
   FlameIcon,
 } from 'lucide-react';
 import type { UserChoiceTypeWatch } from '@/types';
-import { redirect } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import NewsItem from '@/components/ui/trending-dash/news';
 import StockCard from '@/components/ui/trending-dash/stock-card';
 import Header from '@/components/ui/trending-dash/header';
@@ -35,6 +35,8 @@ const StockDashboard = () => {
   const [ userChoice , setUserChoice ] = useState<UserChoiceTypeWatch>({
       ticker:"",             
   });
+
+  const navigate = useNavigate();
  
 const [activeTab, setActiveTab] = useState("overview");
  
@@ -45,7 +47,7 @@ useEffect(() => {
 if (isLoading) return <ClipLoader size={40}/>
 
 if (isError) {
-    redirect("/login")
+    navigate("/login")
 }
 
 const cardsData = (data: any) => [

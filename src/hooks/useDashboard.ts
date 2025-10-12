@@ -21,7 +21,7 @@ export function useDashboard() {
       
       return response.data;
     },
-    enabled: !!userId, // Only run query if userId exists
+    enabled: !!userId, 
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
     retry: 2,
   });
