@@ -19,13 +19,12 @@ import Header from '@/components/ui/trending-dash/header';
 import StatCard from '@/components/ui/trending-dash/dash-block';
 import TabsListComponent from '@/components/ui/trending-dash/tabs-list';
 import { useQuery  } from "@tanstack/react-query"
-import axios from 'axios';
-import { ClipLoader } from 'react-spinners';
-const StockDashboard = () => {
-  //const loader = useLoaderData();
 
+import { ClipLoader } from 'react-spinners';
+import api from '@/lib/axios-config';
+const StockDashboard = () => {
   const { data , isLoading , error ,  isError } = useQuery({queryKey:['port'], queryFn: async() => {
-    const response = await axios.get(`https://stocks-server-kcro.onrender.com/api/trending-stock`, {withCredentials:true})
+    const response = await api.get(`/api/trending-stock`)
     return response.data
   }});
 
@@ -45,6 +44,7 @@ useEffect(() => {
 },[]);
 
 if (isLoading) return <ClipLoader size={40}/>
+
 if (isError) {
     redirect("/login")
 }

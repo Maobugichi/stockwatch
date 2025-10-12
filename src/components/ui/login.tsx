@@ -1,98 +1,109 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form } from "./form";
-import { Input } from "./input";
-import { getLoginDetails } from "@/lib/utils";
-import { Button } from "./button";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/authContext";
+import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { useLogin } from "@/hooks/useLogin";
+import api from "@/lib/axios-config";
 
-type UserDataType = {
-    email: string,
-    password: string
-}
+
+
+const formSchema = z.object({
+   email:z.email({ message: "Invalid Email address" }),
+   password:z.string().min(6,{message: 'password must be at least 6 characters'})
+});
+
 
 const Login = () => {
+    const { login } = useAuth();
     const navigate = useNavigate();
-    const { mutateAsync: login, isPending, isError, error } = useLogin();
-
-    const [userData, setUserData] = useState<UserDataType>({
+    const [loading , setLoading ] = useState<boolean>(false);
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver:zodResolver(formSchema),
+        defaultValues: {
         email: "",
-        password: ""
-    });
+        password: "",
+        },
+    })
+  
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        console.log('🚀 Form submitted');
-        
-        try {
-            console.log('🔄 Calling login...');
-            const result = await login(userData);
-            
-            console.log('✅ Login result:', result);
-            console.log('🔍 Onboarded status:', result?.onboarded);
-            
-            // Navigate based on onboarding status
-            const targetPath = result?.onboarded ? '/' : '/onboarding';
-            console.log('🎯 Target path:', targetPath);
-            
-            // Try navigate
-            console.log('🧭 Attempting navigate...');
-            navigate(targetPath, { replace: true });
-            console.log('✅ Navigate called');
-            
-            // Fallback: if navigate doesn't work, force hash change
-            setTimeout(() => {
-                console.log('⏱️ Checking if navigation happened...');
-                console.log('Current hash:', window.location.hash);
-                const expectedHash = `#${targetPath}`;
-                
-                if (window.location.hash !== expectedHash) {
-                    console.log('⚠️ Navigate failed, forcing hash change');
-                    window.location.hash = targetPath;
-                    
-                    // If still not working after another delay, reload
-                    setTimeout(() => {
-                        if (window.location.hash !== expectedHash) {
-                            console.log('🔥 Nuclear option: reloading');
-                            window.location.reload();
-                        }
-                    }, 500);
-                }
-            }, 500);
-            
-        } catch (error) {
-            console.error('❌ Login failed:', error);
-        }
-    }
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+      setLoading(true)
+     try {
+        const response = await api.post(`/api/login/`,values);
+        console.log(response.data)
+        setLoading(false);
+        login(response.data);
+      
+        toast.success("Login Successful! 🎉", {
+          description: "Welcome back! Redirecting you now...",
+        });
+        navigate('/')   
+       
+     } catch(err:any) {
+        console.log(err);
+        setLoading(false);
+         toast.error("Login Failed", {
+          description: err.response?.data?.message || "Invalid email or password. Please try again.",
+        });
+     }
+    
+  }
 
-    return (
-        <div className="h-screen grid place-items-center font-inter">
-            <Form className="rounded-2xl border-2 h-fit py-10 gap-3 flex flex-col w-[90%] items-center justify-center md:w-1/2 space-y-2 mx-auto" submitForm={handleSubmit}>
-                <Input 
-                    name="email" 
-                    type="text" 
-                    value={userData.email} 
-                    placeholder="Enter your email" 
-                    checkInput={(e: React.ChangeEvent<HTMLInputElement>) => getLoginDetails(e, setUserData)}
-                />
-                <Input 
-                    name="password" 
-                    type="password" 
-                    value={userData.password} 
-                    placeholder="Enter your password" 
-                    checkInput={(e: React.ChangeEvent<HTMLInputElement>) => getLoginDetails(e, setUserData)}
-                />
-                <Button 
-                    type="submit"
-                    className="md:self-start md:ml-8 bg-black text-white text-sm h-12 font-bold rounded-sm w-[90%] md:w-[15%] md:h-12"
-                    disabled={isPending}
-                >
-                    {isPending ? <ClipLoader color="#fff" size={20} /> : 'Submit'} 
-                </Button>
-                <button 
+  return(
+     <div className="h-screen grid place-items-center font-inter">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="h-fit p-6  rounded-2xl border-2 md:h-fit md:py-6 gap-3 flex flex-col w-[90%] items-center justify-center md:w-1/2 space-y-2 mx-auto"
+        >
+         
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input className="py-6" placeholder="email" type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input className="py-6" placeholder="password" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className={`${loading ? "bg-black/80" : "bg-black"}  text-white text-sm font-bold py-5 md:text-lg h-8 md:h-12 md:w-[95%] w-full`}>
+            {loading ? <ClipLoader size={20} color="white"/> : 'Submit' }
+          </Button>
+
+           <button 
                     className="bg-black text-white px-4 py-2 rounded" 
                     onClick={() => {
                         localStorage.setItem("debug", "true");
@@ -102,11 +113,23 @@ const Login = () => {
                 >
                     Enable Debug Mode
                 </button>
-                {isError && <p style={{ color: "red" }}>{(error as any).message}</p>}
-                <span> Don't have an Account? <Link className="text-blue-500 underline" to="/signup">Sign up</Link></span>
-            </Form>
-        </div>
-    )
+
+          <div className="bg-white shadow md:w-[95%] w-full border flex h-7 md:h-8 items-center justify-center gap-2 rounded-sm">
+            <FcGoogle />
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => (window.location.href = "http://localhost:3000/auth/google")}
+            >
+              Continue with Google
+            </Button>
+          </div>
+
+          
+        </form>
+      </Form>
+    </div>
+  )
 }
 
 export default Login

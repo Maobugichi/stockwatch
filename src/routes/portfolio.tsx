@@ -15,7 +15,7 @@ import {
   TrendingUp,
   TrendingDown,
 } from "lucide-react";
-import type { PortfolioData } from "@/types";
+
 import { Tooltip } from "recharts";
 import StockNews from "@/components/ui/news";
 import { fetchTrendingNews } from "@/lib/utils";
@@ -23,6 +23,8 @@ import HoldingsTable from "@/components/ui/holdingTable";
 import { resolveCssVar } from "@/lib/utils";
 import PortfolioPie from "@/components/ui/port-pie";
 import { FullPageEmptyState } from "@/components/ui/empty-state";
+import { ClipLoader } from "react-spinners";
+import { useDashboard } from "@/hooks/useDashboard";
 
 
 
@@ -47,7 +49,21 @@ const iconMap = {
 };
 
 
-const PortfolioDashboard = ({data}: { data:PortfolioData}) => {
+const PortfolioDashboard = () => {
+
+
+   const { data, isLoading, isError, error } = useDashboard();
+
+   console.log(data)
+
+    if (isLoading) {
+      return <ClipLoader/>
+    }
+
+    if (isError) {
+      return <div>Error: {error.message}</div>;
+    }
+
    const summaryCards: SummaryCard[] = [
     {
       title: "Portfolio Value",
@@ -234,7 +250,7 @@ const PortfolioDashboard = ({data}: { data:PortfolioData}) => {
               >
                 <ResponsiveContainer width="100%" height="100%" minWidth={280}>
                   <AreaChart
-                    data={data.breakdown.map((item) => ({
+                    data={data.breakdown.map((item:any) => ({
                       symbol: item.symbol,
                       pl:
                         (item.currentPrice - Number(item.buyPrice)) *
