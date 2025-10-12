@@ -4,15 +4,25 @@ interface ContextProps {
   children:React.ReactNode
 }
 
-interface UserContext {
-    notification:string;
-    setNotification:React.Dispatch<SetStateAction<string>>
+interface NotifProp {
+    type:string,
+    message:string
 }
+
+interface UserContext {
+    notification:NotifProp;
+    setNotification:React.Dispatch<SetStateAction<NotifProp>>
+}
+
+
 
 const MyContext = createContext<UserContext | undefined>(undefined);
 
 const ContextProvider:React.FC<ContextProps> = ({ children }) => {
-    const [ notification, setNotification ] = useState<string>("");
+    const [ notification, setNotification ] = useState<NotifProp>({
+        type:"",
+        message:""
+    });
 
     const contextValue = useMemo(
         () => ({ notification, setNotification }),

@@ -21,7 +21,7 @@ export default function StepPreferredMarkets({ next, data }: any) {
 
       <div className="flex flex-wrap justify-center gap-3">
         {AVAILABLE_MARKETS.map((market) => (
-          <label key={market} className="flex items-center gap-2">
+          <label key={market} className="flex items-center gap-2 cursor-pointer">
             <Checkbox
               checked={markets.includes(market)}
               onCheckedChange={() => toggleMarket(market)}
@@ -33,7 +33,7 @@ export default function StepPreferredMarkets({ next, data }: any) {
 
       <Button
         className="mt-6"
-        clicked={() => next({ preferredMarkets: markets })}
+        onClick={() => next({ preferredMarkets: markets })}
         disabled={markets.length === 0}
       >
         Continue

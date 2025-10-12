@@ -1,6 +1,6 @@
 import { useState, type SetStateAction } from "react";
 import { motion } from "motion/react";
-import { Home, Bell, Settings, Star, Newspaper , PanelLeftOpen , PanelRightOpen, Briefcase } from "lucide-react";
+import { Home, Bell, Settings, Star, Newspaper, PanelLeftOpen, PanelRightOpen, Briefcase } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Tooltip,
@@ -13,7 +13,7 @@ import useResponsiveIconSize from "@/hooks/useResponsiveIcon";
 
 type Item = {
   name: string;
-  icon:React.ComponentType<{ size?: number }>;
+  icon: React.ComponentType<{ size?: number }>;
   path: string;
   children?: Item[];
 };
@@ -27,6 +27,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const location = useLocation();
   const iconSize = useResponsiveIconSize();
+  
   const toggleMenu = (name: string): void => {
     setOpenMenus((prev) => ({ ...prev, [name]: !prev[name] }));
   };
@@ -35,7 +36,6 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
     setIsOpen((prev) => !prev);
   };
 
- 
   let userId;
   const userData = localStorage.getItem("user-data");
   if (userData) {
@@ -53,7 +53,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-     
+      {/* Desktop Sidebar */}
       <motion.div
         initial={{ width: 60 }}
         animate={{ width: isOpen ? 200 : 60 }}
@@ -63,7 +63,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
         <div className="p-2">
           <Button
             className="w-full justify-center"
-            clicked={handleToggleNav}
+            onClick={handleToggleNav}
             aria-label={isOpen ? "Collapse navigation" : "Expand navigation"}
           >
             {isOpen ? <PanelLeftOpen size={20} /> : <PanelRightOpen size={20} />}
@@ -73,11 +73,11 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
         <TooltipProvider delayDuration={0}>
           <nav className="flex-1 overflow-y-auto space-y-3">
             {navItems.map((item: Item, i: number) => {
-              
               const isActive = item.path === '/' ? location.pathname === '/' : location.pathname.startsWith(item.path);
               const hasChildren = item.children && item.children.length > 0;
               const isExpanded = openMenus[item.name];
               const IconComponent = item.icon;
+              
               return (
                 <div key={i}>
                   <Tooltip>
@@ -91,7 +91,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                           }`}
                           onClick={() => toggleMenu(item.name)}
                         >
-                          <IconComponent size={iconSize}/>
+                          <IconComponent size={iconSize} />
                           {isOpen && (
                             <motion.span
                               initial={{ opacity: 0 }}
@@ -112,7 +112,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                               : "text-gray-400 hover:bg-gray-800 hover:text-white"
                           }`}
                         >
-                          <IconComponent size={iconSize}/>
+                          <IconComponent size={iconSize} />
                           {isOpen && (
                             <motion.span
                               initial={{ opacity: 0 }}
@@ -164,11 +164,12 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
         </TooltipProvider>
       </motion.div>
 
-     
+      {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center h-14 z-50">
         {navItems.map((item: Item, i: number) => {
           const IconComponent = item.icon;
           const isActive = item.path === '/' ? location.pathname === '/' : location.pathname.startsWith(item.path);
+          
           return (
             <Tooltip key={i}>
               <TooltipTrigger asChild>
@@ -181,7 +182,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                   }`}
                   aria-label={item.name}
                 >
-                  <IconComponent size={iconSize}/>
+                  <IconComponent size={iconSize} />
                   <span className="text-xs mt-1 truncate">{item.name}</span>
                 </Link>
               </TooltipTrigger>

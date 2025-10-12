@@ -1,5 +1,8 @@
-import { useEffect, useState , useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { MyContext } from "../context";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
     Card,
     CardContent
@@ -14,7 +17,6 @@ import {
     SelectItem,
     SelectValue
 } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
 import { 
     Dialog,
     DialogTrigger,
@@ -22,148 +24,221 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { getTicker, handleAlerts } from "@/lib/utils";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import { getTicker } from "@/lib/utils";
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { Form } from "./form";
 import { BellPlus } from "lucide-react";
+
+const alertSchema = z.object({
+    symbol: z.string().min(1, "Stock symbol is required"),
+    conditions: z.array(
+        z.object({
+            type: z.enum(["price_above", "price_below", "volume_above"]),
+            value: z.string().min(1, "Value is required").refine(
+                (val) => !isNaN(Number(val)) && Number(val) > 0,
+                "Value must be a positive number"
+            )
+        })
+    ).min(1, "At least one condition is required")
+});
+
+type AlertFormValues = z.infer<typeof alertSchema>;
 
 const CreateAlertForm = () => {
     const myContext = useContext(MyContext);
     if (!myContext) throw new Error("MyContext must be used inside provider");
 
     const { setNotification } = myContext;
-    const [ query , setQuery ] = useState<string>("");
-    const [ options, setOptions ] = useState<any>([])
-    const [ conditions , setConditions ] = useState([
-       { type:"price_above" , value:"" }
-    ]);
-    const [ open , setOpen ] = useState<boolean>(false)
-    const [ userChoice, setUserChoice ] = useState<string>("") 
+    const [query, setQuery] = useState<string>("");
+    const [options, setOptions] = useState<any>([]);
+    const [open, setOpen] = useState<boolean>(false);
     
-    console.log(userChoice);
+    const form = useForm<AlertFormValues>({
+        resolver: zodResolver(alertSchema),
+        defaultValues: {
+            symbol: "",
+            conditions: [{ type: "price_above", value: "" }]
+        }
+    });
+
+    const conditions = form.watch("conditions");
+
     const handleAddCondition = () => {
-        setConditions([...conditions, {type:"price_above" , value:""}]);
+        const currentConditions = form.getValues("conditions");
+        form.setValue("conditions", [...currentConditions, { type: "price_above", value: "" }]);
     }
 
-    const handleConditionChange = (
-       index:number,
-       key:string,
-       value:string 
-    ) => {
-        const newConds:any = [...conditions]
-        newConds[index][key] = value
-        setConditions(newConds)
+    const onSubmit = async (data: AlertFormValues) => {
+        try {
+            // Your alert creation logic here
+            console.log("Form data:", data);
+            
+            
+            
+            setNotification({
+                type: "success",
+                message: "Alert created successfully!"
+            });
+            
+            // Reset form and close dialog
+            form.reset();
+            setQuery("");
+            setOpen(false);
+        } catch (error) {
+            setNotification({
+                type: "error",
+                message: "Failed to create alert"
+            });
+        }
     }
 
     useEffect(() => {
-     const delay = setTimeout(() => {
-        if (!query) {
-            setOptions([])
-            return
-        }
-        getTicker(query,setOptions)
-     }, 300);
+        const delay = setTimeout(() => {
+            if (!query) {
+                setOptions([])
+                return
+            }
+            getTicker(query, setOptions)
+        }, 300);
 
-     return () => clearTimeout(delay)
-    },[query])
+        return () => clearTimeout(delay)
+    }, [query])
 
-   return(
-     <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-           <Button clicked={() => setOpen(prev => !prev)} className="" ><BellPlus size={20}/></Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-lg">
-            <DialogHeader>
-                <DialogTitle>Create Stock Alert</DialogTitle>
-            </DialogHeader>
-
-            <Form submitForm={(e:React.FormEvent<HTMLFormElement>) => handleAlerts(e,query,conditions,setQuery,setConditions,setNotification)} className="">
-                <Card className="shadow-none border-0">
-                    <CardContent className="space-y-4 pt-4">
-                        <div className="space-y-2">
-                        <Label htmlFor="symbol">Stock Symbol</Label>
-                        </div>
-                    </CardContent>
-                    <Command>
-                        <CommandInput
-                            placeholder="Search ticker(AAPL , TSLA ,MSFT...)"
-                            value={query}
-                            onValueChange={(val) => {
-                            setQuery(val);
-                            }}
-                        />
-                        <CommandList>
-                          
-                            <CommandGroup heading="Items">
-                                {
-                                options.map((item:any) => (
-                                    <CommandItem
-                                    key={item.symbol}
-                                    value={`${item.symbol} ${item.name}`}
-                                    onSelect={() => {
-                                        setUserChoice(item.symbol);
-                                        setQuery(item.symbol + " - " + item.name)
-                                        setOptions([])
-                                    }}
-                                    >
-                                        {item.symbol} - {item.name}
-                                    </CommandItem>
-                                ))
-                                }
-                            </CommandGroup>
-                        </CommandList>    
-                    </Command>
-                </Card>
-
-                {conditions.map((cond,i) => (
-                    <div key={i} className="flex items-end justify-between  ">
-                        <div className="flex h-20  flex-col justify-end gap-2">
-                          <Label>Condition Type</Label>
-                          <Select
-                           value={cond.type}
-                           
-                           onValueChange={(value) => handleConditionChange(i , "type" , value)}
-                          >
-                            <SelectTrigger className="h-[500px]">
-                                <SelectValue placeholder="Select condition"/>
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="price_above">
-                                    Price Above
-                                </SelectItem>
-                                <SelectItem value="price_below">Price Below</SelectItem>
-                                <SelectItem value="volume_above">Volume Above</SelectItem>
-                            </SelectContent>    
-                          </Select>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <Label className="ml-3">Value</Label>
-                          <Input
-                           type="number"
-                           name="Value"
-                           value={cond.value}
-                           className=" border"
-                           placeholder="value"
-                           checkInput={(e:React.ChangeEvent<HTMLInputElement>) => handleConditionChange(i , "value", e.target.value) }
-                          />
-                        </div>
-                    </div>
-                ))}
-
-                <div>
-                    <Button className="" clicked={handleAddCondition}>
-                        + Add Condition
-                    </Button>
-                </div>
-                 <Button type="submit" className="" >
-                    Save Alert
+    return (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button className="">
+                    <BellPlus size={20} />
                 </Button>
-             </Form>    
-             
-        </DialogContent>
-     </Dialog>
-   )
-}
+            </DialogTrigger>
+            <DialogContent className="max-w-lg">
+                <DialogHeader>
+                    <DialogTitle>Create Stock Alert</DialogTitle>
+                </DialogHeader>
 
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <Card className="shadow-none border-0">
+                            <CardContent className="space-y-4 pt-4">
+                                <FormField
+                                    control={form.control}
+                                    name="symbol"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Stock Symbol</FormLabel>
+                                            <FormControl>
+                                                <Command>
+                                                    <CommandInput
+                                                        placeholder="Search ticker(AAPL, TSLA, MSFT...)"
+                                                        value={query}
+                                                        onValueChange={(val) => {
+                                                            setQuery(val);
+                                                        }}
+                                                    />
+                                                    <CommandList>
+                                                        <CommandGroup heading="Items">
+                                                            {
+                                                                options.map((item: any) => (
+                                                                    <CommandItem
+                                                                        key={item.symbol}
+                                                                        value={`${item.symbol} ${item.name}`}
+                                                                        onSelect={() => {
+                                                                            field.onChange(item.symbol);
+                                                                            setQuery(item.symbol + " - " + item.name)
+                                                                            setOptions([])
+                                                                        }}
+                                                                    >
+                                                                        {item.symbol} - {item.name}
+                                                                    </CommandItem>
+                                                                ))
+                                                            }
+                                                        </CommandGroup>
+                                                    </CommandList>    
+                                                </Command>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </CardContent>
+                        </Card>
+
+                        {conditions.map((cond, i) => (
+                            
+                            <div key={i} className="flex items-end justify-between gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name={`conditions.${i}.type`}
+                                    render={({ field }) => (
+                                        <FormItem className="flex-1">
+                                            <FormLabel>Condition Type</FormLabel>
+                                            <Select
+                                                value={field.value}
+                                                onValueChange={field.onChange}
+                                            >
+                                                <span>{cond.type}</span>
+                                                <FormControl>
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Select condition" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    <SelectItem value="price_above">
+                                                        Price Above
+                                                    </SelectItem>
+                                                    <SelectItem value="price_below">
+                                                        Price Below
+                                                    </SelectItem>
+                                                    <SelectItem value="volume_above">
+                                                        Volume Above
+                                                    </SelectItem>
+                                                </SelectContent>    
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`conditions.${i}.value`}
+                                    render={({ field }) => (
+                                        <FormItem className="flex-1">
+                                            <FormLabel>Value</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="number"
+                                                    placeholder="value"
+                                                    className="border"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        ))}
+
+                        <div>
+                            <Button type="button" className="" onClick={handleAddCondition}>
+                                + Add Condition
+                            </Button>
+                        </div>
+                        <Button type="submit" className="">
+                            Save Alert
+                        </Button>
+                    </form>
+                </Form>    
+            </DialogContent>
+        </Dialog>
+    )
+}
 
 export default CreateAlertForm

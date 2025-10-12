@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-
 export interface NewsItem {
   id: number;
   headline: string;
@@ -55,7 +54,7 @@ const NewsCard = ({ item }: { item: NewsItem }) => {
               <Button
                 key={ticker}
                 className=""
-                clicked={() => handleTickerClick(ticker)}
+                onClick={() => handleTickerClick(ticker)}
               >
                 {ticker}
               </Button>

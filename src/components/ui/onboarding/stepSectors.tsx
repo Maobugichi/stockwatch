@@ -26,7 +26,7 @@ export default function Step4Sectors({ next, data }:any) {
           </label>
         ))}
       </div>
-      <Button className="" clicked={() => next({ sectors: selected })} disabled={!selected.length}>
+      <Button className="" onClick={() => next({ sectors: selected })} disabled={!selected.length}>
         Continue
       </Button>
     </div>

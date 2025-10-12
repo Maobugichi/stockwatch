@@ -26,7 +26,7 @@ export default function Step3Notifications({ next, data }:any) {
           </label>
         ))}
       </div>
-      <Button className="" clicked={() => next({ notifications: selected })} disabled={!selected.length}>
+      <Button className="" onClick={() => next({ notifications: selected })} disabled={!selected.length}>
         Continue
       </Button>
     </div>

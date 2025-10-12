@@ -18,7 +18,7 @@ export default function Step2Currency({ next, data }:any) {
           <SelectItem value="EUR">EUR</SelectItem>
         </SelectContent>
       </Select>
-      <Button className="" clicked={() => next({ currency })} disabled={!currency}>
+      <Button className="" onClick={() => next({ currency })} disabled={!currency}>
         Continue
       </Button>
     </div>

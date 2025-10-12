@@ -43,6 +43,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, 
 
         return () => clearTimeout(delay);
     }, [searchTerm]);
+    
     useEffect(() => {
         if (open && inputRef.current && document.activeElement !== inputRef.current) {
             setTimeout(() => {
@@ -70,17 +71,15 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, 
         setOptions([]);
     };
 
-    const handleClear = (e:any) => {
-
+    const handleClear = (e: React.MouseEvent) => {
         e.stopPropagation();
         clearSelection();
-            
     }
 
     return (
         <div className="bg-white border-b relative">
             <div className="max-w-7xl mx-auto px-6 py-4">
-                <div className="flex md:flex-row flex-col  justify-between gap-3 space-y-3">
+                <div className="flex md:flex-row flex-col justify-between gap-3 space-y-3">
                     <div className="flex w-full md:items-center gap-4">
                         <h1 className="text-2xl font-bold text-gray-900">Stock Dashboard</h1>
                         <Badge variant="outline" className="text-green-600">
@@ -88,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, 
                         </Badge>
                     </div>
 
-                    <div className="md:w-[45%] w-full flex items-center ">
+                    <div className="md:w-[45%] w-full flex items-center">
                         <Popover open={open} onOpenChange={setOpen}>
                             <PopoverTrigger asChild>
                                 <div className="relative w-full">
@@ -96,11 +95,10 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, 
                                         ref={inputRef}
                                         placeholder="Search ticker (AAPL, TSLA, MSFT...)"
                                         value={searchTerm}
-                                        type=""
-                                        checkInput={(e:any) => {
-                                            
-                                         setSearchTerm(e.target.value);
-                                         setOpen(true)
+                                        type="text"
+                                        onChange={(e) => {
+                                            setSearchTerm(e.target.value);
+                                            setOpen(true)
                                         }}
                                         autoComplete='off'
                                         name="search"
@@ -109,9 +107,9 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, 
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 space-x-1">
                                         {searchTerm && (
                                             <button
-                                               
-                                                className="h-6 w-6 p-0 hover:bg-gray-100"
+                                                className="h-6 w-6 p-0 hover:bg-gray-100 rounded"
                                                 onClick={handleClear}
+                                                type="button"
                                             >
                                                 <X className="h-4 w-4" />
                                             </button>

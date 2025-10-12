@@ -8,7 +8,7 @@ export default function Step1Experience({ next }:any) {
       <h2 className="text-2xl font-semibold">What’s your experience level?</h2>
       <div className="flex justify-center gap-4">
         {levels.map((level) => (
-          <Button key={level} className="" clicked={() => next({ experienceLevel: level })}>
+          <Button key={level} className="" onClick={() => next({ experienceLevel: level })}>
             {level}
           </Button>
         ))}
