@@ -24,7 +24,6 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Hydrate from "./App";
 import StockDashboard from "./routes/trending";
-import { authLoader } from "./lib/checkAuth";
 import { AuthProvider } from "./hooks/authContext";
 
 
@@ -44,7 +43,6 @@ const router = createHashRouter([
     path: "/",
     element:<Root/>,
     errorElement:<ErrorPage/>,
-    loader:authLoader,
     children: [{
         index:true,   
         element: <StockDashboard/>,
@@ -89,7 +87,7 @@ const router = createHashRouter([
     element:<SignUp/>
   },
   {
-    path:"login",
+    path:"/login/",
     element:<Login/>
   },
   {

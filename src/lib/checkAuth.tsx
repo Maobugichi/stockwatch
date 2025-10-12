@@ -1,18 +1,16 @@
-import axios from "axios";
+
 import { redirect } from "react-router-dom";
-
-
-const backendEndpoint = import.meta.env.VITE_API_BASE_URL;
+import api from "./axios-config";
 
 
 
 export async function authLoader() {
   try {
-    const response = await axios.get(`${backendEndpoint}/`, { withCredentials: true });
+    const response = await api.get(`/`);
 
     if (response.data) {
-        console.log(response.data)
-         redirect("/");
+        
+         redirect("/portfolio/");
     } 
   } catch (err: any) {
     if (err.response?.status === 401) {

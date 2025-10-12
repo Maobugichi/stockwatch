@@ -19,7 +19,6 @@ import Header from '@/components/ui/trending-dash/header';
 import StatCard from '@/components/ui/trending-dash/dash-block';
 import TabsListComponent from '@/components/ui/trending-dash/tabs-list';
 import { useQuery  } from "@tanstack/react-query"
-
 import { ClipLoader } from 'react-spinners';
 import api from '@/lib/axios-config';
 const StockDashboard = () => {
