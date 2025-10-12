@@ -6,6 +6,7 @@ import type { SetStateAction } from "react";
 import type { LoaderFunctionArgs } from "react-router-dom";
 import type React from "react";
 import type { UserDetails } from "@/types";
+import api from "./axios-config";
 
 
 type InputFields = {
@@ -149,16 +150,12 @@ const dashLoader = async () => {
     userId = parsedData.userId;
   }
   try {
-    const response = await axios.get(`${backendEndpoint}/portfolio/${userId}`,{
-      withCredentials:true
-    });
+    const response = await api.get(`/api/portfolio/${userId}`);
     localStorage.setItem("dashInfo",JSON.stringify(response.data))
     return response.data
   } catch(err) {
     console.log(err)
   }
-  
-  
 }
 
 const addToWatchList = async (e:React.FormEvent<HTMLFormElement>,userChoice:any,userId:number,setUserChoice:React.Dispatch<SetStateAction<any>>,setOpen:React.Dispatch<SetStateAction<boolean>>,setQuery:React.Dispatch<SetStateAction<string>>,setNotification: React.Dispatch<SetStateAction<string>>) => {
