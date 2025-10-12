@@ -10,7 +10,7 @@ const Root: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);  
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
-  console.log("hofuckinla")
+  
   return (
     <main className="flex min-h-[100vh] h-fit pb-16 md:pb-0 overflow-hidden">
      

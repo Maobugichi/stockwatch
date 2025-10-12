@@ -5,7 +5,10 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base:"/",
+  base:"/stockwatch/",
+  define: {
+    'import.meta.env.VITE_API_URL': JSON.stringify('https://stocks-server-kcro.onrender.com')
+  },
   plugins: [react(),tailwindcss()],
   resolve: {
     alias: {
