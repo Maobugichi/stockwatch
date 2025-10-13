@@ -28,7 +28,8 @@ interface Stock {
 }
 
 const WatchList = () => {
-    const data = useLoaderData()
+    const data = useLoaderData();
+    console.log(data)
      
     return(
         <div >

@@ -16,6 +16,7 @@ const StockDetails = () => {
   const stock: StockData | undefined = useLoaderData();
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<string>("3m");
 
+  console.log(stock)
   if (!stock) return <div>Loading...</div>;
 
   const hasCandlestick = stock.ohlc_history?.length;

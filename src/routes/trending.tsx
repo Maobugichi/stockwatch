@@ -83,7 +83,7 @@ const cardsData = (data: any) => [
 ];
 
   return (
-    <div className="min-h-screen font-inter">
+    <div className="min-h-screen font-inter font-semibold">
       <Header searchTerm={searchTerm} refreshing={refreshing} setSearchTerm={setSearchTerm} setUserChoice={setUserChoice} userChoice={userChoice}/>
     
       <div className="max-w-7xl overflow-auto mx-auto px-6 py-6">
@@ -97,12 +97,12 @@ const cardsData = (data: any) => [
               ))}
             </div>
 
-            <Card className='border-none shadow-none'>
+            <Card className='border-none  shadow-none'>
               <CardHeader>
                 <CardTitle className='text-xl md:text-2xl'>Live Market Data</CardTitle>
                 <CardDescription>Real-time stock prices from your portfolio</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className=' px-3'>
                 <ScrollArea className="h-96">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                     {data?.liveData

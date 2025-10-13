@@ -10,7 +10,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, icon, value, description }: StatCardProps) => {
   return (
-    <Card className={`border shadow font-inter  h-[130px]`}>
+    <Card className={`border-black shadow font-inter  h-[130px]`}>
       <CardHeader className=" h-[20%]">
         <CardTitle className="text-sm font-medium flex items-center gap-2">
           {icon}

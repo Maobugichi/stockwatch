@@ -75,9 +75,8 @@ async function stockLoader({params, request}:LoaderFunctionArgs)  {
     const period2 = url.searchParams.get("period2");
     const interval = url.searchParams.get("interval");
 
-    const res = await axios.get(`${backendEndpoint}/stocks/${params.symbol}`,{
+    const res = await api.get(`/api/stocks/${params.symbol}`,{
       params: { period1, period2, interval },
-      withCredentials:true
     });
     if (!res.data) throw new Error("Failed to load stock data");
     return res.data
