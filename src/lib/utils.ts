@@ -200,19 +200,13 @@ function formatNumber(value: number): string {
 }
 
 const getNewsData = async (param:string) => {
-  
-  const response = await axios.get(`${backendEndpoint}/news/${param}`, {
-    withCredentials:true
-  });
-  
+  const response = await api.get(`/api/news/${param}`);
   return response.data
 } 
 
 const fetchTrendingNews = async () => {
   try {
-    const response = await axios.get(`${backendEndpoint}/trending-news/`, {
-      withCredentials:true
-    });
+    const response = await api.get(`/api/trending-news/`);
     
     return response.data
   } catch(err) {
@@ -250,7 +244,7 @@ const fetchTrendingNews = async () => {
  const fetchAlerts = async ({params}:LoaderFunctionArgs) => {
      const { userId } = params
       try {
-        const { data } = await axios.get(`${backendEndpoint}/alerts/${userId}`,{ withCredentials: true})
+        const { data } = await api.get(`/api/alerts/${userId}`)
         return data
       } catch (err) {
         console.error(err)
@@ -359,19 +353,19 @@ const handleAnalyze = async (
   let endpoint = "";
 
 if (type === "trending") {
-  endpoint = `${backendEndpoint}/newsList/category?category=general`;
+  endpoint = `/api/newsList/category?category=general`;
 } else if (type === "category" && category) {
-  endpoint = `${backendEndpoint}/newsList/category?category=${category}`;
+  endpoint = `/api/newsList/category?category=${category}`;
 } else if (type === "company" && symbol) {
   const to = Math.floor(Date.now() / 1000);
   let from = to - 7 * 24 * 60 * 60;
   if (range === "1d") from = to - 1 * 24 * 60 * 60;
   if (range === "30d") from = to - 30 * 24 * 60 * 60;
 
-  endpoint = `${backendEndpoint}/newsList/company-news/${symbol}?from=${from}&to=${to}`;
+  endpoint = `/api/newsList/company-news/${symbol}?from=${from}&to=${to}`;
 }
 
-  const response = await axios.get(endpoint, { withCredentials: true });
+  const response = await api.get(endpoint);
   return response.data;
 };
 

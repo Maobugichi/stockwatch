@@ -61,13 +61,13 @@ const router = createHashRouter([
       errorElement:<ErrorPage/>
     },
     {
-      path:"news/:category",
+      path:"/news/:category",
       element:<NewsPage/>,
       loader:newsLoader,
       errorElement:<ErrorPage/>
     },
     {
-      path:"alerts/:userId",
+      path:"/alerts/:userId",
       element:<AlertsList />,
       loader:fetchAlerts,
       errorElement:<ErrorPage/>

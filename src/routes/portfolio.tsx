@@ -108,7 +108,7 @@ const PortfolioDashboard = () => {
                {summaryCards.map((card, idx) => {
                     const Icon = card.icon ? iconMap[card.icon] : null;
                     return (
-                    <Card  className="rounded-2xl" key={idx}>
+                    <Card  className="rounded-2xl " key={idx}>
                         <CardHeader className="flex items-center justify-between">
                         <CardTitle className="text-lg">{card.title}</CardTitle>
                         {Icon && <Icon className="w-10 h-10 text-muted-foreground" />}

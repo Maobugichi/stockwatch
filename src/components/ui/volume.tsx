@@ -54,7 +54,7 @@ const Volume: React.FC<VolumeProps> = ({ stock }) => {
                     <ResponsiveContainer width="100%" height="100%" minWidth={300}>
                         <AreaChart 
                             data={stock.volume_history ?? []} 
-                            margin={{ top: 0, right: 25, left: 10, bottom: 2 }}
+                            margin={{ top: 0, right: 25, left: 10, bottom: -20 }}
                         >
                             <XAxis 
                                 dataKey="date"
