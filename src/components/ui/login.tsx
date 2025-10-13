@@ -51,7 +51,7 @@ const Login = () => {
         toast.success("Login Successful! 🎉", {
           description: "Welcome back! Redirecting you now...",
         });
-        navigate('#/')   
+        navigate('/')   
        
      } catch(err:any) {
         console.log(err);

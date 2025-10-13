@@ -181,14 +181,9 @@ const addToWatchList = async (e:React.FormEvent<HTMLFormElement>,userChoice:any,
 
 const watchListLoader = async () => {
   try {
-     let userId
-     const userData = localStorage.getItem("user-data");
-     if (userData) {
-        userId = JSON.parse(userData).userId
-      }
-    const response = await axios.get(`${backendEndpoint}/getList/${userId}`, {
-      withCredentials:true
-    });
+    
+    const response = await api.get(`/api/getList`);
+    console.log(response)
     return response.data
   } catch(err) {
     console.log(err)
