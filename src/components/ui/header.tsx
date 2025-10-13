@@ -5,6 +5,7 @@ import CreateAlertForm from "./alert-form";
 import { Eye, PlusCircle } from "lucide-react";
 import type { UserChoiceType , UserChoiceTypeWatch } from "@/types";
 import { StockWatcherLogo } from "../logo";
+import { UserMenu } from "./usermenu";
 
 
 interface HeaderProp {
@@ -29,6 +30,7 @@ const Header:React.FC<HeaderProp> = ({style}) => {
         style={style}
         className="fixed px-4 top-0 h-16 bg-black  text-white backdrop-blur-2xl w-full z-50 flex items-center">
             <StockWatcherLogo/>
+            
             <div className="flex  w-[80%] md:w-full  mx-auto h-[80%] justify-end ">
                 <div className="w-[40%] flex gap-5">
                     
@@ -56,7 +58,7 @@ const Header:React.FC<HeaderProp> = ({style}) => {
                     submitDetails={addToWatchList}
                     />
                 </div>
-                
+                <UserMenu/>
             </div>
         </header>
     )
