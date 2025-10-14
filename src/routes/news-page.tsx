@@ -298,7 +298,7 @@ const NewsPage = () => {
   );
 
   return (
-    <div ref={newsContainerRef} className="p-6 space-y-8 relative">
+    <div ref={newsContainerRef} className="p-6 space-y-8 relative overflow-hidden">
       {showScrollTop && (
         <Button
           className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg"
