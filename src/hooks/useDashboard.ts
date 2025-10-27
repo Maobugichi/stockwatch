@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios-config";
+import { useAuth } from "./authContext";
+
+
 
 export function useDashboard() {
-  const userData = localStorage.getItem("user-data");
-  const userId = userData ? JSON.parse(userData).userId : null;
-
-  console.log(userId)
+  const { user:userData } = useAuth();
+  const userId = userData?.id;
 
   return useQuery({
     queryKey: ["dashboard", userId],
@@ -13,16 +14,43 @@ export function useDashboard() {
       if (!userId) {
         throw new Error("User ID not found");
       }
-      
+
       const response = await api.get(`/api/portfolio/${userId}`);
       
-    
-      localStorage.setItem("dashInfo", JSON.stringify(response.data));
-      
+     
       return response.data;
     },
-    enabled: !!userId, 
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    enabled: !!userId,
+    staleTime: 5 * 60 * 1000, 
+    gcTime: 10 * 60 * 1000, 
     retry: 2,
   });
+}
+
+export function useDashboardData() {
+  const queryClient = useQueryClient();
+    const { user:userData } = useAuth();
+  const userId = userData?.id;
+  
+  return queryClient.getQueryData(["dashboard", userId]);
+}
+
+
+export function usePrefetchDashboard() {
+  const queryClient = useQueryClient();
+  const { user:userData } = useAuth();
+  const userId = userData?.id;
+
+  return () => {
+    if (userId) {
+      queryClient.prefetchQuery({
+        queryKey: ["dashboard", userId],
+        queryFn: async () => {
+          const response = await api.get(`/api/portfolio/${userId}`);
+          return response.data;
+        },
+        staleTime: 5 * 60 * 1000,
+      });
+    }
+  };
 }

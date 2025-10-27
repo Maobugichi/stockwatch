@@ -1,79 +1,155 @@
-import React, { useEffect, useRef, useState, type SetStateAction } from "react"
+import React, { useState, type SetStateAction } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { getTicker, handleUserChoice } from "@/lib/utils"
+import { Command, CommandGroup, CommandInput, CommandItem, CommandList, CommandEmpty } from "@/components/ui/command"
+import { handleUserChoice } from "@/lib/utils"
 import { useContext } from "react";
 import { MyContext } from "@/components/context";
 
+import { useAddPortfolioHolding } from "@/hooks/usePortfolio"
+import { useAddToWatchlist } from "@/hooks/useWatchList"
+import { useDebouncedTickerSearch } from "@/hooks/useTickerSearch"
+import { toast } from "sonner"
+import { Loader2 } from "lucide-react"
+
 interface HoldingsProp {
-    query: string,
-    setQuery: React.Dispatch<SetStateAction<string>>,
     open: boolean;
-    setOpen: React.Dispatch<SetStateAction<boolean>>,
+    setOpen: React.Dispatch<SetStateAction<boolean>>;
     userChoice: any;
-    setUserChoice: React.Dispatch<SetStateAction<any>>,
-    submitDetails: (e: React.FormEvent<HTMLFormElement>, userChoice: any, userId: number, setUserChoice: any, setOpen: any, setQuery: any, setNotification: any) => void
-    type: string
-    header: any
+    setUserChoice: React.Dispatch<SetStateAction<any>>;
+    type: "portfolio" | "watchlist"; 
+    header: any;
 }
 
-const Holdings: React.FC<HoldingsProp> = ({ query, setQuery, open, setOpen, userChoice, setUserChoice, submitDetails, header, type }) => {
+const Holdings: React.FC<HoldingsProp> = ({ 
+    open, 
+    setOpen, 
+    userChoice, 
+    setUserChoice, 
+    header, 
+    type 
+}) => {
     const myContext = useContext(MyContext);
     if (!myContext) throw new Error("MyContext must be used inside provider");
-
-    const { setNotification } = myContext;
-    const [options, setOptions] = useState<any[]>([]);
-    const userId = useRef<string>("");
     
-    useEffect(() => {
-        const delay = setTimeout(() => {
-            if (!query) {
-                setOptions([]);
+   
+    const { setNotification } = myContext;
+    const [query, setQuery] = useState("");
+    
+    // Search hook
+    const { data: options = [], isLoading: isSearching } = useDebouncedTickerSearch(query);
+    
+    // Mutation hooks
+    const addHolding = useAddPortfolioHolding();
+    const addToWatchlist = useAddToWatchlist();
+    
+    // Determine which mutation to use
+    const isPortfolio = type === "portfolio";
+    const isPending = isPortfolio ? addHolding.isPending : addToWatchlist.isPending;
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // Validation
+        if (!userChoice.ticker) {
+            toast.error("Please select a stock");
+            return;
+        }
+
+        if (isPortfolio) {
+            if (!userChoice.shares || Number(userChoice.shares) <= 0) {
+                toast.error("Please enter valid number of shares");
                 return;
             }
-            getTicker(query, setOptions)
-        }, 300);
-
-        return () => clearTimeout(delay)
-    }, [query])
-
-    useEffect(() => {
-        const data = localStorage.getItem("user-data");
-        if (data) {
-            const parsedData = JSON.parse(data)
-            userId.current = parsedData.userId
+            if (!userChoice.buyPrice || Number(userChoice.buyPrice) <= 0) {
+                toast.error("Please enter valid buy price");
+                return;
+            }
         }
-    }, [])
+
+        try {
+            if (isPortfolio) {
+                await addHolding.mutateAsync(userChoice);
+                
+                setNotification({
+                    message: `Successfully added ${userChoice.ticker} to portfolio`,
+                    type: 'success'
+                });
+            } else {
+              
+                await addToWatchlist.mutateAsync(userChoice.ticker);  
+                setNotification({
+                    message: `Successfully added ${userChoice.ticker} to watchlist`,
+                    type: 'success'
+                });
+            }
+
+            // Reset form
+            setQuery("");
+            setUserChoice({
+                ticker: "",
+                shares: "",
+                buyPrice: ""
+            });
+
+            // Close dialog after short delay
+            setTimeout(() => {
+                setOpen(false);
+            }, 1500);
+
+        } catch (err) {
+            console.error("Failed to submit:", err);
+            setNotification({
+                message: `Failed to add ${userChoice.ticker}`,
+                type: 'error'
+            });
+        }
+    };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button onClick={() => setOpen(prev => !prev)} className="">{header}</Button>
+                <Button onClick={() => setOpen(prev => !prev)}>
+                    {header}
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>{type}</DialogTitle>
+                    <DialogTitle>
+                        {isPortfolio ? "Add to Portfolio" : "Add to Watchlist"}
+                    </DialogTitle>
                 </DialogHeader>
                 <form 
-                    onSubmit={(e) => submitDetails(e, userChoice, parseInt(userId.current), setUserChoice, setOpen, setQuery, setNotification)} 
+                    onSubmit={handleSubmit}
                     className="grid gap-4"
                 >
                     <div>
-                        <label htmlFor="">Stock</label>
+                        <label htmlFor="stock">Stock</label>
                         <Command>
                             <CommandInput
-                                placeholder="Search ticker(AAPL , TSLA ,MSFT...)"
+                                placeholder="Search ticker (AAPL, TSLA, MSFT...)"
                                 value={query}
-                                onValueChange={(val) => {
-                                    setQuery(val);
-                                }}
+                                onValueChange={setQuery}
+                                disabled={isPending}
                             />
                             <CommandList>
-                                <CommandGroup heading="Items">
-                                    {
-                                        options.map((item: any) => (
+                                {isSearching && (
+                                    <div className="flex items-center justify-center p-4">
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                        <span className="ml-2 text-sm text-muted-foreground">
+                                            Searching...
+                                        </span>
+                                    </div>
+                                )}
+                                
+                                {!isSearching && query && options.length === 0 && (
+                                    <CommandEmpty>No tickers found</CommandEmpty>
+                                )}
+                                
+                                {!isSearching && options.length > 0 && (
+                                    <CommandGroup heading="Results">
+                                        {options.map((item: any) => (
                                             <CommandItem
                                                 key={item.symbol}
                                                 value={`${item.symbol} ${item.name}`}
@@ -82,44 +158,68 @@ const Holdings: React.FC<HoldingsProp> = ({ query, setQuery, open, setOpen, user
                                                         ...prev,
                                                         ticker: item.symbol
                                                     }));
-                                                    setQuery(item.symbol + " - " + item.name)
-                                                    setOptions([])
+                                                    setQuery(`${item.symbol} - ${item.name}`);
                                                 }}
                                             >
-                                                {item.symbol} - {item.name}
+                                                <div className="flex flex-col">
+                                                    <span className="font-semibold">{item.symbol}</span>
+                                                    <span className="text-sm text-muted-foreground">
+                                                        {item.name}
+                                                    </span>
+                                                </div>
                                             </CommandItem>
-                                        ))
-                                    }
-                                </CommandGroup>
+                                        ))}
+                                    </CommandGroup>
+                                )}
                             </CommandList>
                         </Command>
                     </div>
-                    {type.includes('portfolio') && (
-                        <div>
-                            <label htmlFor="shares">Shares</label>
-                            <Input
-                                name="shares"
-                                type="number"
-                                value={userChoice.shares}
-                                placeholder="e.g 10"
-                                onChange={(e) => handleUserChoice(e, setUserChoice)}
-                            />
-                        </div>
+                    
+                    {/* Only show these fields for portfolio */}
+                    {isPortfolio && (
+                        <>
+                            <div>
+                                <label htmlFor="shares">Shares</label>
+                                <Input
+                                    name="shares"
+                                    type="number"
+                                    step="any"
+                                    value={userChoice.shares}
+                                    placeholder="e.g 10"
+                                    onChange={(e) => handleUserChoice(e, setUserChoice)}
+                                    disabled={isPending}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="buyPrice">Buy Price</label>
+                                <Input
+                                    name="buyPrice"
+                                    type="number"
+                                    step="0.01"
+                                    value={userChoice.buyPrice}
+                                    placeholder="e.g 120.50"
+                                    onChange={(e) => handleUserChoice(e, setUserChoice)}
+                                    disabled={isPending}
+                                    required
+                                />
+                            </div>
+                        </>
                     )}
-                    {type.includes('portfolio') && (
-                        <div>
-                            <label>Buy Price</label>
-                            <Input
-                                name="buyPrice"
-                                type="number"
-                                value={userChoice.buyPrice}
-                                placeholder="e.g 120.50"
-                                onChange={(e) => handleUserChoice(e, setUserChoice)}
-                            />
-                        </div>
-                    )}
-                    <Button type="submit" className="h-10 w-20 bg-black text-white">
-                        Submit
+                    
+                    <Button 
+                        type="submit" 
+                        className="h-10 w-full bg-black text-white hover:bg-gray-800"
+                        disabled={isPending || !userChoice.ticker}
+                    >
+                        {isPending ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                {isPortfolio ? "Adding to Portfolio..." : "Adding to Watchlist..."}
+                            </>
+                        ) : (
+                            'Submit'
+                        )}
                     </Button>
                 </form>
             </DialogContent>

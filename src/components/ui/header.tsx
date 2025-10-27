@@ -1,6 +1,5 @@
 import Holdings from "../holdings"
 import { useState } from "react";
-import {  addToWatchList, submitPortfolio } from "@/lib/utils";
 import CreateAlertForm from "./alert-form";
 import { Eye, PlusCircle } from "lucide-react";
 import type { UserChoiceType , UserChoiceTypeWatch } from "@/types";
@@ -13,14 +12,14 @@ interface HeaderProp {
 }
 
 const Header:React.FC<HeaderProp> = ({style}) => {
-    const [ query , setQuery ] = useState<string>('');
+  
     const [ open , setOpen ] = useState<boolean>(false);
     const [ userChoice , setUserChoice ] = useState<UserChoiceType>({
         ticker:"",
         shares:"",
         buyPrice:""
     });
-    const [ queryWatch , setQueryWatch ] = useState<string>('');
+  
     const [ openWatch , setOpenWatch ] = useState<boolean>(false);
     const [ userChoiceWatch , setUserChoiceWatch ] = useState<UserChoiceTypeWatch>({
             ticker:""
@@ -35,27 +34,25 @@ const Header:React.FC<HeaderProp> = ({style}) => {
                 <div className="w-[40%] flex gap-5">
                     
                     <Holdings
-                    header={<span className="flex bg-black text-white p-2 rounded-sm items-center justify-center text-sm md:text-md gap-1 md:gap-3"><PlusCircle size={20}/>  <p>Hodlings</p></span>}
-                    type="+ add to portfolio"
-                    query={query}
-                    setQuery={setQuery}
-                    open={open}
-                    setOpen={setOpen}
-                    userChoice={userChoice}
-                    setUserChoice={setUserChoice}
-                    submitDetails={submitPortfolio}
+                        header={<span className="flex bg-black text-white p-2 rounded-sm items-center justify-center text-sm md:text-md gap-1 md:gap-3"><PlusCircle size={20}/>  <p>Hodlings</p></span>}
+                        type="portfolio"
+                      
+                        open={open}
+                        setOpen={setOpen}
+                        userChoice={userChoice}
+                        setUserChoice={setUserChoice}
+                       
                     />
                     <CreateAlertForm/>
                     <Holdings
-                    type="Add to Watchlist"
-                    header={<Eye/>}
-                    query={queryWatch}
-                    setQuery={setQueryWatch}
-                    open={openWatch}
-                    setOpen={setOpenWatch}
-                    userChoice={userChoiceWatch}
-                    setUserChoice={setUserChoiceWatch}
-                    submitDetails={addToWatchList}
+                        type="watchlist"
+                        header={<Eye/>}
+                        
+                        open={openWatch}
+                        setOpen={setOpenWatch}
+                        userChoice={userChoiceWatch}
+                        setUserChoice={setUserChoiceWatch}
+                    
                     />
                 </div>
                 <UserMenu/>

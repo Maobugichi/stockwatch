@@ -1,4 +1,4 @@
-import { Eye, TrendingUp, ArrowUpRight, ArrowDownRight, Activity, Globe } from "lucide-react";
+import { Eye, TrendingUp, ArrowUpRight, ArrowDownRight, Activity } from "lucide-react";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 
@@ -26,10 +26,7 @@ const TabsListComponent = () => {
               <Activity className="h-3 w-3" />
               Most Active
             </TabsTrigger>
-            <TabsTrigger value="news" className="flex-shrink-0 flex items-center gap-1 text-xs whitespace-nowrap px-4">
-              <Globe className="h-3 w-3" />
-              News
-            </TabsTrigger>
+           
       </TabsList>
   );
 };

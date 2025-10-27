@@ -10,12 +10,15 @@ import {
 import { Button } from "./ui/button";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import useResponsiveIconSize from "@/hooks/useResponsiveIcon";
+import { useAuth } from "@/hooks/authContext";
+import { usePrefetchDashboard } from "@/hooks/useDashboard";
 
 type Item = {
   name: string;
   icon: React.ComponentType<{ size?: number }>;
   path: string;
   children?: Item[];
+  prefetch?: boolean; // Flag to enable prefetching
 };
 
 interface NavProp {
@@ -27,6 +30,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const location = useLocation();
   const iconSize = useResponsiveIconSize();
+  const prefetchDashboard = usePrefetchDashboard();
   
   const toggleMenu = (name: string): void => {
     setOpenMenus((prev) => ({ ...prev, [name]: !prev[name] }));
@@ -36,24 +40,27 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
     setIsOpen((prev) => !prev);
   };
 
-  let userId;
-  const userData = localStorage.getItem("user-data");
-  if (userData) {
-    userId = JSON.parse(userData).userId;
-  }
+  const { user: userData } = useAuth();
 
   const navItems: Item[] = [
-    { name: "Dashboard", icon: Home, path: "/" },
-    { name: "Portfolio", icon: Briefcase, path: "/portfolio" },
-    { name: "Watchlist", icon: Star, path: "/watchlist" },
-    { name: "News", icon: Newspaper, path: `/news/trending` },
-    { name: "Alerts", icon: Bell, path: `/alerts/${userId}` },
-    { name: "Settings", icon: Settings, path: "/settings" },
+    { name: "Dashboard", icon: Home, path: "/", prefetch: false }, 
+    { name: "Portfolio", icon: Briefcase, path: "/portfolio", prefetch: true }, 
+    { name: "Watchlist", icon: Star, path: "/watchlist", prefetch: true }, 
+    { name: "News", icon: Newspaper, path: `/news/trending`, prefetch: false },
+    { name: "Alerts", icon: Bell, path: `/alerts/${userData?.id}`, prefetch: false },
+    { name: "Settings", icon: Settings, path: "/settings", prefetch: false },
   ];
+
+  const handleMouseEnter = (item: Item) => {
+   
+    if (item.prefetch) {
+      prefetchDashboard();
+    }
+  };
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      {/* Desktop Navigation */}
       <motion.div
         initial={{ width: 60 }}
         animate={{ width: isOpen ? 200 : 60 }}
@@ -90,6 +97,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                               : "text-gray-400 hover:bg-gray-800 hover:text-white"
                           }`}
                           onClick={() => toggleMenu(item.name)}
+                          onMouseEnter={() => handleMouseEnter(item)}
                         >
                           <IconComponent size={iconSize} />
                           {isOpen && (
@@ -111,6 +119,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                               ? "bg-gray-700 text-white"
                               : "text-gray-400 hover:bg-gray-800 hover:text-white"
                           }`}
+                          onMouseEnter={() => handleMouseEnter(item)}
                         >
                           <IconComponent size={iconSize} />
                           {isOpen && (
@@ -151,6 +160,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                               ? "bg-gray-800 text-white"
                               : "text-gray-400 hover:text-white hover:bg-gray-800"
                           }`}
+                          onMouseEnter={() => handleMouseEnter(child)}
                         >
                           <span className="truncate">{child.name}</span>
                         </Link>
@@ -166,32 +176,36 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
 
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center h-14 z-50">
-        {navItems.map((item: Item, i: number) => {
-          const IconComponent = item.icon;
-          const isActive = item.path === '/' ? location.pathname === '/' : location.pathname.startsWith(item.path);
-          
-          return (
-            <Tooltip key={i}>
-              <TooltipTrigger asChild>
-                <Link
-                  to={item.path}
-                  className={`flex flex-col items-center justify-center p-2 flex-1 transition-colors ${
-                    isActive
-                      ? "bg-gray-700 text-white"
-                      : "text-gray-400 hover:text-neon-purple"
-                  }`}
-                  aria-label={item.name}
-                >
-                  <IconComponent size={iconSize} />
-                  <span className="text-xs mt-1 truncate">{item.name}</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="top" className="bg-gray-800 text-white">
-                {item.name}
-              </TooltipContent>
-            </Tooltip>
-          );
-        })}
+        <TooltipProvider delayDuration={0}>
+          {navItems.map((item: Item, i: number) => {
+            const IconComponent = item.icon;
+            const isActive = item.path === '/' ? location.pathname === '/' : location.pathname.startsWith(item.path);
+            
+            return (
+              <Tooltip key={i}>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={item.path}
+                    className={`flex flex-col items-center justify-center p-2 flex-1 transition-colors ${
+                      isActive
+                        ? "bg-gray-700 text-white"
+                        : "text-gray-400 hover:text-neon-purple"
+                    }`}
+                    aria-label={item.name}
+                    onMouseEnter={() => handleMouseEnter(item)}
+                    onTouchStart={() => handleMouseEnter(item)} // Prefetch on touch for mobile
+                  >
+                    <IconComponent size={iconSize} />
+                    <span className="text-xs mt-1 truncate">{item.name}</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="bg-gray-800 text-white">
+                  {item.name}
+                </TooltipContent>
+              </Tooltip>
+            );
+          })}
+        </TooltipProvider>
       </div>
     </>
   );

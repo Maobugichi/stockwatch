@@ -1,4 +1,4 @@
-import { useLoaderData , Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ResponsiveContainer , LineChart, Line , Tooltip,XAxis,YAxis } from "recharts";
 import { TrendingUp, TrendingDown, DollarSign, BarChart3 , Info ,  ArrowUpRight } from "lucide-react";
@@ -8,6 +8,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useWatchlist } from "@/hooks/useWatchList";
+import { ClipLoader } from "react-spinners";
 
 
 
@@ -28,14 +30,18 @@ interface Stock {
 }
 
 const WatchList = () => {
-    const data = useLoaderData();
-    console.log(data)
+   const { data , isLoading } = useWatchlist();
+
+   if (isLoading) {
+    return (<div className="h-screen grid place-items-center"><ClipLoader /></div>)
+   }
+   console.log(data)
      
     return(
         <div >
          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 w-[90%] md:w-full mx-auto">
-            {data.map((stock:Stock) => {
+            {data?.map((stock:Stock) => {
                 const isUp = stock.change_percent_daily && stock.change_percent_daily > 0;
               return(
               <Card key={stock.symbol} className="rounded-2xl shadow-none border-none transition-all duration-200">
@@ -92,7 +98,7 @@ const WatchList = () => {
                         <div className="h-16 mt-2">
                           <ResponsiveContainer width="100%" height="100%">
                              <LineChart
-                              data={stock.sparkline.timestamps.map((t,i) => ({
+                              data={stock.sparkline?.timestamps.map((t,i) => ({
                                 time:new Date(t).toLocaleDateString(),
                                 close:stock.sparkline.closes[i]
                               }))}
