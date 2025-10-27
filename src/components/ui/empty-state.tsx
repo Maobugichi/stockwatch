@@ -2,11 +2,10 @@ import  { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { PlusCircle, TrendingUp, BarChart3, Briefcase } from 'lucide-react';
 import type { UserChoiceType } from "@/types";
-import { submitPortfolio } from '@/lib/utils';
 import Holdings from '../holdings';
 
 const EmptyPortfolioState = () => {
-    const [ query , setQuery ] = useState<string>('');
+
     const [ open , setOpen ] = useState<boolean>(false);
     const [ userChoice , setUserChoice ] = useState<UserChoiceType>({
         ticker:"",
@@ -31,7 +30,7 @@ const EmptyPortfolioState = () => {
             </div>
           </div>
 
-          {/* Text content */}
+        
           <div className="space-y-3">
             <h3 className="text-lg font-semibold text-gray-900">
               No Portfolio Holdings Yet
@@ -44,17 +43,15 @@ const EmptyPortfolioState = () => {
 
          <Holdings
             header={<button className="flex bg-black text-white p-3 items-center justify-center gap-3"><PlusCircle size={20}/>  <p>Add Portfolio Hodlings</p></button>}
-            type="+ add to portfolio"
-            query={query}
-            setQuery={setQuery}
+            type="portfolio"
             open={open}
             setOpen={setOpen}
             userChoice={userChoice}
             setUserChoice={setUserChoice}
-            submitDetails={submitPortfolio}
+            
          />
 
-          {/* Additional help text */}
+        
           <p className="text-xs text-gray-400">
             Track your investments and monitor performance in real-time
           </p>
@@ -64,9 +61,8 @@ const EmptyPortfolioState = () => {
   );
 };
 
-// Alternative minimal version
 const MinimalEmptyState = () => {
-     const [ query , setQuery ] = useState<string>('');
+  
     const [ open , setOpen ] = useState<boolean>(false);
     const [ userChoice , setUserChoice ] = useState<UserChoiceType>({
         ticker:"",
@@ -89,14 +85,11 @@ const MinimalEmptyState = () => {
       
       <Holdings
         header={<button className="flex bg-black text-white p-3 items-center justify-center gap-3"><PlusCircle size={20}/>  <p>Add Portfolio Hodlings</p></button>}
-        type="+ add to portfolio"
-        query={query}
-        setQuery={setQuery}
+        type="portfolio"
         open={open}
         setOpen={setOpen}
         userChoice={userChoice}
         setUserChoice={setUserChoice}
-        submitDetails={submitPortfolio}
      />
     </div>
   );
@@ -104,7 +97,7 @@ const MinimalEmptyState = () => {
 
 
 const FullPageEmptyState = () => {
-     const [ query , setQuery ] = useState<string>('');
+ 
     const [ open , setOpen ] = useState<boolean>(false);
     const [ userChoice , setUserChoice ] = useState<UserChoiceType>({
         ticker:"",
@@ -146,14 +139,11 @@ const FullPageEmptyState = () => {
           <div className="pt-4">
             <Holdings
             header={<button className="flex bg-black text-white p-2 rounded-sm items-center justify-center text-sm md:text-md gap-3"><PlusCircle size={20}/>  <p>Add Portfolio Hodlings</p></button>}
-            type="+ add to portfolio"
-            query={query}
-            setQuery={setQuery}
+            type="portfolio"
             open={open}
             setOpen={setOpen}
             userChoice={userChoice}
             setUserChoice={setUserChoice}
-            submitDetails={submitPortfolio}
             />
           </div>
           

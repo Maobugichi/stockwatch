@@ -54,6 +54,7 @@ export function useAddPortfolioHolding() {
 
     // On error, rollback to previous state
     onError: (err, newHolding, context) => {
+        console.log(newHolding)
       if (context?.previousDashboard) {
         queryClient.setQueryData(["dashboard", userId], context.previousDashboard);
       }
