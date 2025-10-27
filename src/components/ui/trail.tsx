@@ -110,3 +110,5 @@ const Trail = () => {
             </svg>
     )
 }
+
+export default Trail
