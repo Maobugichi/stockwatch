@@ -69,23 +69,47 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
         },
 
     ];
+
     const percentInRange = Math.max(0, Math.min(100, ((data.portfolioValue - data.low52) / (data.high52 - data.low52)) * 100));
     return(
         <div className="grid grid-cols-1  md:grid-cols-3 gap-4">
                {summaryCards.map((card, idx) => {
                     const Icon = card.icon ? iconMap[card.icon] : null;
+                    const TrendIcon = card.trend === "up" ? ArrowUpRight : card.trend === "down" ? ArrowDownRight : null;
+                 
                     return (
-                    <Card  className="rounded-2xl " key={idx}>
-                        <CardHeader className="flex items-center justify-between">
-                        <CardTitle className="text-lg">{card.title}</CardTitle>
-                        {Icon && <Icon className="w-10 h-10 text-muted-foreground" />}
-                        {card.trend === "up" && (
-                            <ArrowUpRight className="text-green-600 w-4 h-4" />
-                        )}
-                        {card.trend === "down" && (
-                            <ArrowDownRight className="text-red-600 w-4 h-4" />
-                        )}
-                        </CardHeader>
+                    <Card  className="rounded-3xl " key={idx}>
+                       <CardHeader className="flex  flex-row items-center justify-between ">
+                        <CardTitle className="text-sm font-medium text-gray-600">{card.title}</CardTitle>
+                        <div className="flex items-center gap-2">
+                            {Icon && (
+                            <div className={`p-2 rounded-lg ${
+                                card.color.includes("green") 
+                                ? "bg-green-50"
+                                : card.color.includes("red")
+                                ? "bg-red-50"
+                                : "bg-blue-50"
+                            } transition-transform group-hover:scale-110 duration-300`}>
+                                <Icon className={`w-5 h-5 ${
+                                card.color.includes("green") 
+                                    ? "text-green-600"
+                                    : card.color.includes("red")
+                                    ? "text-red-600"
+                                    : "text-blue-600"
+                                }`} />
+                            </div>
+                            )}
+                            {TrendIcon && (
+                            <div className={`p-1.5 rounded-lg ${
+                                card.trend === "up" ? "bg-green-50" : "bg-red-50"
+                            }`}>
+                                <TrendIcon className={`w-4 h-4 ${
+                                card.trend === "up" ? "text-green-600" : "text-red-600"
+                                }`} />
+                            </div>
+                            )}
+                        </div>
+                      </CardHeader>
 
                         <CardContent className="space-y-2">
                             <div className={`text-3xl font-jet font-bold ${card.color}`}>
@@ -106,7 +130,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                             )}
 
                             {card.sparkline && card.sparkline?.length > 0 && (
-                                <ResponsiveContainer width="100%" height={40}>
+                                <ResponsiveContainer width="100%" height={25}>
                                 <LineChart
                                     data={card.sparkline.map((v, i) => ({ 
                                     index: i, 

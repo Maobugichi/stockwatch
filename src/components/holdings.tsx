@@ -37,7 +37,7 @@ const Holdings: React.FC<HoldingsProp> = ({
     const { setNotification } = myContext;
     const [query, setQuery] = useState("");
     
-    // Search hook
+   
     const { data: options = [], isLoading: isSearching } = useDebouncedTickerSearch(query);
     
     // Mutation hooks

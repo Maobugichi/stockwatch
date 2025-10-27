@@ -49,39 +49,37 @@ if (isError) {
     navigate("/login")
 }
 
-console.log(data)
+
 
 const cardsData = (data: any) => [
   {
     title: "Live Data Points",
-    icon: <DollarSign className="h-4 w-4" />,
+    icon: <DollarSign className="h-7 w-7 text-blue-600" />,
     value: data?.liveData?.length || 0,
     description: "Real-time quotes",
     gradientClass: "bg-gradient-to-br from-blue-50 to-blue-100",
   },
-   {
+  {
     title: "Top Gainers",
-    icon: <Globe className="h-4 w-4" />,
-    value:
-      data?.gainers?.length || 0,
+    icon: <Globe className="h-7 w-7 text-orange-600" />,
+    value: data?.gainers?.length || 0,
     description: "Latest updates",
     gradientClass: "bg-gradient-to-br from-orange-50 to-orange-100",
   },
   {
     title: "Trending Stocks",
-    icon: <TrendingUp className="h-4 w-4" />,
+    icon: <TrendingUp className="h-7 w-7 text-green-600" />,
     value: data?.isTrendingQuote?.length || 0,
     description: "Popular today",
     gradientClass: "bg-gradient-to-br from-green-50 to-green-100",
   },
   {
     title: "Most Active",
-    icon: <Activity className="h-4 w-4" />,
+    icon: <Activity className="h-7 w-7 text-purple-600" />,
     value: data?.active?.length || 0,
     description: "High volume",
     gradientClass: "bg-gradient-to-br from-purple-50 to-purple-100",
   },
- 
 ];
 
   return (
@@ -91,22 +89,23 @@ const cardsData = (data: any) => [
       <div className="max-w-7xl overflow-auto mx-auto px-6 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsListComponent/>
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
               { cardsData(data).map((item:any) => (
                 <StatCard title={item.title} icon={item.icon} value={item.value} description={item.description} gradientClass={item.gradientClass}/>
               ))}
             </div>
 
+          <TabsContent value="overview" className="space-y-6">
+           
             <Card className='border-none  shadow-none'>
               <CardHeader>
                 <CardTitle className='text-xl md:text-2xl'>Live Market Data</CardTitle>
                 <CardDescription>Real-time stock prices from your portfolio</CardDescription>
               </CardHeader>
-              <CardContent className=' px-3'>
-                <ScrollArea className="h-96">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+              <CardContent className=' p-3'>
+                <ScrollArea className="h-96 w-full px-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                     {data?.liveData
                      .map((stock:any, index:any) => (
                         <StockCard 

@@ -44,7 +44,7 @@ const WatchList = () => {
             {data?.map((stock:Stock) => {
                 const isUp = stock.change_percent_daily && stock.change_percent_daily > 0;
               return(
-              <Card key={stock.symbol} className="rounded-2xl shadow-none border-none transition-all duration-200">
+              <Card key={stock.symbol} className="rounded-3xl shadow-none border-none transition-all duration-200">
                    <CardHeader className="pb-0 ">
                       <div className="flex justify-between items-center">
                             <div className="space-y-1">
