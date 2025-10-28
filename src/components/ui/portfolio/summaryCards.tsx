@@ -4,10 +4,10 @@ import {
   Wallet,
   TrendingUp,
   TrendingDown, } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../card";
 import {  XAxis, YAxis , ResponsiveContainer,  LineChart, Line, } from "recharts";
 import { Tooltip } from "recharts";
-import { Badge } from "../ui/badge";
+import { Badge } from "../badge";
 import { Progress } from "@/components/ui/progress";
 
 

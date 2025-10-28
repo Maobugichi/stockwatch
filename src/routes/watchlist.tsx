@@ -1,15 +1,26 @@
 import {  Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ResponsiveContainer , LineChart, Line , Tooltip,XAxis,YAxis } from "recharts";
-import { TrendingUp, TrendingDown, DollarSign, BarChart3 , Info ,  ArrowUpRight } from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, BarChart3 , Info ,  ArrowUpRight, Trash, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { useWatchlist } from "@/hooks/useWatchList";
+import { useRemoveFromWatchlist, useWatchlist } from "@/hooks/useWatchList";
 import { ClipLoader } from "react-spinners";
+import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 
 
@@ -31,12 +42,36 @@ interface Stock {
 
 const WatchList = () => {
    const { data , isLoading } = useWatchlist();
+   const deleteHolding = useRemoveFromWatchlist();
+   const [deleteDialog, setDeleteDialog] = useState<{
+    open: boolean;
+    symbol: string | null;
+  }>({
+    open: false,
+    symbol: null,
+  });
 
    if (isLoading) {
     return (<div className="h-screen grid place-items-center"><ClipLoader /></div>)
    }
-   console.log(data)
-     
+
+   const handleDeleteClick = (  symbol: string) => {
+    setDeleteDialog({
+      open: true,
+      symbol,
+    });
+  };
+
+  const confirmDelete = () => {
+    if (deleteDialog.symbol !== null) {
+      deleteHolding.mutate(deleteDialog.symbol, {
+        onSuccess: () => {
+          setDeleteDialog({ open: false, symbol: null });
+        },
+      });
+    }
+  };
+   
     return(
         <div >
          
@@ -71,14 +106,41 @@ const WatchList = () => {
                                 </p>
                             </div>
                         </div>
+                        
                    </CardHeader>
                     <CardContent className="space-y-2 border rounded-2xl p-5">
-                       
+                       <div className="flex items-center justify-between">
                         <div className="mt-3 flex items-center  gap-2">
                            <DollarSign className="w-4 h-4 text-muted-foreground" />
                            <p className="font-bold text-2xl font-jet">
                              {stock.current_price ? stock.current_price.toFixed(2) : "—"}
                            </p>
+                        </div>
+                         <HoverCard>
+                              <HoverCardTrigger asChild>
+                                <span>
+                                    <Info className="w-4 h-4 cursor-pointer"/>
+                                  </span>
+                              </HoverCardTrigger>
+                              <HoverCardContent className=" w-64">
+                                <p className="text-sm">
+                                  <span className="font-medium">52W High:</span>{" "}
+                                  <span className="font-jet">{stock.fifty_two_week_high 
+                                    ? `$${stock.fifty_two_week_high}`
+                                    : "—"}</span>
+                                </p>
+                                <p>
+                                  <span className="font-medium">52W Low:</span>{" "}
+                                  <span className="font-jet">{stock.fifty_two_week_low
+                                    ? `$${stock.fifty_two_week_low}`
+                                    : "—"}</span>
+                                </p>
+                                <p className="text-sm">
+                                  <span className="font-medium">P/E Ratio</span>{" "}
+                                  {stock.pe_ratio ? Number(stock.pe_ratio).toFixed(2) : "—"}
+                                </p>
+                              </HoverCardContent>
+                          </HoverCard>
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                             <BarChart3 className="w-4 h-4 text-muted-foreground" />
@@ -124,41 +186,22 @@ const WatchList = () => {
                         </div>
 
                         <div className="mt-3 flex items-center justify-between">
-                            <HoverCard>
-                                <HoverCardTrigger asChild>
-                                  <span>
-                                    
-                                    <Button className="flex items-center gap-1 cursor-pointer">
-                                        <Info className="w-4 h-4"/>
-                                        Fundamentals
-                                    </Button>
-                                   </span>
-                                </HoverCardTrigger>
-                                <HoverCardContent className=" w-64">
-                                  <p className="text-sm">
-                                    <span className="font-medium">52W High:</span>{" "}
-                                    <span className="font-jet">{stock.fifty_two_week_high 
-                                     ? `$${stock.fifty_two_week_high}`
-                                     : "—"}</span>
-                                  </p>
-                                  <p>
-                                    <span className="font-medium">52W Low:</span>{" "}
-                                    <span className="font-jet">{stock.fifty_two_week_low
-                                     ? `$${stock.fifty_two_week_low}`
-                                     : "—"}</span>
-                                  </p>
-                                  <p className="text-sm">
-                                    <span className="font-medium">P/E Ratio</span>{" "}
-                                    {stock.pe_ratio ? Number(stock.pe_ratio).toFixed(2) : "—"}
-                                  </p>
-                                </HoverCardContent>
-                            </HoverCard>
-                            <Link 
-                            to={`/watchlist/${stock.symbol}`}
-                            className="flex items-center gap-1"
+                            <Button
+                             
+                              size="sm"
+                              className="bg-transparent hover:bg-gray-300"
+                              onClick={() => handleDeleteClick(stock.symbol)}
+                              disabled={deleteHolding.isPending}
                             >
+                                <Trash2 color="black"/>
+                            </Button>
+                             <Link 
+                              to={`/watchlist/${stock.symbol}`}
+                              className="flex items-center gap-1"
+                              >
                                 View <ArrowUpRight className="w-4 h-4" />
                             </Link>
+
                         </div>
                     </CardContent>
 
@@ -166,6 +209,32 @@ const WatchList = () => {
             )})
 
             }
+            <AlertDialog 
+                    open={deleteDialog.open} 
+                    onOpenChange={(open) => setDeleteDialog({ ...deleteDialog, open })}
+                  >
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete Holding</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to delete {deleteDialog.symbol} from your watchlist? 
+                          This action cannot be undone.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel disabled={deleteHolding.isPending}>
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={confirmDelete}
+                          disabled={deleteHolding.isPending}
+                          className="bg-red-600 hover:bg-red-700"
+                        >
+                          {deleteHolding.isPending ? "Deleting..." : "Delete"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
           </div>
         </div>
     )

@@ -180,7 +180,7 @@ const Candlestick: React.FC<CandleProp> = ({
   }, [stock, timePeriod]);
 
   return (
-    <Card className="rounded-lg w-full max-w-full overflow-hidden h-full flex flex-col">
+    <Card className="rounded-3xl w-full max-w-full overflow-hidden h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <CardTitle className="text-lg">Price Chart (OHLC)</CardTitle>

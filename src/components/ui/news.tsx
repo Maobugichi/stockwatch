@@ -104,7 +104,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
   const sentimentDisplay = getSentimentDisplay();
 
   return (
-    <div className="relative h-24 md:h-32 w-full overflow-hidden rounded-2xl">
+    <div className="relative h-24 md:h-32 w-full overflow-hidden rounded-3xl border-gray-200  border">
       <AnimatePresence mode="wait">
         <motion.div
           key={article.uuid}
@@ -112,7 +112,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -40 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-0 bg-white rounded-2xl shadow-md border border-gray-200 p-2 sm:p-3 flex items-center gap-5 sm:gap-3"
+          className="absolute inset-0 bg-white rounded-2xl shadow-md border-none p-2 sm:p-3 flex items-center gap-5 sm:gap-3"
         >
           {article.thumbnail ?  (
             <img

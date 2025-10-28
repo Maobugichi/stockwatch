@@ -20,7 +20,7 @@ import PortfolioPie from "@/components/ui/port-pie";
 import { FullPageEmptyState } from "@/components/ui/empty-state";
 import { ClipLoader } from "react-spinners";
 import { useDashboard } from "@/hooks/useDashboard";
-import SummaryCard from "@/components/portfolio/summaryCards";
+import SummaryCard from "@/components/ui/portfolio/summaryCards";
 import { Button } from "@/components/ui/button";
 
 const PortfolioDashboard = () => {
@@ -35,6 +35,7 @@ const PortfolioDashboard = () => {
   } = useDashboard();
 
  
+
   if (isLoading) {
     return (
       <div className="h-screen grid place-items-center">
@@ -58,6 +59,7 @@ const PortfolioDashboard = () => {
   }
 
 
+
   if (!data || !data.breakdown || data.breakdown.length === 0) {
     return (
       <div className="h-screen grid place-items-center">
@@ -66,6 +68,7 @@ const PortfolioDashboard = () => {
     );
   }
 
+
   const strokeColor = resolveCssVar("--chart-2");
   
  
@@ -73,7 +76,7 @@ const PortfolioDashboard = () => {
   const minutesAgo = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
 
   return (
-    <div className="space-y-8  font-inter">
+    <div className="space-y-8 w-[94%] mx-auto font-inter">
    
       <div className="flex items-center justify-between">
         <div className="flex flex-col sm:flex-row gap-4">
@@ -132,10 +135,7 @@ const PortfolioDashboard = () => {
 
       <StockNews getNewsData={fetchTrendingNews()} />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-fr">
-        <HoldingsTable data={data} />
-        <PortfolioPie data={data} />
-      </div>
+      
 
       <Card className="md:h-[450px] h-[400px] flex flex-col border-none shadow-none pb-0">
         <CardHeader className="text-lg sm:text-2xl p-0">
@@ -212,6 +212,11 @@ const PortfolioDashboard = () => {
           </ChartContainer>
         </CardContent>
       </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-fr">
+        <HoldingsTable data={data} />
+        <PortfolioPie data={data} />
+      </div>
     </div>
   );
 };

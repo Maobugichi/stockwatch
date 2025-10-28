@@ -22,7 +22,7 @@ type ValuationTableProps = {
 
 const ValuationTable =  ( {stock} :ValuationTableProps) => {
   return (
-    <div className="rounded-lg border bg-card shadow-sm pb-4">
+    <div className="rounded-3xl border bg-card shadow-sm pb-4">
       <Table>
         <TableBody>
          

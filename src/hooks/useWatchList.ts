@@ -137,7 +137,7 @@ export function useRemoveFromWatchlist() {
 
       const previousWatchlist = queryClient.getQueryData(["watchlist", userId]);
 
-      // Optimistically remove from cache
+      
       queryClient.setQueryData(["watchlist", userId], (old: WatchlistItem[] = []) => {
         return old.filter(item => item.ticker !== ticker);
       });

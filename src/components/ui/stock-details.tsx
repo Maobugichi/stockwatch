@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { getNewsData } from "@/lib/utils";
 import ValuationTable from "./val-table";
@@ -11,12 +11,16 @@ import Volume from "./volume";
 import EarningsRevenueChart from "./earnings";
 import AnalystRecommendationsChart from "./recommendations";
 import EarningsEstimatesChart from "./estimate";
+import { WatchlistToggleButton } from "./watchToggleBtn";
 
 const StockDetails = () => {
   const stock: StockData | undefined = useLoaderData();
+  const { symbol } = useParams<{ symbol: string }>(); 
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<string>("3m");
 
-  console.log(stock)
+  console.log("Symbol from params:", symbol);
+  console.log("Stock data:", stock);
+
   if (!stock) return <div>Loading...</div>;
 
   const hasCandlestick = stock.ohlc_history?.length;
@@ -34,10 +38,12 @@ const StockDetails = () => {
 
   return (
     <div className="grid w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+  
+      <WatchlistToggleButton ticker={symbol || stock.symbol || ""} />
      
       <div className="flex mt-10 md:mt-0 flex-col md:flex-row md:items-center md:justify-between gap-2 h-20">
         <h1 className="text-2xl font-bold">
-          {stock.company_name ?? "Unknown"} ({stock.symbol ?? "N/A"})
+          {stock.company_name ?? "Unknown"} ({symbol || stock.symbol || "N/A"})
         </h1>
         <div>
           <span className="font-jet">${stock.current_price?.toFixed(2) ?? "N/A"}</span>
@@ -80,33 +86,26 @@ const StockDetails = () => {
         </div>
       )}
 
-
      
       {stock && <ValuationTable stock={stock} />}
 
       
-      {stock.symbol && <StockNews getNewsData={getNewsData(stock.symbol)} />}
+      {(symbol || stock.symbol) && (
+        <StockNews getNewsData={getNewsData(symbol || stock.symbol)} />
+      )}
 
     
       {(hasEarningsRevenue || hasRecommendations) && (
         <div className={`grid gap-5 ${hasEarningsRevenue && hasRecommendations ? "md:grid-cols-2" : "grid-cols-1"}`}>
-          {hasEarningsRevenue && (
-            <EarningsRevenueChart stock={stock}/>
-          )}
-
-          {hasRecommendations && (
-           <AnalystRecommendationsChart stock={stock}/>
-          )}
+          {hasEarningsRevenue && <EarningsRevenueChart stock={stock} />}
+          {hasRecommendations && <AnalystRecommendationsChart stock={stock} />}
         </div>
       )}
 
       
       {(hasEarningsEstimates || stock) && (
         <div className={`grid gap-8 ${hasEarningsEstimates ? "md:grid-cols-2" : "grid-cols-1"}`}>
-          {hasEarningsEstimates && (
-            <EarningsEstimatesChart stock={stock}/>
-          )}
-
+          {hasEarningsEstimates && <EarningsEstimatesChart stock={stock} />}
           <div className="space-y-4">
             <EventsInfoTable stock={stock} />
           </div>

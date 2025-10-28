@@ -46,7 +46,7 @@ const Volume: React.FC<VolumeProps> = ({ stock }) => {
 
     return (
         <div className="h-full w-full min-w-0">
-            <Card className="h-full w-full">
+            <Card className="h-full w-full rounded-3xl">
                 <CardHeader>
                     <CardTitle>Volume (Last 30 days)</CardTitle>
                 </CardHeader>

@@ -25,7 +25,7 @@ const AnalystRecommendationsChart: React.FC<RecommendationsProps> = ({ stock }) 
   }, []);
 
   return (
-    <Card className="w-full rounded-sm">
+    <Card className="w-full rounded-3xl">
       <CardHeader>
         <CardTitle className="text-sm sm:text-lg">Analyst Recommendations</CardTitle>
       </CardHeader>

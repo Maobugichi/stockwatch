@@ -14,7 +14,7 @@ type EventsInfoTableProps = {
 
 const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
   return (
-    <Card className="rounded-sm border p-0 bg-card shadow-sm">
+    <Card className="rounded-3xl border p-0 bg-card shadow-sm">
       <Table className="p-0">
         <TableBody>
          
