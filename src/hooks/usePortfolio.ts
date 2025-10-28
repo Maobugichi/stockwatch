@@ -123,7 +123,7 @@ export function useAddPortfolioHolding() {
     },
 
     onError: (err, newHolding, context) => {
-      // Rollback on error
+      console.log(newHolding)
       if (context?.previousDashboard) {
         queryClient.setQueryData(
           ["dashboard", userId],
@@ -137,17 +137,17 @@ export function useAddPortfolioHolding() {
     },
 
     onSuccess: (data, variables) => {
+      console.log(data)
       toast.success("Holding added successfully!", {
         description: `${variables.ticker} added to your portfolio`,
       });
 
-      // Refetch for accurate server data
       queryClient.invalidateQueries({ queryKey: ["dashboard", userId] });
     },
   });
 }
 
-// Delete Portfolio Holding Hook
+
 export function useDeletePortfolioHolding() {
   const queryClient = useQueryClient();
   const { user } = useAuth();
@@ -163,7 +163,7 @@ export function useDeletePortfolioHolding() {
         `/api/portfolio/${userId}/holdings/${holdingId}`
       );
 
-      // Clear cache
+     
       try {
         await api.delete(`/api/portfolio/${userId}/cache`);
       } catch (err) {
@@ -188,7 +188,10 @@ export function useDeletePortfolioHolding() {
           if (!old) return old;
 
           const filteredBreakdown = old.breakdown.filter(
-            (item, index) => index !== holdingId
+            (item, index) => {
+              console.log(item) 
+              return index !== holdingId 
+            }
           );
 
           return {
@@ -209,6 +212,7 @@ export function useDeletePortfolioHolding() {
 
     onError: (err, holdingId, context) => {
       if (context?.previousDashboard) {
+        console.log(holdingId)
         queryClient.setQueryData(
           ["dashboard", userId],
           context.previousDashboard
@@ -268,7 +272,7 @@ export function useUpdatePortfolioHolding() {
         userId,
       ]);
 
-      // Optimistically update
+     
       queryClient.setQueryData<DashboardData>(
         ["dashboard", userId],
         (old) => {
@@ -298,6 +302,7 @@ export function useUpdatePortfolioHolding() {
 
     onError: (err, variables, context) => {
       if (context?.previousDashboard) {
+        console.log(variables)
         queryClient.setQueryData(
           ["dashboard", userId],
           context.previousDashboard

@@ -1,7 +1,7 @@
 import {  Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ResponsiveContainer , LineChart, Line , Tooltip,XAxis,YAxis } from "recharts";
-import { TrendingUp, TrendingDown, DollarSign, BarChart3 , Info ,  ArrowUpRight, Trash, Trash2 } from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, BarChart3 , Info ,  ArrowUpRight,  Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   HoverCard,
