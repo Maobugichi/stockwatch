@@ -73,7 +73,7 @@ const PortfolioDashboard = () => {
   const minutesAgo = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
 
   return (
-    <div className="space-y-8 py-16 px-8 font-inter">
+    <div className="space-y-8  font-inter">
    
       <div className="flex items-center justify-between">
         <div className="flex flex-col sm:flex-row gap-4">

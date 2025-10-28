@@ -27,8 +27,8 @@ const Root: React.FC = () => {
         >
          
           <div className="absolute inset-0 mt-16 overflow-auto">
-            <div className="min-h-full md:p-4 ">
-             {isLoading ? <div className="h-[80vh] grid place-items-center"><ClipLoader color="#3b82f6" size={40} /></div> : <Outlet/>}
+            <div className="min-h-full py-16 px-8">
+             {isLoading ? <div className="h-screen grid place-items-center"><ClipLoader   /></div> : <Outlet/>}
             </div>
           </div>
         </motion.div>
