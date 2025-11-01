@@ -76,8 +76,9 @@ const PortfolioDashboard = () => {
   const minutesAgo = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
 
   return (
-    <div className="space-y-8 w-[94%] mx-auto font-inter">
+    <div className="space-y-8 w-[94%] mx-auto font-jet">
    
+     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex flex-col sm:flex-row gap-4">
           {data.topStock && (
@@ -109,7 +110,7 @@ const PortfolioDashboard = () => {
           )}
         </div>
 
-        {/* Refresh button */}
+       
         <Button
           variant="outline"
           size="sm"
@@ -130,6 +131,7 @@ const PortfolioDashboard = () => {
           Last updated {minutesAgo} minute{minutesAgo !== 1 ? 's' : ''} ago
         </p>
       )}
+    </div>  
 
       <SummaryCard data={data} />
 

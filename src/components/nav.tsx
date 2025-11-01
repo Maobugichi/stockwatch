@@ -174,7 +174,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
         </TooltipProvider>
       </motion.div>
 
-      {/* Mobile Bottom Navigation */}
+    
       <div className="md:hidden fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center h-14 z-50">
         <TooltipProvider delayDuration={0}>
           {navItems.map((item: Item, i: number) => {

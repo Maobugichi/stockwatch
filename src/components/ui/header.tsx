@@ -11,9 +11,10 @@ interface HeaderProp {
     style:any
 }
 
+
+
 const Header:React.FC<HeaderProp> = ({style}) => {
-  
-    const [ open , setOpen ] = useState<boolean>(false);
+  const [ open , setOpen ] = useState<boolean>(false);
     const [ userChoice , setUserChoice ] = useState<UserChoiceType>({
         ticker:"",
         shares:"",
@@ -24,41 +25,47 @@ const Header:React.FC<HeaderProp> = ({style}) => {
     const [ userChoiceWatch , setUserChoiceWatch ] = useState<UserChoiceTypeWatch>({
             ticker:""
     });
-    return(
-        <header 
-        style={style}
-        className="fixed px-4 top-0 h-16 bg-black  text-white backdrop-blur-2xl w-full z-50 flex items-center">
-            <StockWatcherLogo/>
-            
-            <div className="flex  w-[80%] md:w-full  mx-auto h-[80%] justify-end ">
-                <div className="w-[40%] flex gap-5">
-                    
-                    <Holdings
-                        header={<span className="flex bg-black text-white p-2 rounded-sm items-center justify-center text-sm md:text-md gap-1 md:gap-3"><PlusCircle size={20}/>  <p>Hodlings</p></span>}
-                        type="portfolio"
-                      
-                        open={open}
-                        setOpen={setOpen}
-                        userChoice={userChoice}
-                        setUserChoice={setUserChoice}
-                       
-                    />
-                    <CreateAlertForm/>
-                    <Holdings
-                        type="watchlist"
-                        header={<Eye/>}
-                        
-                        open={openWatch}
-                        setOpen={setOpenWatch}
-                        userChoice={userChoiceWatch}
-                        setUserChoice={setUserChoiceWatch}
-                    
-                    />
-                </div>
-                <UserMenu/>
-            </div>
-        </header>
-    )
-}
+
+  return (
+    <header
+      style={style}
+      className="fixed top-0 z-50  h-16 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 text-slate-100 md:w-[95.5%] w-full right-0"
+    >
+      <div className="container mx-auto h-full px-4 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <StockWatcherLogo />
+
+      
+        <div className="flex items-center gap-2 md:gap-3">
+          <Holdings
+            header={<PlusCircle size={20} />}
+            type="portfolio"
+            open={open}
+            setOpen={setOpen}
+            userChoice={userChoice}
+            setUserChoice={setUserChoice}
+          />
+          
+          <CreateAlertForm />
+          
+          <Holdings
+            type="watchlist"
+            header={<Eye size={20} />}
+            open={openWatch}
+            setOpen={setOpenWatch}
+            userChoice={userChoiceWatch}
+            setUserChoice={setUserChoiceWatch}
+          />
+
+          {/* Divider */}
+          <div className="h-8 w-px bg-white/10 mx-1 hidden sm:block" />
+
+         <UserMenu/>
+        </div>
+      </div>
+    </header>
+  );
+};
+
 
 export default Header

@@ -15,9 +15,10 @@ export function useDashboard() {
         throw new Error("User ID not found");
       }
 
-      const response = await api.get(`/api/portfolio/${userId}`);
+      const response = await api.get(`/api/portfolio/`,{
+        headers: { "x-requires-auth": true }
+      });
       
-     
       return response.data;
     },
     enabled: !!userId,
@@ -46,7 +47,9 @@ export function usePrefetchDashboard() {
       queryClient.prefetchQuery({
         queryKey: ["dashboard", userId],
         queryFn: async () => {
-          const response = await api.get(`/api/portfolio/${userId}`);
+          const response = await api.get(`/api/portfolio/`,{
+        headers: { "x-requires-auth": true }
+      });
           return response.data;
         },
         staleTime: 5 * 60 * 1000,

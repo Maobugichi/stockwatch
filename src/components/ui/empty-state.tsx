@@ -138,7 +138,7 @@ const FullPageEmptyState = () => {
           
           <div className="pt-4">
             <Holdings
-            header={<button className="flex bg-black text-white p-2 rounded-sm items-center justify-center text-sm md:text-md gap-3"><PlusCircle size={20}/>  <p>Add Portfolio Hodlings</p></button>}
+            header={<PlusCircle size={20}/> }
             type="portfolio"
             open={open}
             setOpen={setOpen}

@@ -61,7 +61,9 @@ export function useAddToWatchlist() {
         throw new Error("User not authenticated");
       }
 
-      const response = await api.post(`/api/watchlist/add/${userId}`, { ticker });
+      const response = await api.post(`/api/watchlist/add/${userId}`, { ticker },{
+        headers: { "x-requires-auth": true }
+      });
 
       return response.data;
     },

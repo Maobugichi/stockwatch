@@ -104,7 +104,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
   const sentimentDisplay = getSentimentDisplay();
 
   return (
-    <div className="relative h-24 md:h-32 w-full overflow-hidden rounded-3xl border-gray-200  border">
+    <div className="relative h-24 md:h-32 w-full overflow-hidden rounded-3xl border-gray-200 font-space-grotesk tracking-wide border">
       <AnimatePresence mode="wait">
         <motion.div
           key={article.uuid}

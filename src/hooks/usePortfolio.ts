@@ -62,11 +62,15 @@ export function useAddPortfolioHolding() {
         throw new Error("User not authenticated");
       }
 
-      const response = await api.post(`/api/save-port/${userId}`, holding);
+      const response = await api.post(`/api/save-port/${userId}`, holding , {
+        headers: { "x-requires-auth": true }
+      });
 
      
       try {
-        await api.delete(`/api/portfolio/${userId}/cache`);
+        await api.delete(`/api/portfolio/${userId}/cache`,{
+        headers: { "x-requires-auth": true }
+      });
       } catch (err) {
         console.warn("Cache clear failed:", err);
       }

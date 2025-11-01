@@ -12,7 +12,7 @@ import {
   FlameIcon,
 } from 'lucide-react';
 import type { UserChoiceTypeWatch } from '@/types';
-import {  useNavigate } from 'react-router-dom';
+import {  Link, useNavigate } from 'react-router-dom';
 import StockCard from '@/components/ui/trending-dash/stock-card';
 import Header from '@/components/ui/trending-dash/header';
 import StatCard from '@/components/ui/trending-dash/dash-block';
@@ -82,6 +82,8 @@ const cardsData = (data: any) => [
   },
 ];
 
+
+
   return (
     <div className="min-h-screen font-inter font-semibold">
       <Header searchTerm={searchTerm} refreshing={refreshing} setSearchTerm={setSearchTerm} setUserChoice={setUserChoice} userChoice={userChoice}/>
@@ -108,12 +110,14 @@ const cardsData = (data: any) => [
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                     {data?.liveData
                      .map((stock:any, index:any) => (
+                      <Link to={`/watchlist/${stock.symbol}`}>
                         <StockCard 
                           key={index} 
                           stock={stock} 
                           showMarketCap 
                           onSelect={setSelectedStock}
                         />
+                      </Link>
                       ))}
                   </div>
                 </ScrollArea>
@@ -134,7 +138,9 @@ const cardsData = (data: any) => [
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                   {data?.isTrendingQuote?.map((stock:any , index:number) => (
-                    <StockCard key={index} stock={stock} onSelect={setSelectedStock} />
+                    <Link to={`/watchlist/${stock.symbol}`}>
+                     <StockCard key={index} stock={stock} onSelect={setSelectedStock} />
+                    </Link>
                   ))}
                 </div>
               </CardContent>
@@ -154,13 +160,15 @@ const cardsData = (data: any) => [
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {data?.gainers?.map((stock:any, index:any) => (
-                    <StockCard 
-                      key={index} 
-                      stock={stock} 
-                      showVolume 
-                      showMarketCap 
-                      onSelect={setSelectedStock}
-                    />
+                    <Link to={`/watchlist/${stock.symbol}`}>
+                      <StockCard 
+                        key={index} 
+                        stock={stock} 
+                        showVolume 
+                        showMarketCap 
+                        onSelect={setSelectedStock}
+                      />
+                    </Link>
                   ))}
                 </div>
               </CardContent>
@@ -180,13 +188,15 @@ const cardsData = (data: any) => [
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                   {data?.losers?.map((stock:any, index:any) => (
-                    <StockCard 
-                      key={index} 
-                      stock={stock} 
-                      showVolume 
-                      showMarketCap 
-                      onSelect={setSelectedStock}
-                    />
+                     <Link to={`/watchlist/${stock.symbol}`}>
+                      <StockCard 
+                        key={index} 
+                        stock={stock} 
+                        showVolume 
+                        showMarketCap 
+                        onSelect={setSelectedStock}
+                      />
+                    </Link>  
                   ))}
                 </div>
               </CardContent>
@@ -206,13 +216,15 @@ const cardsData = (data: any) => [
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                   {data?.active?.map((stock:any, index:any) => (
-                    <StockCard 
-                      key={index} 
-                      stock={stock} 
-                      showVolume 
-                      showMarketCap 
-                      onSelect={setSelectedStock}
-                    />
+                    <Link to={`/watchlist/${stock.symbol}`}>
+                      <StockCard 
+                        key={index} 
+                        stock={stock} 
+                        showVolume 
+                        showMarketCap 
+                        onSelect={setSelectedStock}
+                      />
+                    </Link> 
                   ))}
                 </div>
               </CardContent>
