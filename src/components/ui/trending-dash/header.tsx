@@ -9,10 +9,11 @@ interface HeaderProps {
     refreshing: boolean;
     setSearchTerm: React.Dispatch<SetStateAction<string>>;
     setUserChoice: any;
-    userChoice: any
+    userChoice: any;
+    onRefresh:any
 }
 
-const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, setUserChoice }) => {
+const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, setUserChoice ,  onRefresh }) => {
     return (
         <div className="bg-white border-b relative">
             <div className="max-w-7xl mx-auto px-6 py-4">
@@ -29,6 +30,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, refreshing, setSearchTerm, 
 
                         <Button
                             disabled={refreshing}
+                            onClick={onRefresh}
                             className=" h-10  "
                         >
                             <RefreshCw className={`h-4 w-4  ${refreshing ? 'animate-spin' : ''}`} />

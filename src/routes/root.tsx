@@ -1,15 +1,18 @@
 import Nav from "@/components/nav";
 import { Outlet, useNavigation } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { RefObject } from "react";
 import Header from "@/components/ui/header";
 import { motion } from "motion/react";
 import { ClipLoader } from "react-spinners";
+import ScrollToTop from "@/scroll-to-top";
 
 
 const Root: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);  
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
+  const scrollContainerRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
   
   return (
     <main className="flex min-h-[100vh] h-fit pb-16 md:pb-0 overflow-hidden">
@@ -26,9 +29,14 @@ const Root: React.FC = () => {
           transition={{ duration: 0.3 }}
         >
          
-          <div className="absolute inset-0 mt-16 overflow-auto">
+          <div ref={scrollContainerRef} className="absolute inset-0 mt-16 overflow-auto">
             <div className="min-h-full py-16 md:px-8">
-             {isLoading ? <div className="h-screen grid place-items-center"><ClipLoader   /></div> : <Outlet/>}
+             {isLoading ? <div className="h-screen grid place-items-center"><ClipLoader   /></div> :
+              <>
+                <ScrollToTop scrollContainerRef={scrollContainerRef}/>
+                <Outlet/>
+             
+             </>}
             </div>
           </div>
         </motion.div>

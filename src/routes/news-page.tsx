@@ -88,7 +88,6 @@ const NewsPage = () => {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    // Simulate refresh - replace with actual API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     window.location.reload();
   };
@@ -194,11 +193,14 @@ const NewsPage = () => {
     </div>
   );
 
-  const renderFiltersAndActions = () => (
-    <div className="md:grid md:grid-cols-3 scrollbar-hide flex overflow-auto place-items-center gap-3 mb-6 md:p-4 bg-gray-50 rounded-lg items-center">
-      <div className="flex h-10 gap-2">
+ const renderFiltersAndActions = () => (
+  <div className="mb-6 space-y-3">
+   
+    <div className="md:hidden space-y-3">
+     
+      <div className="flex gap-2">
         <Select value={sortBy} onValueChange={(val: any) => setSortBy(val)}>
-          <SelectTrigger className="md:w-40 h-full">
+          <SelectTrigger className="flex-1 h-11">
             <Clock className="w-4 h-4 mr-2" />
             <SelectValue />
           </SelectTrigger>
@@ -210,7 +212,7 @@ const NewsPage = () => {
         </Select>
 
         <Select value={filterSource} onValueChange={setFilterSource}>
-          <SelectTrigger className="md:w-40 h-full">
+          <SelectTrigger className="flex-1 h-11">
             <Filter className="w-4 h-4 mr-2" />
             <SelectValue />
           </SelectTrigger>
@@ -224,45 +226,124 @@ const NewsPage = () => {
           </SelectContent>
         </Select>
       </div>
-      
-      <div className="flex flex-shrink-0 w-[95%] gap-2 items-center h-9">
+
+   
+      <div className="flex gap-2">
         <Button
-          className="text-xs shadow-xs grid place-items-center rounded-sm h-full border w-1/2"
+          variant="outline"
+          className="flex-1 h-11"
           onClick={handleRefresh}
           disabled={refreshing}
         >
           <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+          Refresh
         </Button>
 
         <Button
-          className="text-xs shadow-xs flex items-center rounded-sm justify-center h-full border w-1/2"
+          variant={autoRefresh ? "default" : "outline"}
+          className="flex-1 h-11"
           onClick={() => setAutoRefresh(!autoRefresh)}
         >
           <TrendingUp className="w-4 h-4 mr-2" />
-          Auto-refresh {autoRefresh ? 'ON' : 'OFF'}
+          Auto {autoRefresh ? 'ON' : 'OFF'}
         </Button>
       </div>
-      
-      <div className="flex flex-shrink-0 items-center text-xs md:text-sm text-gray-600 h-10">
-        Showing {paginatedNews.length} of {processedNews.length} articles
+
+      <div className="text-center text-sm text-gray-600 py-2 bg-white rounded-lg border">
+        Showing <span className="font-semibold">{paginatedNews.length}</span> of{' '}
+        <span className="font-semibold">{processedNews.length}</span> articles
       </div>
     </div>
-  );
+
+   
+    <div className="hidden md:grid md:grid-cols-12 gap-4 items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border shadow-sm">
+    
+      <div className="col-span-5 flex gap-3">
+        <Select value={sortBy} onValueChange={(val: any) => setSortBy(val)}>
+          <SelectTrigger className="flex-1 h-10 bg-white">
+            <Clock className="w-4 h-4 mr-2 text-gray-600" />
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="newest">
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-2" />
+                Newest First
+              </div>
+            </SelectItem>
+            <SelectItem value="oldest">
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-2" />
+                Oldest First
+              </div>
+            </SelectItem>
+            <SelectItem value="relevance">
+              <div className="flex items-center">
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Most Relevant
+              </div>
+            </SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select value={filterSource} onValueChange={setFilterSource}>
+          <SelectTrigger className="flex-1 h-10 bg-white">
+            <Filter className="w-4 h-4 mr-2 text-gray-600" />
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Sources</SelectItem>
+            {uniqueSources.map(source => (
+              <SelectItem key={source} value={source!}>
+                {source}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Actions Section - 4 columns */}
+      <div className="col-span-4 flex gap-2">
+        <Button
+          variant="outline"
+          className="flex-1 h-10 bg-white hover:bg-gray-50"
+          onClick={handleRefresh}
+          disabled={refreshing}
+        >
+          <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+          <span className="hidden lg:inline">Refresh</span>
+        </Button>
+
+        <Button
+          variant={autoRefresh ? "default" : "outline"}
+          className={`flex-1 h-10 ${autoRefresh ? 'bg-blue-600 hover:bg-blue-700' : 'bg-white hover:bg-gray-50'}`}
+          onClick={() => setAutoRefresh(!autoRefresh)}
+        >
+          <TrendingUp className="w-4 h-4 mr-2" />
+          <span className="hidden lg:inline">Auto</span>
+          <span className="lg:hidden">{autoRefresh ? 'ON' : 'OFF'}</span>
+          <span className="hidden lg:inline ml-1">{autoRefresh ? 'ON' : 'OFF'}</span>
+        </Button>
+      </div>
+
+      {/* Article Count - 3 columns */}
+      <div className="col-span-3 text-right">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-lg border text-sm">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span className="text-gray-600">
+            <span className="font-semibold text-gray-900">{paginatedNews.length}</span>
+            <span className="text-gray-400 mx-1">/</span>
+            <span className="font-semibold text-gray-900">{processedNews.length}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
   const renderPagination = () => (
     totalPages > 1 && (
-      <div className="flex justify-center items-center gap-2 mt-8">
-        <Button
-          className="bg-black text-white p-2 md:text-md text-sm"
-          disabled={currentPage === 1}
-          onClick={() => {
-            setCurrentPage(currentPage - 1)
-            newsContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }}
-        >
-          Previous
-        </Button>
-        
+      <div className="flex flex-col justify-center items-center gap-2 mt-8">
         <div className="flex gap-5">
           {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
             const pageNum = currentPage <= 3 ? i + 1 : currentPage - 2 + i;
@@ -283,7 +364,18 @@ const NewsPage = () => {
           })}
         </div>
 
-        <Button
+        <div className="flex gap-7">
+           <Button
+          className="bg-black text-white p-2 md:text-md text-sm"
+          disabled={currentPage === 1}
+          onClick={() => {
+            setCurrentPage(currentPage - 1)
+            newsContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
+          Previous
+        </Button>
+         <Button
           className="text-white bg-black p-2 px-4 md:text-md text-sm"
           disabled={currentPage === totalPages}
           onClick={() => {
@@ -293,12 +385,13 @@ const NewsPage = () => {
         >
           Next
         </Button>
+        </div>
       </div>
     )
   );
 
   return (
-    <div ref={newsContainerRef} className="p-6 space-y-8 relative overflow-hidden">
+    <div ref={newsContainerRef} className="w-[94%] mx-auto space-y-8 relative overflow-hidden">
       {showScrollTop && (
         <Button
           className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg"
@@ -309,7 +402,7 @@ const NewsPage = () => {
       )}
 
       <Tabs value={type === "company" ? "company" : category} onValueChange={handleTabChange}>
-        <TabsList className="mb-6 sticky h-10 md:h-12 snap-x snap-mandatory scroll-smooth z-30 md:grid gap-5 md:grid-cols-6 flex w-full overflow-x-auto scrollbar-hide justify-start lg:w-auto pl-2 lg:justify-center top-8">
+        <TabsList className="mb-6 sticky h-10 md:h-12 snap-x snap-mandatory scroll-smooth z-30 md:grid gap-5 md:grid-cols-6 flex w-full overflow-x-auto scrollbar-hide justify-start lg:w-auto pl-2 lg:justify-center top-0">
           <TabsTrigger className="" value="general">📰 General</TabsTrigger>
           <TabsTrigger value="crypto">💰 Crypto</TabsTrigger>
           <TabsTrigger value="forex">💱 Forex</TabsTrigger>
@@ -336,10 +429,11 @@ const NewsPage = () => {
             <>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {paginatedNews.map((item) => (
-                  <div key={item.id || item.datetime} className="relative group h-full">
+                  <div key={item.id || item.datetime} className="relative group flex flex-col h-full">
                     <NewsCard item={item} />
                     
-                    <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                   
+                    <div className="absolute bottom-6 right-5 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex gap-1">
                       <Button
                         className="h-8 w-8"
                         onClick={() => toggleBookmark(String(item.id) || String(item.datetime) || "")}
@@ -458,7 +552,8 @@ const NewsPage = () => {
                   <div key={item.id || item.datetime} className="relative group">
                     <NewsCard item={item} />
                     
-                    <div className="absolute bottom-0 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                    {/* Always visible on mobile, hover on desktop */}
+                    <div className="absolute bottom-0 right-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex gap-1">
                       <Button
                         className="h-8 w-8"
                         onClick={() => toggleBookmark(String(item.id) || item.datetime?.toString() || "")}

@@ -31,11 +31,11 @@ const NewsCard = ({ item }: { item: NewsItem }) => {
   };
 
   return (
-    <Card className="hover:shadow-md transition h-full">
+    <Card className="hover:shadow-md pt-0 rounded-3xl md:pb-5 pb-16  transition h-full">
       <img
         src={item.image || "/placeholder-news.png"}
         alt={item.headline}
-        className="rounded-t-2xl h-40 w-full object-cover"
+        className="rounded-t-3xl w-full object-cover"
         loading="lazy"
       />
       <CardHeader>

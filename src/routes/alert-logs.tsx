@@ -8,7 +8,7 @@ import { Loader2, XCircle, Edit3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLoaderData } from "react-router-dom"
 import { submitChanges } from "@/lib/utils"
-import { MdTune } from 'react-icons/md'
+import AlertsHeader from "@/components/ui/alert/alert-heading"
 
 export default function AlertsList() {
   const [editingAlert, setEditingAlert] = useState<any | null>(null)
@@ -57,20 +57,14 @@ export default function AlertsList() {
   }
 
   return (
-    <div className="space-y-6 font-inter">
-      <div className="bg-white border-b flex top-5 items-center md:justify-start justify-center gap-3 h-20 z-20 text-black">
-        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-          <span className="h-[90%]"><MdTune /></span>
-          Manage Your Alerts
-        </h2>
-        <Badge className="text-purple-500 bg-gray-200 h-5 py-2">Smart Alerts</Badge>
-      </div>
+    <div className="space-y-6 relative font-inter">
+      <AlertsHeader/>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-[90%] mx-auto md:w-full">
         {alerts.map((alert: any, index: number) => (
           <Card 
             key={alert.alert_id} 
-            className="group relative border overflow-hidden bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+            className="group relative border rounded-3xl overflow-hidden bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
             style={{ 
               animationDelay: `${index * 100}ms`,
               animation: 'fadeInUp 0.6s ease-out forwards'
@@ -117,7 +111,7 @@ export default function AlertsList() {
 
               <CardFooter className="pt-0">
                 <Button 
-                  className="w-full bg-black border-0 text-white font-medium transition-all duration-200 hover:shadow-xl hover:scale-[1.02] group flex items-center justify-center gap-2 h-8 md:h-10 rounded-sm"
+                  className="w-full bg-black border-0 rounded-2xl text-white font-medium transition-all duration-200 hover:shadow-xl hover:scale-[1.02] group flex items-center justify-center gap-2 h-9 md:h-10 "
                   onClick={() => edit(alert)}
                 >
                   <Edit3 className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-200" />

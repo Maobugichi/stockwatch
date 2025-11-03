@@ -27,6 +27,7 @@ import StockDashboard from "./routes/trending";
 import { AuthProvider } from "./hooks/authContext";
 
 
+
 async function initErudaIfDebug() {
   if (localStorage.getItem("debug") === "true") {
     const eruda = await import("eruda");
@@ -98,11 +99,14 @@ const router = createHashRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    
       <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ContextProvider>
+          
           <RouterProvider router={router} />
           <Notifications/>
+          
           <Toaster position="top-right" richColors closeButton/>
         </ContextProvider>
       </AuthProvider>

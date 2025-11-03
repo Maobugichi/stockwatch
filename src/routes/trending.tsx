@@ -23,7 +23,7 @@ import api from '@/lib/axios-config';
 
 
 const StockDashboard = () => {
-  const { data , isLoading ,  isError } = useQuery({queryKey:['port'], queryFn: async() => {
+  const { data , isLoading ,  isError , refetch } = useQuery({queryKey:['port'], queryFn: async() => {
     const response = await api.get(`/api/trending-stock`)
     return response.data
   }});
@@ -37,10 +37,17 @@ const StockDashboard = () => {
 
   const navigate = useNavigate();
  
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState<string>("overview");
+ 
+   const handleRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
  
   useEffect(() => {
-  setRefreshing(false);console.log(selectedStock)
+   setRefreshing(false);
+   console.log(selectedStock)
   },[]);
 
 if (isLoading) return <ClipLoader size={40}/>
@@ -86,7 +93,14 @@ const cardsData = (data: any) => [
 
   return (
     <div className="min-h-screen font-inter font-semibold">
-      <Header searchTerm={searchTerm} refreshing={refreshing} setSearchTerm={setSearchTerm} setUserChoice={setUserChoice} userChoice={userChoice}/>
+      <Header 
+      searchTerm={searchTerm} 
+      refreshing={refreshing} 
+      setSearchTerm={setSearchTerm} 
+      setUserChoice={setUserChoice} 
+      userChoice={userChoice}
+      onRefresh={handleRefresh}
+      />
     
       <div className="max-w-7xl overflow-auto mx-auto px-6 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
