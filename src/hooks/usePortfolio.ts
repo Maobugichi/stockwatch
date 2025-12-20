@@ -78,13 +78,10 @@ export function useAddPortfolioHolding() {
       return response.data;
     },
 
-    onMutate: async (newHolding) => {
+    onMutate: async () => {
    
       await queryClient.cancelQueries({ queryKey: ["dashboard", userId] });
 
-     
-
-      // Optimistically update
       return { previousDashboard: null };
     },
 

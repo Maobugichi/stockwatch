@@ -23,11 +23,11 @@ import { Button } from "./button";
 
 interface HeaderProp {
   style?: any;
-  isOpen:boolean
+  isOpen?:boolean
 }
 
 
-const Header: React.FC<HeaderProp> = ({ style , isOpen }) => {
+const Header: React.FC<HeaderProp> = ({ style  }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [userChoice, setUserChoice] = useState<UserChoiceType>({
     ticker: "",
