@@ -5,8 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList, CommandEmpty } from "@/components/ui/command"
 import { handleUserChoice } from "@/lib/utils"
 import { useContext } from "react";
-import { MyContext } from "@/components/context";
-
+import { AlertContext } from "@/components/context";
 import { useAddPortfolioHolding } from "@/hooks/usePortfolio"
 import { useAddToWatchlist } from "@/hooks/useWatchList"
 import { useDebouncedTickerSearch } from "@/hooks/useTickerSearch"
@@ -20,6 +19,7 @@ interface HoldingsProp {
     setUserChoice: React.Dispatch<SetStateAction<any>>;
     type: "portfolio" | "watchlist"; 
     header: any;
+    buttonClass?: string;
 }
 
 const Holdings: React.FC<HoldingsProp> = ({ 
@@ -28,75 +28,73 @@ const Holdings: React.FC<HoldingsProp> = ({
     userChoice, 
     setUserChoice, 
     header, 
-    type 
+    type,
+    buttonClass = 'p-0 bg-transparent hover:bg-gray-200 w-full flex justify-start text-black'
 }) => {
-    const myContext = useContext(MyContext);
+    const myContext = useContext(AlertContext);
     if (!myContext) throw new Error("MyContext must be used inside provider");
     
-   
     const { setNotification } = myContext;
     const [query, setQuery] = useState("");
     
-   
     const { data: options = [], isLoading: isSearching } = useDebouncedTickerSearch(query);
     
-    // Mutation hooks
     const addHolding = useAddPortfolioHolding();
     const addToWatchlist = useAddToWatchlist();
     
-    // Determine which mutation to use
-    const isPortfolio = type === "portfolio";
-    const isPending = isPortfolio ? addHolding.isPending : addToWatchlist.isPending;
+   
+    const config = {
+        portfolio: {
+            mutation: addHolding,
+            validate: () => {
+                if (!userChoice.shares || Number(userChoice.shares) <= 0) {
+                    toast.error("Please enter valid number of shares");
+                    return false;
+                }
+                if (!userChoice.buyPrice || Number(userChoice.buyPrice) <= 0) {
+                    toast.error("Please enter valid buy price");
+                    return false;
+                }
+                return true;
+            },
+            payload: userChoice,
+            title: "Add to Portfolio",
+            loadingText: "Adding to Portfolio..."
+        },
+        watchlist: {
+            mutation: addToWatchlist,
+            validate: () => true,
+            payload: userChoice.ticker,
+            title: "Add to Watchlist",
+            loadingText: "Adding to Watchlist..."
+        }
+    };
+
+    const currentConfig = config[type];
+    const isPending = currentConfig.mutation.isPending;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Validation
         if (!userChoice.ticker) {
             toast.error("Please select a stock");
             return;
         }
 
-        if (isPortfolio) {
-            if (!userChoice.shares || Number(userChoice.shares) <= 0) {
-                toast.error("Please enter valid number of shares");
-                return;
-            }
-            if (!userChoice.buyPrice || Number(userChoice.buyPrice) <= 0) {
-                toast.error("Please enter valid buy price");
-                return;
-            }
-        }
+        if (!currentConfig.validate()) return;
 
         try {
-            if (isPortfolio) {
-                await addHolding.mutateAsync(userChoice);
-                
-                setNotification({
-                    message: `Successfully added ${userChoice.ticker} to portfolio`,
-                    type: 'success'
-                });
-            } else {
-              
-                await addToWatchlist.mutateAsync(userChoice.ticker);  
-                setNotification({
-                    message: `Successfully added ${userChoice.ticker} to watchlist`,
-                    type: 'success'
-                });
-            }
-
-            // Reset form
-            setQuery("");
-            setUserChoice({
-                ticker: "",
-                shares: "",
-                buyPrice: ""
+            await currentConfig.mutation.mutateAsync(currentConfig.payload);
+            
+            setNotification({
+                message: `Successfully added ${userChoice.ticker} to ${type}`,
+                type: 'success'
             });
 
-            // Close dialog after short delay
-            setTimeout(() => {
-                setOpen(false);
-            }, 1500);
+            setQuery("");
+            setUserChoice({ ticker: "", shares: "", buyPrice: "" });
+            
+            setTimeout(() => setOpen(false), 1500);
 
         } catch (err) {
             console.error("Failed to submit:", err);
@@ -110,15 +108,14 @@ const Holdings: React.FC<HoldingsProp> = ({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button onClick={() => setOpen(prev => !prev)}>
-                    {header}
+                <Button className={buttonClass} onClick={() => setOpen(prev => !prev)}>
+                    {header} 
+                    <span>{currentConfig.title}</span>
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>
-                        {isPortfolio ? "Add to Portfolio" : "Add to Watchlist"}
-                    </DialogTitle>
+                    <DialogTitle>{currentConfig.title}</DialogTitle>
                 </DialogHeader>
                 <form 
                     onSubmit={handleSubmit}
@@ -175,8 +172,7 @@ const Holdings: React.FC<HoldingsProp> = ({
                         </Command>
                     </div>
                     
-                    {/* Only show these fields for portfolio */}
-                    {isPortfolio && (
+                    {type === "portfolio" && (
                         <>
                             <div>
                                 <label htmlFor="shares">Shares</label>
@@ -215,7 +211,7 @@ const Holdings: React.FC<HoldingsProp> = ({
                         {isPending ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {isPortfolio ? "Adding to Portfolio..." : "Adding to Watchlist..."}
+                                {currentConfig.loadingText}
                             </>
                         ) : (
                             'Submit'

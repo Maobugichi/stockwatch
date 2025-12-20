@@ -1,20 +1,15 @@
-import { 
-  ArrowDownRight, 
-  ArrowUpRight ,
-  Wallet,
-  TrendingUp,
-  TrendingDown, } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {  XAxis, YAxis , ResponsiveContainer,  LineChart, Line, } from "recharts";
 import { Tooltip } from "recharts";
-import { Badge } from "../badge";
+import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-
+import { WalletIcon , CaretUpIcon, CaretDownIcon } from "@phosphor-icons/react";
 
 const iconMap = {
-  wallet: Wallet,
-  up: TrendingUp,
-  down: TrendingDown,
+  wallet: WalletIcon,
+  up: CaretUpIcon,
+  down: CaretDownIcon,
 };
 
 
@@ -75,7 +70,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
         <div className="grid grid-cols-1  md:grid-cols-3 gap-4">
                {summaryCards.map((card, idx) => {
                     const Icon = card.icon ? iconMap[card.icon] : null;
-                    const TrendIcon = card.trend === "up" ? ArrowUpRight : card.trend === "down" ? ArrowDownRight : null;
+                    const TrendIcon = card.trend === "up" ? CaretUpIcon : card.trend === "down" ? CaretDownIcon : null;
                  
                     return (
                     <Card  className="rounded-3xl " key={idx}>
@@ -90,7 +85,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                                 ? "bg-red-50"
                                 : "bg-blue-50"
                             } transition-transform group-hover:scale-110 duration-300`}>
-                                <Icon className={`w-5 h-5 ${
+                                <Icon weight="fill" className={` ${
                                 card.color.includes("green") 
                                     ? "text-green-600"
                                     : card.color.includes("red")
@@ -103,7 +98,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                             <div className={`p-1.5 rounded-lg ${
                                 card.trend === "up" ? "bg-green-50" : "bg-red-50"
                             }`}>
-                                <TrendIcon className={`w-4 h-4 ${
+                                <TrendIcon weight="fill" className={` ${
                                 card.trend === "up" ? "text-green-600" : "text-red-600"
                                 }`} />
                             </div>

@@ -60,16 +60,16 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      {/* Desktop Navigation */}
+     
       <motion.div
         initial={{ width: 60 }}
         animate={{ width: isOpen ? 200 : 60 }}
         transition={{ duration: 0.3, type: "spring", stiffness: 20 }}
-        className="hidden md:flex h-screen bg-gray-900 text-white flex-col gap-5 overflow-hidden"
+        className="hidden md:flex  pt-16 h-screen bg-gray-900 text-white flex-col gap-5 overflow-hidden"
       >
-        <div className="p-2">
+        <div className="p-2 ">
           <Button
-            className="w-full justify-center"
+            className={`w-10 bg-transparent justify-center`}
             onClick={handleToggleNav}
             aria-label={isOpen ? "Collapse navigation" : "Expand navigation"}
           >

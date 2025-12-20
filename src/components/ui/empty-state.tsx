@@ -136,13 +136,14 @@ const FullPageEmptyState = () => {
             Begin tracking your investments and watch your wealth grow.
           </p>
           
-          <div className="pt-4">
+          <div className=" bg-red-500">
             <Holdings
             header={<PlusCircle size={20}/> }
             type="portfolio"
             open={open}
             setOpen={setOpen}
             userChoice={userChoice}
+            buttonClass='bg-black'
             setUserChoice={setUserChoice}
             />
           </div>

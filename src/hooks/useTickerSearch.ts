@@ -1,4 +1,4 @@
-// hooks/useTickerSearch.ts
+import { useState, useEffect } from "react";
 import api from "@/lib/axios-config";
 import { useQuery } from "@tanstack/react-query";
 
@@ -31,7 +31,7 @@ export function useTickerSearch(query: string) {
 }
 
 
-import { useState, useEffect } from "react";
+
 
 export function useDebouncedTickerSearch(query: string, delay: number = 300) {
   const [debouncedQuery, setDebouncedQuery] = useState(query);

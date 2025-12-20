@@ -1,8 +1,3 @@
-import { useEffect, useState, useContext } from "react";
-import { MyContext } from "../context";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import {
     Card,
     CardContent
@@ -32,89 +27,28 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { getTicker } from "@/lib/utils";
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { BellPlus } from "lucide-react";
-
-const alertSchema = z.object({
-    symbol: z.string().min(1, "Stock symbol is required"),
-    conditions: z.array(
-        z.object({
-            type: z.enum(["price_above", "price_below", "volume_above"]),
-            value: z.string().min(1, "Value is required").refine(
-                (val) => !isNaN(Number(val)) && Number(val) > 0,
-                "Value must be a positive number"
-            )
-        })
-    ).min(1, "At least one condition is required")
-});
-
-type AlertFormValues = z.infer<typeof alertSchema>;
+import { useAlertForm } from "../features/alerts/hooks/useAlerts";
 
 const CreateAlertForm = () => {
-    const myContext = useContext(MyContext);
-    if (!myContext) throw new Error("MyContext must be used inside provider");
-
-    const { setNotification } = myContext;
-    const [query, setQuery] = useState<string>("");
-    const [options, setOptions] = useState<any>([]);
-    const [open, setOpen] = useState<boolean>(false);
-    
-    const form = useForm<AlertFormValues>({
-        resolver: zodResolver(alertSchema),
-        defaultValues: {
-            symbol: "",
-            conditions: [{ type: "price_above", value: "" }]
-        }
-    });
-
-    const conditions = form.watch("conditions");
-
-    const handleAddCondition = () => {
-        const currentConditions = form.getValues("conditions");
-        form.setValue("conditions", [...currentConditions, { type: "price_above", value: "" }]);
-    }
-
-    const onSubmit = async (data: AlertFormValues) => {
-        try {
-            // Your alert creation logic here
-            console.log("Form data:", data);
-            
-            
-            
-            setNotification({
-                type: "success",
-                message: "Alert created successfully!"
-            });
-            
-            // Reset form and close dialog
-            form.reset();
-            setQuery("");
-            setOpen(false);
-        } catch (error) {
-            setNotification({
-                type: "error",
-                message: "Failed to create alert"
-            });
-        }
-    }
-
-    useEffect(() => {
-        const delay = setTimeout(() => {
-            if (!query) {
-                setOptions([])
-                return
-            }
-            getTicker(query, setOptions)
-        }, 300);
-
-        return () => clearTimeout(delay)
-    }, [query])
+    const {
+        form,
+        query,
+        setQuery,
+        options,
+        open,
+        setOpen,
+        conditions,
+        handleAddCondition,
+        onSubmit,
+        isSubmitting
+    } = useAlertForm();
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="">
+                <Button className="bg-transparent">
                     <BellPlus size={20} />
                 </Button>
             </DialogTrigger>
@@ -125,8 +59,8 @@ const CreateAlertForm = () => {
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <Card className="shadow-none border-0">
-                            <CardContent className="space-y-4 pt-4">
+                        <Card className="  shadow-none border-0">
+                            <CardContent className="space-y-4 px-0 pt-4">
                                 <FormField
                                     control={form.control}
                                     name="symbol"
@@ -145,14 +79,13 @@ const CreateAlertForm = () => {
                                                     <CommandList>
                                                         <CommandGroup heading="Items">
                                                             {
-                                                                options.map((item: any) => (
+                                                               Array.isArray(options) && options.map((item: any) => (
                                                                     <CommandItem
                                                                         key={item.symbol}
                                                                         value={`${item.symbol} ${item.name}`}
                                                                         onSelect={() => {
                                                                             field.onChange(item.symbol);
                                                                             setQuery(item.symbol + " - " + item.name)
-                                                                            setOptions([])
                                                                         }}
                                                                     >
                                                                         {item.symbol} - {item.name}
@@ -170,7 +103,7 @@ const CreateAlertForm = () => {
                             </CardContent>
                         </Card>
 
-                        {conditions.map((cond, i) => (
+                        {conditions.map((cond:any, i:number) => (
                             
                             <div key={i} className="flex items-end justify-between gap-4">
                                 <FormField
@@ -183,7 +116,7 @@ const CreateAlertForm = () => {
                                                 value={field.value}
                                                 onValueChange={field.onChange}
                                             >
-                                                <span>{cond.type}</span>
+                                                <span className="text-sm text-muted-foreground">{cond.type}</span>
                                                 <FormControl>
                                                     <SelectTrigger className="w-full">
                                                         <SelectValue placeholder="Select condition" />
@@ -210,7 +143,7 @@ const CreateAlertForm = () => {
                                     name={`conditions.${i}.value`}
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
-                                            <FormLabel>Value</FormLabel>
+                                            <FormLabel className="text-sm text-muted-foreground">Value</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="number"
@@ -226,14 +159,15 @@ const CreateAlertForm = () => {
                             </div>
                         ))}
 
-                        <div>
+                        <div className="flex justify-between">
                             <Button type="button" className="" onClick={handleAddCondition}>
                                 + Add Condition
                             </Button>
+                            <Button type="submit" className="" disabled={isSubmitting}>
+                                {isSubmitting ? "Saving..." : "Save Alert"}
+                            </Button>
                         </div>
-                        <Button type="submit" className="">
-                            Save Alert
-                        </Button>
+                        
                     </form>
                 </Form>    
             </DialogContent>

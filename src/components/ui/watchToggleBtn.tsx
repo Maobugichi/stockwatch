@@ -13,7 +13,7 @@ export function WatchlistToggleButton({ ticker }: { ticker: string }) {
       size="sm"
       onClick={() => toggle(ticker)}
       disabled={isPending}
-      className="gap-2 w-28"
+      className="gap-2 w-fit"
     >
       {isPending ? (
         <ClipLoader />

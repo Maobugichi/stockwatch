@@ -14,9 +14,7 @@ interface UserContext {
     setNotification:React.Dispatch<SetStateAction<NotifProp>>
 }
 
-
-
-const MyContext = createContext<UserContext | undefined>(undefined);
+const AlertContext = createContext<UserContext | undefined>(undefined);
 
 const ContextProvider:React.FC<ContextProps> = ({ children }) => {
     const [ notification, setNotification ] = useState<NotifProp>({
@@ -29,7 +27,7 @@ const ContextProvider:React.FC<ContextProps> = ({ children }) => {
         [notification]
     );
 
-     return <MyContext.Provider value={contextValue}>{children}</MyContext.Provider>;
+     return <AlertContext.Provider value={contextValue}>{children}</AlertContext.Provider>;
 };
 
-export { MyContext , ContextProvider}
+export { AlertContext , ContextProvider}

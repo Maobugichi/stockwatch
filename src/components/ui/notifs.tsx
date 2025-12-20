@@ -1,11 +1,11 @@
 import { useEffect, useContext } from "react";
 import { socket } from "@/lib/socket";
 import { toast } from "sonner";
-import { MyContext } from "../context";
+import { AlertContext } from "../context";
 
 
 const Notifications = () => {
-   const myContext = useContext(MyContext);
+   const myContext = useContext(AlertContext);
    if (!myContext) throw new Error("ShowContext must be used within a ContextProvider");
 
    const { notification } = myContext;

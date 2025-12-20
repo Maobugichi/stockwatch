@@ -6,6 +6,7 @@ import Header from "@/components/ui/header";
 import { motion } from "motion/react";
 import { ClipLoader } from "react-spinners";
 import ScrollToTop from "@/scroll-to-top";
+import { StockDashboardProvider } from "@/components/features/dashboard/context";
 
 
 const Root: React.FC = () => {
@@ -21,7 +22,7 @@ const Root: React.FC = () => {
         <Nav isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
       </div>    
       <div className="flex flex-col flex-1 min-w-0 w-0">
-        <Header style={{}}/>
+        <Header isOpen={isNavOpen} style={{}}/>
         <motion.div
           className="flex-1 overflow-x-auto md:overflow-hidden relative"
           initial={{ opacity: 0 }}
@@ -30,12 +31,13 @@ const Root: React.FC = () => {
         >
          
           <div ref={scrollContainerRef} className="absolute inset-0 mt-16 overflow-auto">
-            <div className="min-h-full py-16 md:px-8">
+            <div className="min-h-full py-5 ">
              {isLoading ? <div className="h-screen grid place-items-center"><ClipLoader   /></div> :
               <>
                 <ScrollToTop scrollContainerRef={scrollContainerRef}/>
-                <Outlet/>
-             
+                <StockDashboardProvider>
+                 <Outlet/>
+                </StockDashboardProvider>
              </>}
             </div>
           </div>

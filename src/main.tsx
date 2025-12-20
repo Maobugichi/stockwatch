@@ -1,5 +1,5 @@
 import {
-  createHashRouter,
+  createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import { StrictMode } from 'react'
@@ -19,12 +19,12 @@ import StockDetails from "./components/ui/stock-details";
 import AlertsList from "./routes/alert-logs";
 import  NewsPage from "./routes/news-page";
 import Onboarding from "./components/ui/onboarding/onboardingStepper";
-
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Hydrate from "./App";
 import StockDashboard from "./routes/trending";
 import { AuthProvider } from "./hooks/authContext";
+
 
 
 
@@ -39,7 +39,7 @@ async function initErudaIfDebug() {
 
 initErudaIfDebug();
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element:<Root/>,
@@ -47,6 +47,7 @@ const router = createHashRouter([
     children: [{
         index:true,   
         element: <StockDashboard/>,
+        errorElement:<ErrorPage/>,
         HydrateFallback: HydrateFallback, 
     },
     {
@@ -84,15 +85,15 @@ const router = createHashRouter([
   }
   ,
   {
-    path:"/signup/",
+    path:"/signup",
     element:<SignUp/>
   },
   {
-    path:"/login/",
+    path:"/login",
     element:<Login/>
   },
   {
-    path:"/onboarding/",
+    path:"/onboarding",
     element:<Onboarding/>   
   }
 ]);
@@ -103,11 +104,11 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ContextProvider>
-          
-          <RouterProvider router={router} />
-          <Notifications/>
-          
-          <Toaster position="top-right" richColors closeButton/>
+        
+           <RouterProvider router={router} />
+           <Notifications/>
+           <Toaster position="top-right" richColors closeButton/>
+           
         </ContextProvider>
       </AuthProvider>
       </QueryClientProvider>

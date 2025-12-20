@@ -5,16 +5,15 @@ interface StatCardProps {
   icon: React.ReactNode;
   value: number;
   description: string;
-  gradientClass: string;
+  gradientClass?: string;
 }
 
 const StatCard = ({ title, icon, value, description, gradientClass }: StatCardProps) => {
   return (
-    <Card className="group border- relative shadow font-inter h-32 rounded-3xl overflow-hidden">
+    <Card className=" group shadow-none relative font-inter h-32 rounded-3xl overflow-hidden">
    
       <div className={`absolute top-0 left-0 right-0 h-1 ${gradientClass} rounded-t-3xl`} />
       
-    
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300s ${gradientClass}`} />
       
       <CardHeader className="h-[20%]">

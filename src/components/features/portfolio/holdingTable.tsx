@@ -120,7 +120,7 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
 
   return (
     <>
-      <Card className="h-full flex flex-col rounded-sm border-none shadow-none md:col-span-2 pb-0">
+      <Card className="flex-1 flex flex-col rounded-sm border-none shadow-none w-full md:w-[68%] pb-0">
         <CardHeader className="text-2xl p-0 shrink-0">
           <CardTitle className="text-lg sm:text-xl md:text-2xl">
             Holdings Breakdown
@@ -142,7 +142,7 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
                 </TableRow>
               </TableHeader>
 
-              <TableBody>
+              <TableBody >
                 {data.breakdown.map((item: any, idx: number) => {
                   const pl =
                     (item.currentPrice - Number(item.buyPrice)) *

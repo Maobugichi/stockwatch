@@ -31,7 +31,7 @@ const NewsCard = ({ item }: { item: NewsItem }) => {
   };
 
   return (
-    <Card className="hover:shadow-md pt-0 rounded-3xl md:pb-5 pb-16  transition h-full">
+    <Card className="hover:shadow-md pt-0 rounded-3xl   transition h-full">
       <img
         src={item.image || "/placeholder-news.png"}
         alt={item.headline}
@@ -39,15 +39,15 @@ const NewsCard = ({ item }: { item: NewsItem }) => {
         loading="lazy"
       />
       <CardHeader>
-        <CardTitle className="text-base">{item.headline}</CardTitle>
+        <CardTitle className="text-base line-clamp-1">{item.headline}</CardTitle>
         <div className="flex justify-between items-center text-xs text-gray-500 mt-1">
           <span>{item.source}</span>
           <span>{formatDate(item.datetime)}</span>
         </div>
       </CardHeader>
-      <CardContent className="text-sm space-y-2">
+      <CardContent className="text-sm grid space-y-5">
         <p className="text-xs text-blue-600 uppercase font-semibold">{item.category}</p>
-        <p className="line-clamp-3">{item.summary}</p>
+        <p className="line-clamp-2">{item.summary}</p>
         {item.related && (
           <div className="flex flex-wrap gap-2 mt-2">
             {item.related.split(",").map((ticker) => (

@@ -149,3 +149,15 @@
     display: none; 
   }
 }
+
+@theme {
+  --font-family-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-family-heading: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+   --animate-shimmer: shimmer 2s ease-in-out infinite;
+}
+
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

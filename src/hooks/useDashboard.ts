@@ -48,7 +48,7 @@ export function usePrefetchDashboard() {
         queryKey: ["dashboard", userId],
         queryFn: async () => {
           const response = await api.get(`/api/portfolio/`,{
-        headers: { "x-requires-auth": true }
+       
       });
           return response.data;
         },

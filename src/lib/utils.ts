@@ -91,9 +91,7 @@ async function stockLoader({params, request}:LoaderFunctionArgs)  {
 
 const getTicker = async(q:string,setOptions:React.Dispatch<SetStateAction<SearchTicker>>) => {
   try {
-      const res:any = await axios.get(`${backendEndpoint}/ticker/${q}`,{
-        withCredentials:true
-      });
+      const res:any = await api.get(`/api/ticker/${q}`);
       setOptions(res.data);
   } catch(err) {
     console.log(err)

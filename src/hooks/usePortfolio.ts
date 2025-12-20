@@ -82,48 +82,10 @@ export function useAddPortfolioHolding() {
    
       await queryClient.cancelQueries({ queryKey: ["dashboard", userId] });
 
-      // Snapshot previous value
-      const previousDashboard = queryClient.getQueryData<DashboardData>([
-        "dashboard",
-        userId,
-      ]);
+     
 
       // Optimistically update
-      queryClient.setQueryData<DashboardData>(
-        ["dashboard", userId],
-        (old) => {
-          if (!old) return old;
-
-          const shares = Number(newHolding.shares);
-          const buyPrice = Number(newHolding.buyPrice);
-
-          const newBreakdownItem: PortfolioBreakdownItem = {
-            symbol: newHolding.ticker,
-            shares: newHolding.shares,
-            buyPrice: newHolding.buyPrice,
-            currentPrice: buyPrice,
-            prevClose: buyPrice,
-            marketCap: 0,
-            peRatio: null,
-            dividendYield: null,
-            valid: true,
-          };
-
-          return {
-            ...old,
-            breakdown: [...(old.breakdown || []), newBreakdownItem],
-            investedAmount: old.investedAmount + shares * buyPrice,
-            meta: old.meta
-              ? {
-                  ...old.meta,
-                  totalHoldings: old.meta.totalHoldings + 1,
-                }
-              : undefined,
-          };
-        }
-      );
-
-      return { previousDashboard };
+      return { previousDashboard: null };
     },
 
     onError: (err, newHolding, context) => {

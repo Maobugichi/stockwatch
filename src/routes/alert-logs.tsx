@@ -16,16 +16,17 @@ export default function AlertsList() {
   const [saving, setSaving] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
   const alerts = useLoaderData() as any[]
+
+
  
   useEffect(() => {
+  
     if (alerts) {
       setLoading(false)
     }
   }, [alerts])
 
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
+
 
   if (loading) {
     return (
@@ -60,11 +61,11 @@ export default function AlertsList() {
     <div className="space-y-6 relative font-inter">
       <AlertsHeader/>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-[90%] mx-auto md:w-full">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-[90%] mx-auto md:w-[95%]">
         {alerts.map((alert: any, index: number) => (
           <Card 
             key={alert.alert_id} 
-            className="group relative border rounded-3xl overflow-hidden bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+            className="group relative border rounded-3xl overflow-hidden bg-white/80 backdrop-blur-sm shadow-sm  transition-all duration-300 "
             style={{ 
               animationDelay: `${index * 100}ms`,
               animation: 'fadeInUp 0.6s ease-out forwards'
