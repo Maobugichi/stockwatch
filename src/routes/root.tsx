@@ -16,7 +16,7 @@ const Root: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
   
   return (
-    <main className="flex min-h-[100vh] h-fit pb-16 md:pb-0 overflow-hidden">
+    <main className="flex bg-[#06070B] min-h-[100vh] h-fit pb-16 md:pb-0 overflow-hidden">
      
       <div className="flex-shrink-0">
         <Nav isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
@@ -31,7 +31,7 @@ const Root: React.FC = () => {
         >
          
           <div ref={scrollContainerRef} className="absolute inset-0 mt-16 overflow-auto">
-            <div className="min-h-full py-5 bg-[#06070B]">
+            <div className="min-h-full py-5 ">
              {isLoading ? <div className="h-screen grid place-items-center"><ClipLoader   /></div> :
               <>
                 <ScrollToTop scrollContainerRef={scrollContainerRef}/>

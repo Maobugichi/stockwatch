@@ -84,7 +84,7 @@ export default function AlertsList() {
                   </CardTitle>
 
                   {alert.active ? (
-                    <Badge className="bg-[#14151C] text-gray-700 border border-[rgba(34,36,45,0.5)]  text-white shadow-sm flex items-center gap-1.5 px-3 py-1">
+                    <Badge className="bg-[#14151C]  border border-[rgba(34,36,45,0.5)]  text-white shadow-sm flex items-center gap-1.5 px-3 py-1">
                       <div className="w-2 h-2 rounded-full bg-green-600 animate-pulse" />
                       Active
                     </Badge>
