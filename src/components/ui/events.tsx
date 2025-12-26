@@ -14,18 +14,18 @@ type EventsInfoTableProps = {
 
 const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
   return (
-    <Card className="rounded-3xl border p-0 bg-card shadow-sm">
+    <Card className="rounded-3xl bg-[#14151C]  border-[rgba(34,36,45,0.5)] border p-0  shadow-sm">
       <Table className="p-0">
         <TableBody>
          
-          <TableRow className="bg-muted/30 hover:bg-muted/30">
-            <TableCell colSpan={2} className="text-lg font-semibold text-muted-foreground p-4">
+          <TableRow className="bg-muted/30 hover:bg-muted/30 ">
+            <TableCell colSpan={2} className="text-lg text-white rounded-t-3xl font-semibold  p-4">
               Upcoming Events
             </TableCell>
           </TableRow>
 
         
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <CalendarDays className="w-4 h-4 text-muted-foreground" />
               Next Earnings
@@ -38,7 +38,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
           </TableRow>
 
           
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <DollarSign className="w-4 h-4 text-muted-foreground" />
               Next Dividend
@@ -52,13 +52,13 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
 
           
           <TableRow className="bg-muted/30 hover:bg-muted/30">
-            <TableCell colSpan={2} className="text-lg font-semibold text-muted-foreground p-3">
+            <TableCell colSpan={2} className="text-lg font-semibold text-white p-3">
               Company Info
             </TableCell>
           </TableRow>
 
           
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Briefcase className="w-4 h-4 text-muted-foreground" />
               Sector
@@ -69,7 +69,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
           </TableRow>
 
           
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Factory className="w-4 h-4 text-muted-foreground" />
               Industry
@@ -80,7 +80,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
           </TableRow>
 
          
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Users className="w-4 h-4 text-muted-foreground" />
               Employees
@@ -91,7 +91,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
           </TableRow>
 
           
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Briefcase className="w-4 h-4 text-muted-foreground" />
               Headquarters
@@ -102,7 +102,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
           </TableRow>
 
           
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               Website
             </TableCell>

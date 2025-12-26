@@ -25,9 +25,9 @@ const EarningsEstimatesChart: React.FC<EarningsEstimatesProps> = ({ stock }) => 
   }, []);
 
   return (
-    <Card className="rounded-3xl w-full">
+    <Card className="rounded-3xl bg-[#14151C] border border-[rgba(34,36,45,0.5)] w-full">
       <CardHeader>
-        <CardTitle className="text-sm sm:text-lg">Earnings Estimates</CardTitle>
+        <CardTitle className="text-sm text-white sm:text-lg">Earnings Estimates</CardTitle>
       </CardHeader>
       <CardContent className="h-64 sm:h-80 p-1 sm:p-3">
         <ResponsiveContainer width="100%" height="100%">

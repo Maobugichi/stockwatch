@@ -1,5 +1,5 @@
 import React, { createContext,  useEffect, useState, type ReactNode } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '@/lib/axios-config';
 import type { UserChoiceTypeWatch } from '@/types';
@@ -8,6 +8,7 @@ interface StockDashboardContextType {
   data: any;
   isLoading: boolean;
   isError: boolean;
+  error:any
   refetch: () => Promise<any>;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -39,14 +40,33 @@ export const StockDashboardProvider: React.FC<StockDashboardProviderProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, refetch } = useQuery({
+  
+  const queryClient = useQueryClient();
+  
+ 
+  useEffect(() => {
+    queryClient.prefetchQuery({
+      queryKey,
+      queryFn: async () => {
+        const response = await api.get(apiEndpoint);
+        return response.data;
+      },
+      staleTime: 5 * 60 * 1000, 
+    });
+  }, []);
+
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey,
     queryFn: async () => {
       const response = await api.get(apiEndpoint);
       return response.data;
     },
+    staleTime: 5 * 60 * 1000, 
+    refetchInterval: 5 * 60 * 1000, 
+    retry: 2, 
   });
 
+  
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -83,6 +103,7 @@ export const StockDashboardProvider: React.FC<StockDashboardProviderProps> = ({
     data,
     isLoading,
     isError,
+    error,
     refetch,
     searchTerm,
     setSearchTerm,

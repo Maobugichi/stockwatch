@@ -78,7 +78,7 @@ const PortfolioDashboard = () => {
 
       <StockNews getNewsData={fetchTrendingNews()} />
 
-     <VolumeChart/>
+      <VolumeChart/>
       <div className="flex md:flex-row flex-col gap-5 h-auto min-h-[350px]">
         <HoldingsTable data={data} />
         <PortfolioPie data={data}  />

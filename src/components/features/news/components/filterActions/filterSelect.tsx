@@ -29,7 +29,7 @@ const FilterSelect = ({
 }: FilterSelectProps) => {
   return (
     <Select   value={value} onValueChange={onChange}>
-      <SelectTrigger className="flex-1 rounded-3xl h-11">
+      <SelectTrigger className="flex-1 bg-[#14151C] text-white border border-[rgba(34,36,45,0.5)] rounded-3xl h-11">
         {icon}
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

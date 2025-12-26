@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {  XAxis, YAxis , ResponsiveContainer,  LineChart, Line, } from "recharts";
 import { Tooltip } from "recharts";
@@ -39,7 +38,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
             title: "Portfolio Value",
             value: `$${data.portfolioValue.toFixed(2)}`,
             sub: `Invested: $${data.investedAmount}`,
-            color: "text-foreground",
+            color: "text-[rgb(252,252,252)]",
             icon: "wallet",
             showRange: true,
         },
@@ -73,7 +72,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                     const TrendIcon = card.trend === "up" ? CaretUpIcon : card.trend === "down" ? CaretDownIcon : null;
                  
                     return (
-                    <Card  className="rounded-3xl " key={idx}>
+                    <Card  className="rounded-3xl border border-[rgba(34,36,45,0.5)] bg-[#14151C] " key={idx}>
                        <CardHeader className="flex  flex-row items-center justify-between ">
                         <CardTitle className="text-sm font-medium text-gray-600">{card.title}</CardTitle>
                         <div className="flex items-center gap-2">
@@ -107,7 +106,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                       </CardHeader>
 
                         <CardContent className="space-y-2">
-                            <div className={`text-3xl font-jet font-bold ${card.color}`}>
+                            <div className={`text-3xl  font-jet font-bold ${card.color}`}>
                                 {card.value}
                             </div>
 

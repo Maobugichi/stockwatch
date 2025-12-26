@@ -9,11 +9,11 @@ import { useStockDashboard } from "@/components/features/dashboard/hooks/useStoc
 const Header = () => {
     const {  refreshing,  handleRefresh  } = useStockDashboard()
     return (
-        <div className="bg-white border-b  relative">
+        <div className="bg-[#06070B]  border-b  border-gray-900/50 text-[rgb(252,252,252)] relative">
             <div className="max-w-7xl mx-auto px-6 py-4">
                 <div className="flex md:flex-row flex-col justify-between gap-3 space-y-3">
                     <div className="flex w-full  items-center gap-4">
-                        <h1 className="text-2xl font-bold text-gray-900">Stock Dashboard</h1>
+                        <h1 className="text-2xl font-bold ">Stock Dashboard</h1>
                         <Badge variant="outline" className="text-green-600 rounded-full mt-1">
                             Live Data
                         </Badge>

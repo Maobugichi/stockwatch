@@ -20,11 +20,11 @@ interface WatchListCardProps {
 export const WatchListCard = ({stock , isUp , handleDeleteClick}:WatchListCardProps) => {
     const deleteHolding = useRemoveFromWatchlist();
     return(
-         <Card key={stock.symbol} className="rounded-3xl shadow-none border-none transition-all duration-200">
+         <Card key={stock.symbol} className="rounded-3xl bg-transparent shadow-none border-none transition-all duration-200">
             <CardHeader className="pb-0">
             <div className="flex justify-between items-center">
                 <div className="space-y-1">
-                <p className="font-semibold">{stock.company_name}</p>
+                <p className="font-semibold text-white">{stock.company_name}</p>
                 <p className="text-xs text-muted-foreground">{stock.symbol}</p>
                 </div>
                 <div className="flex items-center gap-1">
@@ -45,18 +45,18 @@ export const WatchListCard = ({stock , isUp , handleDeleteClick}:WatchListCardPr
                 </div>
             </div>
             </CardHeader>
-            <CardContent className="space-y-2 border rounded-2xl p-5">
+            <CardContent className="bg-[#14151C] border border-[rgba(34,36,45,0.5)] space-y-2 rounded-2xl p-5">
             <div className="flex items-center justify-between">
                 <div className="mt-3 flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-muted-foreground" />
-                <p className="font-bold text-2xl font-jet">
+                <p className="font-bold text-white text-2xl font-jet">
                     {stock.current_price ? stock.current_price.toFixed(2) : "—"}
                 </p>
                 </div>
                 <HoverCard>
                 <HoverCardTrigger asChild>
                     <span>
-                    <Info className="w-4 h-4 cursor-pointer" />
+                    <Info className="w-4 h-4 text-white cursor-pointer" />
                     </span>
                 </HoverCardTrigger>
                 <HoverCardContent className="w-64">
@@ -129,11 +129,11 @@ export const WatchListCard = ({stock , isUp , handleDeleteClick}:WatchListCardPr
                 onClick={() => handleDeleteClick(stock.symbol)}
                 disabled={deleteHolding.isPending}
                 >
-                <Trash2 color="black" />
+                <Trash2 color="white" />
                 </Button>
                 <Link
                 to={`/watchlist/${stock.symbol}`}
-                className="flex items-center gap-1"
+                className="flex text-white items-center gap-1"
                 >
                 View <ArrowUpRight className="w-4 h-4" />
                 </Link>

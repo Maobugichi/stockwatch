@@ -31,7 +31,7 @@ const Root: React.FC = () => {
         >
          
           <div ref={scrollContainerRef} className="absolute inset-0 mt-16 overflow-auto">
-            <div className="min-h-full py-5 ">
+            <div className="min-h-full py-5 bg-[#06070B]">
              {isLoading ? <div className="h-screen grid place-items-center"><ClipLoader   /></div> :
               <>
                 <ScrollToTop scrollContainerRef={scrollContainerRef}/>

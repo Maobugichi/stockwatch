@@ -30,18 +30,17 @@ export const Content = ({
     const { setSelectedStock } = useStockDashboard();
     
     return (
-        <TabsContent value={value} className="space-y-6">
-            <Card className='border-none shadow-none'>
-                <CardHeader>
+        <TabsContent value={value} className="px-0 space-y-6 bg-[#06070B] w-full h-full">
+            <Card className='border-none px-0 bg-[#06070B] text-[rgb(252,252,252)] shadow-none'>
+                <CardHeader className="px-0">
                     <CardTitle className={`flex items-center gap-2 text-xl md:text-2xl ${titleClassName || ''}`}>
-                        
                         {title}
                     </CardTitle>
                     <CardDescription>{description}</CardDescription>
                 </CardHeader>
-                <CardContent className='p-3'>
-                    <ScrollArea className="h-screen md:h-96 w-full px-3">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                <CardContent className='px-0'>
+                    <ScrollArea className="h-screen md:h-96  w-full ">
+                        <div className="w-[95%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                             {data?.map((stock: any, index: number) => (
                                 <Link key={index} to={`/watchlist/${stock.symbol}`}>
                                     <StockCard 

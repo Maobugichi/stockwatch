@@ -10,15 +10,19 @@ import { tabsConfig } from '@/components/features/dashboard/constants';
 
 
 const StockDashboard = () => {
-    const { activeTab, isLoading, setActiveTab, data } = useStockDashboard();
+    const { activeTab, isLoading, setActiveTab, data , isError , error } = useStockDashboard();
+
+    console.log(data)
   
     if (isLoading) return <div className='h-screen grid place-items-center'><ClipLoader size={40}/></div>
 
+    if (isError) return <div className='h-screen grid place-items-center'>{error}</div>
+
     return (
-        <div className="h-auto min-h-[150vh] md:min-h-screen overflow-hidden font-inter space-y-6 font-semibold">
+        <div className="h-auto min-h-[150vh] md:min-h-screen overflow-hidden  font-inter space-y-6 font-semibold">
             <Header/>
-            <div className="w-[95%] max-w-7xl overflow-auto mx-auto px-6 ">
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <div className="w-[95%]  overflow-auto mx-auto px-6 ">
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6 bg-[#06070B]">
                    
                     <TrendingCards/>
                     <TabsListComponent value={activeTab}/>

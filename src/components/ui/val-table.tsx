@@ -22,18 +22,18 @@ type ValuationTableProps = {
 
 const ValuationTable =  ( {stock} :ValuationTableProps) => {
   return (
-    <div className="rounded-3xl border bg-card shadow-sm pb-4">
+    <div className="rounded-3xl bg-[#14151C] border border-[rgba(34,36,45,0.5)]  shadow-sm pb-4">
       <Table>
         <TableBody>
          
-          <TableRow className="bg-muted/30 hover:bg-muted/30">
-            <TableCell colSpan={2} className="text-lg font-semibold text-muted-foreground p-4">
+          <TableRow className="bg-muted/30  hover:bg-muted/30">
+            <TableCell colSpan={2} className="text-lg text-white rounded-t-3xl font-semibold  p-4">
               Valuation
             </TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell className="flex items-center gap-2 p-3">
+          <TableRow className="text-white">
+            <TableCell className="flex items-center  gap-2 p-3">
               <DollarSign className="w-4 h-4 text-muted-foreground" />
               Market Cap
             </TableCell>
@@ -42,17 +42,17 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
             </TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell className="flex items-center gap-2 p-3">
+          <TableRow className="text-white">
+            <TableCell className="flex  items-center gap-2 p-3">
               <BarChart3 className="w-4 h-4 text-muted-foreground" />
               P/E Ratio
             </TableCell>
-            <TableCell className="font-jet text-right font-medium p-3">
+            <TableCell className="font-jet  text-right font-medium p-3">
               {stock.pe_ratio?.toFixed(2) ?? "N/A"}
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <BarChart3 className="w-4 h-4 text-muted-foreground" />
               PEG Ratio
@@ -63,13 +63,13 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
           </TableRow>
 
           
-          <TableRow className="bg-muted/30 hover:bg-muted/30">
-            <TableCell colSpan={2} className="text-sm font-semibold text-muted-foreground p-3">
+          <TableRow className="bg-muted/30 text-white hover:bg-muted/30">
+            <TableCell colSpan={2} className="text-sm font-semibold p-3">
               Risk & Performance
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Activity className="w-4 h-4 text-muted-foreground" />
               Beta
@@ -79,7 +79,7 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <DollarSign className="w-4 h-4 text-muted-foreground" />
               Enterprise Value
@@ -89,7 +89,7 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <BarChart3 className="w-4 h-4 text-muted-foreground" />
               Price/Book
@@ -101,12 +101,12 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
 
         
           <TableRow className="bg-muted/30 hover:bg-muted/30">
-            <TableCell colSpan={2} className="text-sm font-semibold text-muted-foreground p-3">
+            <TableCell colSpan={2} className="text-sm font-semibold text-white p-3">
               Dividends & Shares
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Users className="w-4 h-4 text-muted-foreground" />
               Shares Out.
@@ -116,7 +116,7 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 p-3">
               <Percent className="w-4 h-4 text-muted-foreground" />
               Dividend Yield
@@ -128,7 +128,7 @@ const ValuationTable =  ( {stock} :ValuationTableProps) => {
             </TableCell>
           </TableRow>
 
-          <TableRow>
+          <TableRow className="text-white">
             <TableCell className="flex items-center gap-2 ">
               <BarChart3 className="w-4 h-4 text-muted-foreground" />
               Price/Sales

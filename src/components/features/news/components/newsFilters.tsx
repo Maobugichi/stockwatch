@@ -29,7 +29,7 @@ export const NewsFilters = ({
   const activeFiltersCount = (filterSource !== "all" ? 1 : 0);
   
   return (
-    <div className="flex flex-col rounded-2xl md:flex-row py-5 px-5 shadow-none md:flex-wrap items-center justify-between gap-2 w-full  bg-muted/30  border">
+    <div className="flex flex-col rounded-2xl md:flex-row py-5 px-5 shadow-none md:flex-wrap items-center justify-between gap-2 w-full bg-transparent border border-[rgba(34,36,45,0.5)]">
    
       <div className="flex flex-row flex-wrap    items-center  md:w-fit w-full gap-3 md:gap-2">
           <FilterSelect
@@ -75,9 +75,9 @@ export const NewsFilters = ({
           size="sm"
           onClick={onRefresh}
           disabled={isRefreshing}
-          className="gap-1.5 flex-1 rounded-3xl"
+          className="gap-1.5 flex-1 bg-[#14151C] rounded-3xl border border-[rgba(34,36,45,0.5)]"
         >
-          <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`} />
+          <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""} text-white `} />
           <span className="md:hidden inline">Refresh</span>
         </Button>
 
@@ -85,7 +85,7 @@ export const NewsFilters = ({
           variant={autoRefresh ? "default" : "outline"}
           size="sm"
           onClick={() => setAutoRefresh(!autoRefresh)}
-          className="gap-1.5 min-w-[90px] rounded-3xl flex-1"
+          className="gap-1.5 bg-[#14151C] border border-[rgba(34,36,45,0.5)] text-white min-w-[90px] rounded-3xl flex-1"
         >
           {autoRefresh && <Check className="w-4 h-4" />}
           <span>Auto {autoRefresh ? "ON" : "OFF"}</span>

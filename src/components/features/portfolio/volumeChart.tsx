@@ -13,12 +13,12 @@ export const VolumeChart = () => {
     const { data } = useDashboard();
     const strokeColor = resolveCssVar("--chart-2");
     return(
-      <Card className="md:h-[450px] h-[400px] flex flex-col border-none shadow-none pb-0">
-        <CardHeader className="text-lg sm:text-2xl p-0">
+      <Card className="md:h-[450px] h-[400px] flex flex-col border-none bg-transparent shadow-none pb-0">
+        <CardHeader className="text-lg text-[rgb(252,252,252)] sm:text-2xl p-0">
           <CardTitle>P/L per Holding</CardTitle>
         </CardHeader>
 
-        <CardContent className="flex-1 min-h-0 border rounded-2xl px-2 pt-5 sm:p-3">
+        <CardContent className="flex-1 bg-[#14151C] border-[rgba(34,36,45,0.5)]  min-h-0 border rounded-2xl px-2 pt-5 sm:p-3">
           <ChartContainer
             config={{
               pl: {

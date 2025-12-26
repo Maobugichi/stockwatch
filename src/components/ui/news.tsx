@@ -104,7 +104,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
   const sentimentDisplay = getSentimentDisplay();
 
   return (
-    <div className="relative h-24 md:h-32 w-full overflow-hidden rounded-3xl px-5 border-gray-200 font-space-grotesk tracking-wide border">
+    <div className="border border-[rgba(34,36,45,0.5)] relative h-24 md:h-32 w-full overflow-hidden rounded-3xl px-5 font-space-grotesk tracking-wide ">
       <AnimatePresence mode="wait">
         <motion.div
           key={article.uuid}
@@ -112,7 +112,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -40 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-0 bg-white rounded-2xl shadow-md border-none px-4 sm:p-3 flex items-center gap-5 sm:gap-3"
+          className="absolute inset-0 bg-[#14151C] rounded-2xl shadow-md border-none px-4 sm:p-3 flex items-center gap-5 sm:gap-3 "
         >
           {article.thumbnail ?  (
             <img
@@ -123,7 +123,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
           }
 
           <div className="flex-1 min-w-0 space-y-2">
-            <h4 className="text-sm font-medium text-gray-900 line-clamp-1 sm:line-clamp-2">
+            <h4 className="text-sm font-medium text-[rgb(252,252,252)] line-clamp-1 sm:line-clamp-2">
               {article.title}
               <ExternalLink className="inline-block ml-1 h-3 w-3 opacity-70" />
             </h4>

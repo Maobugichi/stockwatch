@@ -65,7 +65,7 @@ export default function AlertsList() {
         {alerts.map((alert: any, index: number) => (
           <Card 
             key={alert.alert_id} 
-            className="group relative border rounded-3xl overflow-hidden bg-white/80 backdrop-blur-sm shadow-sm  transition-all duration-300 "
+            className="group border border-[rgba(34,36,45,0.5)] relative rounded-3xl overflow-hidden bg-[#14151C] backdrop-blur-sm shadow-sm  transition-all duration-300 "
             style={{ 
               animationDelay: `${index * 100}ms`,
               animation: 'fadeInUp 0.6s ease-out forwards'
@@ -78,13 +78,13 @@ export default function AlertsList() {
                     <div className="w-10 h-10 aspect-square rounded-full bg-black flex items-center justify-center text-white font-bold">
                       <span className="text-base leading-none">{alert.symbol.slice(0, 2)}</span>
                     </div>
-                    <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-white to-slate-700 bg-clip-text text-transparent">
                       {alert.symbol}
                     </span>
                   </CardTitle>
 
                   {alert.active ? (
-                    <Badge className="bg-gray-100 text-gray-700 border-0 shadow-sm flex items-center gap-1.5 px-3 py-1">
+                    <Badge className="bg-[#14151C] text-gray-700 border border-[rgba(34,36,45,0.5)]  text-white shadow-sm flex items-center gap-1.5 px-3 py-1">
                       <div className="w-2 h-2 rounded-full bg-green-600 animate-pulse" />
                       Active
                     </Badge>

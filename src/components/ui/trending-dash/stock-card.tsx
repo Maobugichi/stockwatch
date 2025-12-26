@@ -28,7 +28,7 @@ const StockCard = ({ stock, showVolume = true, showMarketCap = true, onSelect }:
   
   return (
     <Card 
-      className="group relative overflow-hidden transition-all duration-300 h-[140px] rounded-3xl border cursor-pointer shadow-none bg-white"
+      className="group relative overflow-hidden transition-all duration-300 bg-[#14151C] border border-[rgba(34,36,45,0.5)] h-[140px] rounded-3xl text-[rgb(252,252,252)] cursor-pointer shadow-none"
       onClick={() => onSelect && onSelect(stock)}
     >
      

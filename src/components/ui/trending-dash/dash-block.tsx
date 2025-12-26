@@ -10,7 +10,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, icon, value, description, gradientClass }: StatCardProps) => {
   return (
-    <Card className=" group shadow-none relative font-inter h-32 rounded-3xl overflow-hidden">
+    <Card className=" group shadow-none relative bg-[#14151C] border border-[rgba(34,36,45,0.5)] text-[rgb(252,252,252)] font-inter h-32 rounded-3xl overflow-hidden">
    
       <div className={`absolute top-0 left-0 right-0 h-1 ${gradientClass} rounded-t-3xl`} />
       

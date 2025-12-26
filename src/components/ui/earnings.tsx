@@ -31,9 +31,9 @@ const EarningsRevenueChart: React.FC<EarningsProps> = ({ stock }) => {
     }).format(val);
 
   return (
-    <Card className="w-full rounded-3xl">
+    <Card className="w-full rounded-3xl bg-[#14151C] border border-[rgba(34,36,45,0.5)]">
       <CardHeader>
-        <CardTitle className="text-sm sm:text-lg">Earnings vs Revenue</CardTitle>
+        <CardTitle className="text-sm text-white sm:text-lg">Earnings vs Revenue</CardTitle>
       </CardHeader>
       <CardContent className="h-64 sm:h-80 p-1 sm:p-3">
         <ResponsiveContainer width="100%" height="100%">

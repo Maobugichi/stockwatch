@@ -68,8 +68,8 @@ const Candlestick: React.FC<CandleProp> = ({
         fontFamily: "Arial, sans-serif",
       },
       grid: {
-        vertLines: { color: "#f0f0f0" },
-        horzLines: { color: "#f0f0f0" },
+        vertLines: { color: "rgb(34,36,45)" },
+        horzLines: { color: "rgb(34,36,45)" },
       },
       width: container.clientWidth,
       height: Math.max(container.clientHeight - 10, 300), // Ensure minimum height and account for padding
@@ -87,7 +87,7 @@ const Candlestick: React.FC<CandleProp> = ({
         borderColor: "#cccccc",
         scaleMargins: {
           top: 0.1,
-          bottom: 0.15, // Reduced bottom margin to prevent clipping
+          bottom: 0.15, 
         },
       },
       handleScroll: {
@@ -180,7 +180,7 @@ const Candlestick: React.FC<CandleProp> = ({
   }, [stock, timePeriod]);
 
   return (
-    <Card className="rounded-3xl w-full max-w-full overflow-hidden h-full flex flex-col">
+    <Card className="bg-[#14151C] border border-[rgba(34,36,45,0.5)] text-white rounded-3xl w-full max-w-full overflow-hidden h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <CardTitle className="text-lg">Price Chart (OHLC)</CardTitle>
@@ -193,7 +193,7 @@ const Candlestick: React.FC<CandleProp> = ({
       <CardContent className="p-2 sm:p-6 flex-1 flex flex-col min-h-0">
         <div
           ref={candleChartContainer}
-          className="w-full flex-1 min-h-[300px] rounded border bg-white"
+          className="w-full flex-1 min-h-[300px] rounded  bg-[#14151C] border border-[rgb(34,36,45)] "
         />
       </CardContent>
     </Card>

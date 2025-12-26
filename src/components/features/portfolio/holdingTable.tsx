@@ -94,7 +94,7 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
 
     const updates: any = {};
     
-    // Only include changed values
+    
     if (editDialog.ticker) updates.ticker = editDialog.ticker.toUpperCase();
     if (editDialog.shares) updates.shares = editDialog.shares;
     if (editDialog.buyPrice) updates.buyPrice = editDialog.buyPrice;
@@ -120,25 +120,25 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
 
   return (
     <>
-      <Card className="flex-1 flex flex-col rounded-sm border-none shadow-none w-full md:w-[68%] pb-0">
+      <Card className="flex-1 bg-transparent text-[rgb(252,252,252)] flex flex-col rounded-sm border-none shadow-none w-full md:w-[68%] pb-0">
         <CardHeader className="text-2xl p-0 shrink-0">
           <CardTitle className="text-lg sm:text-xl md:text-2xl">
             Holdings Breakdown
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="border rounded-2xl p-0 sm:p-2 flex-1 pb-0   overflow-hidden">
+        <CardContent className="bg-[#14151C] text-[rgb(252,252,252)] border border-[rgba(34,36,45,0.5)] rounded-2xl p-0 sm:p-2 flex-1 pb-0   overflow-hidden">
           <div className="w-full overflow-x-auto">
-            <Table className="min-w-[600px]  text-xs sm:text-sm">
-              <TableHeader className="sticky top-0 bg-white z-10">
+            <Table className="min-w-[600px] text-[rgb(252,252,252)]  text-xs sm:text-sm">
+              <TableHeader className="sticky  top-0  z-10">
                 <TableRow>
-                  <TableHead className="px-2 py-1 sm:px-4 font-bold">Symbol</TableHead>
-                  <TableHead className="px-2 py-1 sm:px-4">Shares</TableHead>
-                  <TableHead className="px-2 py-1 sm:px-4">Buy Price</TableHead>
-                  <TableHead className="px-2 py-1 sm:px-4">Current</TableHead>
-                  <TableHead className="px-2 py-1 sm:px-4">Prev Close</TableHead>
-                  <TableHead className="px-2 py-1 sm:px-4">P/L</TableHead>
-                  <TableHead className="px-2 py-1 sm:px-4 w-20">Actions</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 text-white font-bold">Symbol</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 text-[rgb(252,252,252)]">Shares</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 text-[rgb(252,252,252)]">Buy Price</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 text-[rgb(252,252,252)]">Current</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 text-[rgb(252,252,252)]">Prev Close</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 text-[rgb(252,252,252)]">P/L</TableHead>
+                  <TableHead className="px-2 py-1 sm:px-4 w-20 text-[rgb(252,252,252)]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
 

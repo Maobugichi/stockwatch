@@ -18,14 +18,14 @@ const PortfolioPie = ({ data }: { data: PortfolioData }) => {
   const { chartData, totalValue } = buildPortfolioChartData(data.breakdown);
 
   return (
-    <Card className="flex-1  flex flex-col border-none w-full md:w-[35%] shadow-none pb-0">
-      <CardHeader className="p-0 shrink-0">
+    <Card className="flex-1 bg-transparent flex flex-col border-none w-full md:w-[35%] shadow-none pb-0">
+      <CardHeader className="p-0 shrink-0 text-white">
         <CardTitle className="text-lg sm:text-xl md:text-2xl">
           Allocation
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="border rounded-2xl p-2 flex-1">
+      <CardContent className=" bg-[#14151C] border border-[rgba(34,36,45,0.5)] rounded-2xl p-2 flex-1">
         <ChartContainer
           className="w-full h-full flex items-center justify-center"
           config={chartConfig}
@@ -61,7 +61,7 @@ const PortfolioPie = ({ data }: { data: PortfolioData }) => {
                 y="40%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-foreground text-sm sm:text-base md:text-lg font-semibold"
+                className="fill-white text-sm sm:text-base md:text-lg font-semibold"
               >
                 Total
               </text>
@@ -89,6 +89,7 @@ const PortfolioPie = ({ data }: { data: PortfolioData }) => {
                   justifyContent: "center",
                   fontSize: "10px",
                   rowGap: "4px",
+                  color:'white'
                 }}
               />
             </PieChart>

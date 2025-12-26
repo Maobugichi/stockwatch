@@ -42,11 +42,11 @@ const StockDetails = () => {
       <WatchlistToggleButton ticker={symbol || stock.symbol || ""} />
      
       <div className="flex mt-10 md:mt-0 flex-col md:flex-row md:items-center md:justify-between gap-2 h-20">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl text-white font-bold">
           {stock.company_name ?? "Unknown"} ({symbol || stock.symbol || "N/A"})
         </h1>
         <div>
-          <span className="font-jet">${stock.current_price?.toFixed(2) ?? "N/A"}</span>
+          <span className="font-jet text-white text-2xl">${stock.current_price?.toFixed(2) ?? "N/A"}</span>
           <div className="flex">
             <ChangeIndicator value={stock.change_percent_daily} />
             <span
