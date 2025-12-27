@@ -205,7 +205,7 @@ const getNewsData = async (param:string) => {
 const fetchTrendingNews = async () => {
   try {
     const response = await api.get(`/api/trending-news/`);
-    
+    console.log(response)
     return response.data
   } catch(err) {
     console.log(err)

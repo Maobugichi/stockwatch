@@ -1,7 +1,6 @@
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {  useRef } from "react";
 import { 
-  
   NewspaperIcon,
   CurrencyBtcIcon,
   CurrencyCircleDollarIcon,
@@ -35,8 +34,7 @@ export const NewsTabs = () => {
           ref={(el) => {
             tabsRef.current[tabValue] = el;
           }}
-         
-          className="flex-shrink-0 rounded-xl flex items-center gap-1.5 text-xs md:text-sm whitespace-nowrap px-3 md:px-4 relative z-10 data-[state=active]:bg-[#14151C]  data-[state=active]:text-white text-muted-foreground  data-[state=active]:shadow-none transition-none snap-start"
+          className="flex-shrink-0 rounded-xl flex items-center gap-1.5 text-xs md:text-sm whitespace-nowrap px-3 md:px-4 relative z-10 data-[state=active]:border-[#526FFF]  data-[state=active]:text-[#526FFF] data-[state=active]:bg-[#526FFF]/10   text-muted-foreground  data-[state=active]:shadow-none transition-none snap-start"
         >
           <Icon size={16} weight="duotone" />
           {label}

@@ -122,7 +122,7 @@ const NewsPage = () => {
         <TabsContent value={category} hidden={type === "company"}>
           <div className="flex sticky md:top-22 top-20 md:h-10 bg-transparent text-white h-16 z-10 justify-between items-center mb-4">
             <h2 className="text-xl font-semibold capitalize">{category} News</h2>
-            <Badge variant="secondary" className="text-sm">
+            <Badge  className="text-sm rounded-lg bg-[#526FFF]/10 text-[#526FFF] border border-[#526FFF]">
               {processedNews.length} articles
             </Badge>
           </div>

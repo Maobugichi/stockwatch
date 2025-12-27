@@ -18,7 +18,7 @@ export function useDashboard() {
       const response = await api.get(`/api/portfolio/`,{
         headers: { "x-requires-auth": true }
       });
-      
+       console.log(response.data)
       return response.data;
     },
     enabled: !!userId,

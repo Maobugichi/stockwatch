@@ -1,29 +1,24 @@
-import { useState , useEffect  } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTrendingNews } from "@/lib/utils";
 
+const useNews = () => {
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ['trending-news'],
+    queryFn: fetchTrendingNews,
+    staleTime: 10 * 60 * 1000, 
+    gcTime: 15 * 60 * 1000, 
+    retry: 2,
+    refetchOnWindowFocus: false, 
+    refetchOnMount: false, 
+  });
 
-
-const useNews = (getNewsData:any) => {
-    const [ news , setNews ] = useState<[]>([])
-    const [ loading, setLoading ] = useState<boolean>(true)
-    useEffect(() => {
-      let isMounted = true;
-      async function getNews() {
-        const response = await getNewsData;
-      
-        if (isMounted) {
-            setNews(response);
-            setLoading(false)
-        }
-      }
-      getNews()
-      return () => {
-        isMounted = false
-      }
-
-      
-    },[])
-
-    return { news , loading }
-}
+  return { 
+    news: data || [], 
+    loading: isLoading,
+    isError,
+    error,
+    refetch
+  };
+};
 
 export default useNews;

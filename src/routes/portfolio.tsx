@@ -1,5 +1,4 @@
 import StockNews from "@/components/ui/news";
-import { fetchTrendingNews } from "@/lib/utils";
 import HoldingsTable from "@/components/features/portfolio/holdingTable";
 import PortfolioPie from "@/components/features/portfolio/portfolioPie/port-pie";
 import { FullPageEmptyState } from "@/components/ui/empty-state";
@@ -23,7 +22,7 @@ const PortfolioDashboard = () => {
     dataUpdatedAt 
   } = useDashboard();
 
-  // Prevent scroll when overlay is active
+ 
   useEffect(() => {
     if (isFetching) {
       document.body.style.overflow = 'hidden';
@@ -31,7 +30,7 @@ const PortfolioDashboard = () => {
       document.body.style.overflow = 'unset';
     }
     
-    // Cleanup on unmount
+   
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -40,7 +39,7 @@ const PortfolioDashboard = () => {
   if (isLoading) {
     return (
       <div className="h-screen grid place-items-center">
-        <ClipLoader />
+        <ClipLoader color="white"/>
       </div>
     );
   }
@@ -70,13 +69,11 @@ const PortfolioDashboard = () => {
   const minutesAgo = Math.floor((Date.now() - lastUpdated.getTime()) / 60000);
 
   return (
-    <div className="space-y-8 w-[94%] mx-auto font-jet">
-    
-      {/* Fixed loading overlay - now uses pointer-events-none to allow scroll */}
+    <div className="space-y-8 w-[94%] mx-auto font-jet">   
       {isFetching && (
         <div className="fixed top-4 right-4 z-50 pointer-events-none">
           <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg flex items-center gap-3 border border-gray-200 pointer-events-auto">
-            <ClipLoader size={20} />
+            <ClipLoader color="white" size={20} />
             <span className="text-sm font-medium text-gray-700">Updating...</span>
           </div>
         </div>
@@ -89,7 +86,7 @@ const PortfolioDashboard = () => {
 
       <SummaryCard data={data} />
 
-      <StockNews getNewsData={fetchTrendingNews()} />
+      <StockNews  />
 
       <VolumeChart/>
       

@@ -12,7 +12,7 @@ const iconMap = {
 };
 
 
- interface SummaryCard {
+ interface SummaryCardProps {
   title: string;
   value: string;
   sub: string;
@@ -33,7 +33,7 @@ const iconMap = {
  
 
 const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
-    const summaryCards: SummaryCard[] = [
+    const summaryCards: SummaryCardProps[] = [
         {
             title: "Portfolio Value",
             value: `$${data.portfolioValue.toFixed(2)}`,
@@ -77,25 +77,25 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                         <CardTitle className="text-sm font-medium text-gray-600">{card.title}</CardTitle>
                         <div className="flex items-center gap-2">
                             {Icon && (
-                            <div className={`p-2 rounded-lg ${
+                            <div className={`shadow shadow-gray-600/60 p-2 rounded-lg ${
                                 card.color.includes("green") 
                                 ? "bg-green-50"
                                 : card.color.includes("red")
                                 ? "bg-red-50"
-                                : "bg-blue-50"
-                            } transition-transform group-hover:scale-110 duration-300`}>
+                                : "bg-blue-50/20 border border-blue-50 "
+                            } transition-transform group-hover:scale-110 duration-300 `}>
                                 <Icon weight="fill" className={` ${
                                 card.color.includes("green") 
                                     ? "text-green-600"
                                     : card.color.includes("red")
                                     ? "text-red-600"
-                                    : "text-blue-600"
+                                    : "text-blue-600 "
                                 }`} />
                             </div>
                             )}
                             {TrendIcon && (
                             <div className={`p-1.5 rounded-lg ${
-                                card.trend === "up" ? "bg-green-50" : "bg-red-50"
+                                card.trend === "up" ? "bg-green-50/20 border border-green-50" : "bg-red-50/20 border border-red-50"
                             }`}>
                                 <TrendIcon weight="fill" className={` ${
                                 card.trend === "up" ? "text-green-600" : "text-red-600"
@@ -111,7 +111,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                             </div>
 
                             {card.badge ? (
-                                <Badge className="font-jet" variant="secondary">{card.sub}</Badge>
+                                <Badge className="font-jet bg-gray-200/20 border border-gray-200">{card.sub}</Badge>
                             ) : (
                                 <p className="text-sm text-muted-foreground ">{card.sub}</p>
                             )}

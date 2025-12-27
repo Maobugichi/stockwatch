@@ -1,5 +1,5 @@
 import { useState, type SetStateAction } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Home, Bell, Settings, Star, Newspaper, PanelLeftOpen, PanelRightOpen, Briefcase } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -62,10 +62,9 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
     <>
      
       <motion.div
-        initial={{ width: 60 }}
         animate={{ width: isOpen ? 200 : 60 }}
-        transition={{ duration: 0.3, type: "spring", stiffness: 20 }}
-        className="hidden md:flex  pt-16 h-screen bg-gray-900 text-white flex-col gap-5 overflow-hidden"
+        transition={{ duration: 0.3, type: "spring", stiffness: 20, damping: 15 }}
+        className="bg-[#06070B] border border-[rgba(34,36,45,0.5)] hidden md:flex fixed pt-16 h-screen  text-white flex-col gap-5 z-50 overflow-hidden"
       >
         <div className="p-2 ">
           <Button
@@ -93,7 +92,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                         <div
                           className={`flex items-center gap-3 p-2 mx-2 rounded-md cursor-pointer transition-colors ${
                             isActive
-                              ? "bg-gray-700 text-white"
+                              ? "bg-[#526FFF] text-white"
                               : "text-gray-400 hover:bg-gray-800 hover:text-white"
                           }`}
                           onClick={() => toggleMenu(item.name)}
@@ -115,10 +114,10 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                         <Link
                           to={item.path}
                           className={`flex items-center gap-3 p-2 mx-2 rounded-md transition-colors ${
-                            isActive
-                              ? "bg-gray-700 text-white"
-                              : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                          }`}
+                          isActive
+                            ? "border border-[#526FFF] bg-[#526FFF]/10 text-white"
+                            : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                        }`}
                           onMouseEnter={() => handleMouseEnter(item)}
                         >
                           <IconComponent size={iconSize} />
@@ -175,7 +174,7 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
       </motion.div>
 
     
-      <div className="md:hidden fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center h-14 z-50">
+      <div className="md:hidden fixed bottom-0  left-0 w-full bg-[#06070B] border border-[rgba(34,36,45,0.5)] text-white flex justify-around items-center h-15 z-50">
         <TooltipProvider delayDuration={0}>
           {navItems.map((item: Item, i: number) => {
             const IconComponent = item.icon;
@@ -187,13 +186,13 @@ const Nav: React.FC<NavProp> = ({ isOpen, setIsOpen }) => {
                   <Link
                     to={item.path}
                     className={`flex flex-col items-center justify-center p-2 flex-1 transition-colors ${
-                      isActive
-                        ? "bg-gray-700 text-white"
-                        : "text-gray-400 hover:text-neon-purple"
+                       isActive
+                      ? "border border-[#526FFF] bg-[#526FFF]/10 text-white"
+                      : "text-gray-400 hover:bg-gray-800 hover:text-white"
                     }`}
                     aria-label={item.name}
                     onMouseEnter={() => handleMouseEnter(item)}
-                    onTouchStart={() => handleMouseEnter(item)} // Prefetch on touch for mobile
+                    onTouchStart={() => handleMouseEnter(item)} 
                   >
                     <IconComponent size={iconSize} />
                     <span className="text-xs mt-1 truncate">{item.name}</span>

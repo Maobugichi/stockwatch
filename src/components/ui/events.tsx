@@ -18,7 +18,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
       <Table className="p-0">
         <TableBody>
          
-          <TableRow className="bg-muted/30 hover:bg-muted/30 ">
+          <TableRow className="bg-gray-300/20 hover:bg-muted/30 ">
             <TableCell colSpan={2} className="text-lg text-white rounded-t-3xl font-semibold  p-4">
               Upcoming Events
             </TableCell>
@@ -51,7 +51,7 @@ const EventsInfoTable = ({ stock }: EventsInfoTableProps) => {
           </TableRow>
 
           
-          <TableRow className="bg-muted/30 hover:bg-muted/30">
+          <TableRow className="bg-gray-300/20 hover:bg-muted/30">
             <TableCell colSpan={2} className="text-lg font-semibold text-white p-3">
               Company Info
             </TableCell>

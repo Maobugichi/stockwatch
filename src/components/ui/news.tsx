@@ -1,14 +1,12 @@
-// @ts-nocheck
+import useNews from "@/hooks/useNews";
 import { ExternalLink, Clock, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import useNews from "@/hooks/useNews";
 import { handleAnalyze } from "@/lib/utils";
 import { Progress } from "./progress";
 import { Skeleton } from "./skeleton";
 
 interface StockNewsProps {
-  getNewsData: any;
   marketContext?: string;
 }
 
@@ -31,8 +29,9 @@ interface SentimentAnalysis {
   };
 }
 
-const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neutral' }) => {
-  const { news, loading } = useNews(getNewsData);
+const StockNews: React.FC<StockNewsProps> = ({  marketContext = 'neutral' }) => {
+  const { news, loading, isError } = useNews();
+
   const [index, setIndex] = useState(0);
   const [sentiment, setSentiment] = useState<null | SentimentAnalysis>(null);
   const [analyzing, setAnalyzing] = useState<boolean>(false);
@@ -48,7 +47,7 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
     return () => clearInterval(interval);
   }, [news]);
 
-  if (loading) {
+    if (loading) {
     return (
       <div className="mt-2 animate-pulse space-y-2">
         <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -57,9 +56,17 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
     );
   }
 
+  
+
+  if (isError) {
+     return <p className="text-sm text-gray-500">No news available.</p>;
+  }
+
   if (!news || news.length === 0) {
     return <p className="text-sm text-gray-500">No news available.</p>;
   }
+
+  
 
   const article: any = news[index];
 
@@ -143,12 +150,12 @@ const StockNews: React.FC<StockNewsProps> = ({ getNewsData, marketContext = 'neu
               </p>
             )}
 
-            {/* Buttons + Sentiment */}
+           
             <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2">
               <button
                 onClick={() => handleAnalyze(setAnalyzing, setSentiment, article, marketContext)}
                 disabled={analyzing}
-                className="text-[10px] sm:text-xs bg-blue-100 text-blue-600 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded hover:bg-blue-200 transition disabled:opacity-50"
+                className="text-[10px] sm:text-xs border border-[#526FFF] bg-[#526FFF]/10 text-[#526FFF] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md hover:bg-blue-200 transition disabled:opacity-50"
               >
                 {analyzing ? "Analyzing..." : "AI Sentiment"}
               </button>

@@ -19,6 +19,7 @@ import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import api from "@/lib/axios-config";
 import { Eye, EyeOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   email: z.email({ message: "Invalid Email address" }),
@@ -102,6 +103,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
+                    
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900 z-10"
                   >
                     {showPassword ? (
@@ -127,14 +129,18 @@ const Login = () => {
           <div className="w-full grid space-y-3">
             <Button 
               type="submit" 
-              className={`${loading ? "bg-black/20" : "bg-black"} relative overflow-hidden text-lg tracking-wider text-white h-8 md:h-12 py-5 rounded-3xl w-full`}
+              disabled={loading}
+              className={cn(
+                "relative overflow-hidden text-lg tracking-wider text-white h-8 md:h-12 py-5 rounded-3xl w-full",
+                loading && "!pointer-events-auto cursor-not-allowed"
+              )}
             >
-              <span className="absolute inset-0 bg-black rounded-3xl" />
-              <span className="absolute inset-0 bg-gradient-to-r from-black/0 via-white/20 to-black/0 animate-shimmer" />
+              <span className="absolute inset-0 bg-black rounded-3xl pointer-events-none" />
+              <span className="absolute inset-0 bg-gradient-to-r from-black/0 via-white/20 to-black/0 animate-shimmer pointer-events-none" />
               {loading ? (
-                <ClipLoader size={20} color="white" className="relative z-10" />
+                <ClipLoader size={20} color="white" className="relative z-10 pointer-events-none" />
               ) : (
-                <span className="relative z-10">Submit</span>
+                <span className="relative z-10 pointer-events-none">Submit</span>
               )}
             </Button>
 

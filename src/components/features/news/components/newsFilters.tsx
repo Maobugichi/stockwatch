@@ -36,7 +36,7 @@ export const NewsFilters = ({
             value={sortBy}
             onChange={setSortBy}
             placeholder="Sort"
-            icon={ <Clock className="w-4 h-4 text-muted-foreground" />}
+            icon={ <Clock className="w-4 h-4 text-[#526FFF]/70" />}
             options={[
               { value: "newest", label: "Newest" },
               { value: "oldest", label: "Oldest" },
@@ -51,7 +51,7 @@ export const NewsFilters = ({
             value={filterSource}
             onChange={setFilterSource}
             placeholder="Source"
-            icon={ <Filter className="w-4 h-4 text-muted-foreground" />}
+            icon={ <Filter className="w-4 h-4 text-[#526FFF]/70" />}
             options={[
               { value: "all", label: "All Sources" },
               ...uniqueSources.map((source: any) => ({
@@ -75,17 +75,17 @@ export const NewsFilters = ({
           size="sm"
           onClick={onRefresh}
           disabled={isRefreshing}
-          className="gap-1.5 flex-1 bg-[#14151C] rounded-3xl border border-[rgba(34,36,45,0.5)]"
+          className="gap-1.5 flex-1 border border-[#526FFF] bg-[#526FFF]/10 text-[#526FFF] rounded-3xl "
         >
-          <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""} text-white `} />
-          <span className="md:hidden inline">Refresh</span>
+          <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""} `} />
+          <span className="md:hidden inline text-[#526FFF]">Refresh</span>
         </Button>
 
         <Button
           variant={autoRefresh ? "default" : "outline"}
           size="sm"
           onClick={() => setAutoRefresh(!autoRefresh)}
-          className="gap-1.5 bg-[#14151C] border border-[rgba(34,36,45,0.5)] text-white min-w-[90px] rounded-3xl flex-1"
+          className="gap-1.5 border border-[#526FFF] bg-[#526FFF]/10 text-[#526FFF]  min-w-[90px] rounded-3xl flex-1"
         >
           {autoRefresh && <Check className="w-4 h-4" />}
           <span>Auto {autoRefresh ? "ON" : "OFF"}</span>

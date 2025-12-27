@@ -1,6 +1,5 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { getNewsData } from "@/lib/utils";
 import ValuationTable from "./val-table";
 import type { StockData } from "@/types";
 import EventsInfoTable from "./events";
@@ -17,9 +16,6 @@ const StockDetails = () => {
   const stock: StockData | undefined = useLoaderData();
   const { symbol } = useParams<{ symbol: string }>(); 
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<string>("3m");
-
-  console.log("Symbol from params:", symbol);
-  console.log("Stock data:", stock);
 
   if (!stock) return <div>Loading...</div>;
 
@@ -46,7 +42,7 @@ const StockDetails = () => {
           {stock.company_name ?? "Unknown"} ({symbol || stock.symbol || "N/A"})
         </h1>
         <div>
-          <span className="font-jet text-white text-2xl">${stock.current_price?.toFixed(2) ?? "N/A"}</span>
+          <span className="font-jet text-white text-xl">${stock.current_price?.toFixed(2) ?? "N/A"}</span>
           <div className="flex">
             <ChangeIndicator value={stock.change_percent_daily} />
             <span
@@ -91,7 +87,7 @@ const StockDetails = () => {
 
       
       {(symbol || stock.symbol) && (
-        <StockNews getNewsData={getNewsData(symbol || stock.symbol)} />
+        <StockNews />
       )}
 
     

@@ -142,7 +142,7 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
                 </TableRow>
               </TableHeader>
 
-              <TableBody >
+              <TableBody className="">
                 {data.breakdown.map((item: any, idx: number) => {
                   const pl =
                     (item.currentPrice - Number(item.buyPrice)) *
@@ -150,7 +150,7 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
                   return (
                     <TableRow
                       key={item.id || idx}
-                      className="h-10 cursor-pointer sm:h-14 text-xs sm:text-sm hover:bg-gray-50"
+                      className="h-10 cursor-pointer sm:h-14 text-xs sm:text-sm hover:"
                       onClick={() => navigate(`/watchlist/${item.symbol}`)}
                     >
                       <TableCell className="font-medium px-2 py-1 sm:px-4">
@@ -171,8 +171,8 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
                       <TableCell className="px-2 py-1 sm:px-4 font-jet">
                         <Badge
                           className={`${
-                            pl >= 0 ? "bg-green-500" : "bg-red-500"
-                          } rounded-full text-[10px] sm:text-xs px-2 py-0.5 sm:px-2 sm:py-1`}
+                            pl >= 0 ? "bg-green-500/20 border-green-500 text-green-500" : "bg-red-500/20 border-red-500 text-red-500"
+                          } rounded-full text-[10px] border sm:text-xs px-2 py-0.5 sm:px-2 sm:py-1`}
                         >
                           ${pl.toFixed(2)}
                         </Badge>
