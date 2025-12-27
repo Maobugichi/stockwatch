@@ -43,7 +43,7 @@ const TabsListComponent = ({ value }: TabsListComponentProps) => {
     <TabsList className="w-full overflow-x-auto scrollbar-hide flex justify-start lg:w-auto pl-2 border border-[rgb(34,36,45)] lg:justify-center bg-[#06070B] rounded-2xl relative">
     
       <motion.div
-        className="absolute rounded-2xl bg-[#14151C] text-primary-foreground z-0"
+        className="absolute rounded-2xl border border-[#526FFF] bg-[#526FFF]/10   z-0"
         initial={false}
         animate={{
           left: indicatorStyle.left,
@@ -68,7 +68,7 @@ const TabsListComponent = ({ value }: TabsListComponentProps) => {
             tabsRef.current[tabValue] = el;
           }}
           onClick={() => setActiveTab(tabValue)}
-          className="flex-shrink-0 rounded-2xl flex items-center gap-1 text-xs whitespace-nowrap px-4 relative z-10 data-[state=active]:text-[rgb(252,252,252)] text-muted-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-none"
+          className="flex-shrink-0 rounded-2xl flex items-center gap-1 text-xs whitespace-nowrap px-4 relative z-10 data-[state=active]:text-[#526FFF] text-muted-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-none"
         >
           <Icon className="h-3 w-3" />
           {label}

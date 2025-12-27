@@ -8,7 +8,7 @@ const AlertsHeader = () => {
           <MdTune />
           <span className="hidden md:block">Manage Your Alerts</span>
         </h2>
-        <Badge className="text-purple-500 bg-[#14151C] h-6 border border-[rgba(34,36,45,0.5)]">Smart Alerts</Badge>
+        <Badge className="text-[#526FFF] bg-[#14151C] h-6 border border-[rgba(34,36,45,0.5)]">Smart Alerts</Badge>
       </div>
   );
 };

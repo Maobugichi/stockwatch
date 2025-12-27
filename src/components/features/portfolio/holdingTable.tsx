@@ -127,7 +127,7 @@ const HoldingsTable = ({ data }: { data: PortfolioData }) => {
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="bg-[#14151C] text-[rgb(252,252,252)] border border-[rgba(34,36,45,0.5)] rounded-2xl p-0 sm:p-2 flex-1 pb-0   overflow-hidden">
+        <CardContent className="bg-[#14151C]/40 text-[rgb(252,252,252)] border border-[#14151C] rounded-2xl p-0 sm:p-2 flex-1 pb-0   overflow-hidden">
           <div className="w-full overflow-x-auto">
             <Table className="min-w-[600px] text-[rgb(252,252,252)]  text-xs sm:text-sm">
               <TableHeader className="sticky  top-0  z-10">

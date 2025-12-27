@@ -85,7 +85,7 @@ const Header: React.FC<HeaderProp> = ({ style  }) => {
       transition={{ duration: 0.3, type: "spring", stiffness: 20 }}
       className="fixed top-0 z-50 h-14 md:h-16 bg-[#06070B]  backdrop-blur-md border-b border-[rgb(34,36,45)] text-slate-100 md:w-[95.5%] w-full right-0"
     >
-      <div className="container mx-auto h-full px-3 md:px-4 flex items-center justify-between gap-3">
+      <div className="container mx-auto h-full px-5 md:px-4 flex items-center justify-between gap-3">
        
         <StockWatcherLogo />
 

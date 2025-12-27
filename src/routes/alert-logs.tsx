@@ -65,26 +65,26 @@ export default function AlertsList() {
         {alerts.map((alert: any, index: number) => (
           <Card 
             key={alert.alert_id} 
-            className="group border border-[rgba(34,36,45,0.5)] relative rounded-3xl overflow-hidden bg-[#14151C] backdrop-blur-sm shadow-sm  transition-all duration-300 "
+            className="group border border-[rgba(34,36,45,0.5)] relative rounded-3xl overflow-hidden bg-[#14151C]/40 backdrop-blur-sm shadow-sm  transition-all duration-300 h-[200px]"
             style={{ 
               animationDelay: `${index * 100}ms`,
               animation: 'fadeInUp 0.6s ease-out forwards'
             }}
           >
-            <div className="relative z-10">
+            <div className="relative z-10 mt-2">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-xl font-bold flex items-center gap-3">
                     <div className="w-10 h-10 aspect-square rounded-full bg-black flex items-center justify-center text-white font-bold">
                       <span className="text-base leading-none">{alert.symbol.slice(0, 2)}</span>
                     </div>
-                    <span className="bg-gradient-to-r from-white to-slate-700 bg-clip-text text-transparent">
+                    <span className="text-white">
                       {alert.symbol}
                     </span>
                   </CardTitle>
 
                   {alert.active ? (
-                    <Badge className="bg-[#14151C]  border border-[rgba(34,36,45,0.5)]  text-white shadow-sm flex items-center gap-1.5 px-3 py-1">
+                    <Badge className="bg-green-600/20 border-green-600 rounded-xl   border text-white shadow-sm flex items-center gap-1.5 px-3 py-1">
                       <div className="w-2 h-2 rounded-full bg-green-600 animate-pulse" />
                       Active
                     </Badge>
@@ -102,9 +102,9 @@ export default function AlertsList() {
                   {alert.conditions.map((c: any, i: number) => (
                     <div
                       key={i}
-                      className="px-3 font-jet py-1 rounded-full bg-gradient-to-r from-slate-100 to-slate-200 border border-slate-200 text-slate-700 text-xs font-medium hover:from-blue-100 hover:to-purple-100 hover:border-blue-200 transition-all duration-200"
+                      className="px-3 font-jet py-1 rounded-full bg-[#526FFF]/20 border border-[#526FFF] text-[#526FFF] text-xs font-medium hover:from-blue-100 hover:to-purple-100 hover:border-blue-200 transition-all duration-200"
                     >
-                      {c.condition_type.replace("_", " ")} <span className="font-bold text-slate-900">{c.value}</span>
+                      {c.condition_type.replace("_", " ")} <span className="font-bold text-[#526FFF]">{c.value}</span>
                     </div>
                   ))}
                 </div>
@@ -112,7 +112,7 @@ export default function AlertsList() {
 
               <CardFooter className="pt-0">
                 <Button 
-                  className="w-full bg-black border-0 rounded-2xl text-white font-medium transition-all duration-200 hover:shadow-xl hover:scale-[1.02] group flex items-center justify-center gap-2 h-9 md:h-10 "
+                  className="w-full bg-black border-0 rounded-lg text-white font-medium transition-all duration-200 hover:shadow-xl hover:scale-[1.02] group flex items-center justify-center gap-2 h-12 md:h-10 "
                   onClick={() => edit(alert)}
                 >
                   <Edit3 className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-200" />

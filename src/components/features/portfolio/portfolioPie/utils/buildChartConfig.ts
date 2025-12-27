@@ -1,6 +1,4 @@
-import {
-  type ChartConfig
-} from "@/components/ui/chart";
+import { type ChartConfig } from "@/components/ui/chart";
 import { chartColors } from "./resolveCssVar";
 
 export function buildChartConfig<T extends { symbol: string }>(

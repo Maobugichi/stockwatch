@@ -31,7 +31,7 @@ const NewsCard = ({ item }: { item: NewsItem }) => {
   };
 
   return (
-    <Card className="hover:shadow-md pt-0 rounded-3xl border border-[rgba(34,36,45,0.5)] bg-[#14151C] text-white transition h-full">
+    <Card className="hover:shadow-md pt-0 rounded-3xl border border-[#14151C]a bg-[#14151C]/40 text-white transition h-full">
       <img
         src={item.image || "/placeholder-news.png"}
         alt={item.headline}

@@ -1,10 +1,7 @@
-import { resolveCssVar } from "@/lib/utils";
-
-
 export const chartColors = [
-  "--chart-1",
-  "--chart-2",
-  "--chart-3",
-  "--chart-4",
-  "--chart-5",
-].map(resolveCssVar);
+  "hsl(220 70% 50% / 0.4)",  
+  "hsl(160 60% 45% / 0.4)",  
+  "hsl(30 80% 55% / 0.4)",   
+  "hsl(0 70% 50% / 0.4)",    
+  "hsl(270 70% 50% / 0.4)",  
+];

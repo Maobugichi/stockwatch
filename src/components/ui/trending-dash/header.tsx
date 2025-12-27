@@ -25,9 +25,9 @@ const Header = () => {
                         <Button
                          disabled={refreshing}
                          onClick={handleRefresh}
-                         className=" h-10  rounded-3xl"
+                         className=" h-10 border border-[#526FFF] bg-[#526FFF]/10 text-[#526FFF] rounded-3xl"
                         >
-                        <RefreshCw className={`h-4 w-4  ${refreshing ? 'animate-spin' : ''}`} />
+                        <RefreshCw className={`h-4 w-4   ${refreshing ? 'animate-spin' : ''}`} />
                         
                         </Button>
                      </div>

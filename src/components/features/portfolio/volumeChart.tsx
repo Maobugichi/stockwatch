@@ -18,7 +18,7 @@ export const VolumeChart = () => {
           <CardTitle>P/L per Holding</CardTitle>
         </CardHeader>
 
-        <CardContent className="flex-1 bg-[#14151C] border-[rgba(34,36,45,0.5)]  min-h-0 border rounded-2xl px-2 pt-5 sm:p-3">
+        <CardContent className="flex-1 bg-[#14151C]/40 border-[#14151C]  min-h-0 border rounded-2xl px-2 pt-5 sm:p-3">
           <ChartContainer
             config={{
               pl: {

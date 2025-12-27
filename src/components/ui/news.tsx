@@ -119,7 +119,7 @@ const StockNews: React.FC<StockNewsProps> = ({  marketContext = 'neutral' }) => 
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -40 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-0 bg-[#14151C] rounded-2xl shadow-md border-none px-4 sm:p-3 flex items-center gap-5 sm:gap-3 "
+          className="absolute inset-0 bg-[#14151C]/40 border border-[#14151C] rounded-2xl shadow-md  px-4 sm:p-3 flex items-center gap-5 sm:gap-3 "
         >
           {article.thumbnail ?  (
             <img

@@ -72,7 +72,7 @@ const SummaryCard:React.FC<SummaryProp> = ({ data }) => {
                     const TrendIcon = card.trend === "up" ? CaretUpIcon : card.trend === "down" ? CaretDownIcon : null;
                  
                     return (
-                    <Card  className="rounded-3xl border border-[rgba(34,36,45,0.5)] bg-[#14151C] " key={idx}>
+                    <Card  className="rounded-3xl border border-[#14151C] bg-[#14151C]/40" key={idx}>
                        <CardHeader className="flex  flex-row items-center justify-between ">
                         <CardTitle className="text-sm font-medium text-gray-600">{card.title}</CardTitle>
                         <div className="flex items-center gap-2">

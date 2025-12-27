@@ -45,7 +45,7 @@ export const WatchListCard = ({stock , isUp , handleDeleteClick}:WatchListCardPr
                 </div>
             </div>
             </CardHeader>
-            <CardContent className="bg-[#14151C] border border-[rgba(34,36,45,0.5)] space-y-2 rounded-2xl p-5">
+            <CardContent className="bg-[#14151C]/40 border border-[#14151C] space-y-2 rounded-2xl p-5">
             <div className="flex items-center justify-between">
                 <div className="mt-3 flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-muted-foreground" />
